@@ -10,7 +10,6 @@ using std::mt19937;
 int seed = 0;
 
 Deck::Deck() {
-    string suitList[4] = {"Club", "Diamond", "Heart", "Spade"};
     for (int i=0; i<4; i++) {
         for (int j=0; j<13; j++) {
             Card::Suit suit (i);
@@ -24,16 +23,24 @@ Deck::Deck() {
         card.resize(13);
         played_.push_back(card);
     }
-};
+}
 vector<vector<Card*>> Deck::played() {
     return played_;
-};
-void Deck::print() {};
+}
+void Deck::print() {
+    for (int i=0; i<cards_.size(); i++) {
+        std::cout << *cards_[i] << std::endl;
+    }
+}
+// for testing
+Card* Deck::getCard(int pos) {
+    return cards_[pos];
+}
 void Deck::addPlayed(Card* card) {
     int suit = card->suit().suit();
     int rank = card->rank().rank();
-    played_[suit][rank]++;
-};
+    played_[suit][rank] = card;
+}
 void Deck::shuffle() {
     static mt19937 rng(seed);
     int n = 52;
@@ -45,5 +52,5 @@ void Deck::shuffle() {
         cards_[n] = cards_[k];
         cards_[k] = c;
     } // while
-};
+}
 

@@ -13,6 +13,7 @@ public:
     Deck();
     vector<vector<Card*>> played();
     void print();
+    Card* getCard(int pos);
     void addPlayed(Card* card);
     void shuffle();
 };
