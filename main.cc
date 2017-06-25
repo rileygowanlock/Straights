@@ -1,8 +1,11 @@
 #include <iostream>
 #include "Deck.h"
 #include "Card.h"
+#include <string>
+using std::string;
 
 int main() {
+    // testing
     std::cout << "Hello, World!" << std::endl;
     Deck* d = new Deck();
     d->shuffle();

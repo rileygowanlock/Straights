@@ -29,7 +29,10 @@ vector<vector<Card*>> Deck::played() {
 }
 void Deck::print() {
     for (int i=0; i<cards_.size(); i++) {
-        std::cout << *cards_[i] << std::endl;
+        std::cout << *cards_[i] << " ";
+        if ((i+1)%13==0) {
+            std::cout << "\n";
+        }
     }
 }
 // for testing

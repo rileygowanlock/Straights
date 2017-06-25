@@ -1,0 +1,4 @@
+#ifndef STRAIGHTS_VIEW_H
+#define STRAIGHTS_VIEW_H
+
+#endif //STRAIGHTS_VIEW_H
