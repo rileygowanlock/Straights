@@ -52,7 +52,7 @@ public:
 	Card( Rank, Suit );
 	Suit suit() const;
 	Rank rank() const;
-	bool operator==( const Card & ) const;
+	bool operator==( const Card & c) const;
 	
 private:
 	Suit suit_;
