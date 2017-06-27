@@ -15,6 +15,9 @@ protected:
     vector<Card*> discard_;
 
 public:
+    // added this to construct player before call to deck
+    // addHand() method?
+    Player(int playerNum);
     Player(Deck &d, int playerNum);
     //destructor
     int score();

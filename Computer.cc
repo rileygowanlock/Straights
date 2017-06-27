@@ -5,6 +5,8 @@
 #include <vector>
 using std::vector;
 
+Computer::Computer(int playerNum) {};
+
 Computer::Computer(Deck &d, int playerNum) : Player(d, playerNum) {
 
 }

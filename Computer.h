@@ -4,6 +4,7 @@
 class Computer : public Player {
 
 public:
+    Computer(int playerNum);
     Computer(Deck &d, int playerNum);
     //destructor
     void play(Deck &d) override;

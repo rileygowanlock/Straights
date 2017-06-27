@@ -4,6 +4,10 @@
 #include <vector>
 using std::vector;
 
+Player::Player(int playerNum) {
+    playerNum_ = playerNum;
+}
+
 Player::Player(Deck &d, int playerNum): playerNum_(playerNum) {
    for (int i=0; i<13; i++) {
        hand_.push_back(d.getCard(i+playerNum*13));
