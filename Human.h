@@ -6,7 +6,7 @@
 class Human : public Player {
 
 public:
-    Human(int playerNum);
+    //Human(int playerNum);
     Human(Deck &d, int playerNum);
     //destructor
     void play(Deck &d, Card* c) override;

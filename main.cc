@@ -3,6 +3,9 @@
 #include "Card.h"
 #include "Human.h"
 #include "Computer.h"
+#include "Model.h"
+#include "View.h"
+#include "Controller.h"
 #include <string>
 using std::string;
 

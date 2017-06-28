@@ -1,5 +1,7 @@
 #ifndef STRAIGHTS_CONTROLLER_H
 #define STRAIGHTS_CONTROLLER_H
+#include "View.h"
+#include "Model.h"
 
 class Controller {
 private:

@@ -3,7 +3,9 @@
 #include <vector>
 using std::vector;
 
-class model {
+class Player;
+
+class Model {
 private:
     vector<Player*> players;
 public:
