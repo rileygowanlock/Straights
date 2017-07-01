@@ -34,6 +34,15 @@ void View::run() {
     
     Command command = getCommand();
     controller_->gamePlay (command.type, model_->getPlayers(0), command.card);
+
+    int playerNum = model_->startGame();
+    std::cout << "A new round begins. It's player " << std::to_string(playerNum+1) << "'s turn to play.\n";
+    Player* player = model_->getPlayers(playerNum);
+    if (player->isHuman()) {
+        Command command = getCommand();
+    } else {
+        std::cout << "Is computer" << std::endl;
+    }
 }
 
 Command View::getCommand() {

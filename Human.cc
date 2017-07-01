@@ -66,3 +66,7 @@ void Human::discard(Card& c) {
         hand_.erase(it);
     }
 }
+
+bool Human::isHuman() {
+    return true;
+}

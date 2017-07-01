@@ -1,5 +1,6 @@
 #ifndef STRAIGHTS_MODEL_H
 #define STRAIGHTS_MODEL_H
+#include "Player.h"
 #include <vector>
 #include "Deck.h"
 #include "Player.h"
@@ -15,6 +16,7 @@ public:
     Player* getPlayers(int pos);
     Deck* getDeck();
     //bool isLegalPlay(Player* player, Card &card);
+    int startGame();
 };
 
 #endif //STRAIGHTS_MODEL_H

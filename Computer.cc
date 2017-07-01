@@ -40,3 +40,7 @@ void Computer::discard() {
     if(it != hand_.end())
         hand_.erase(it);
 }
+
+bool Computer::isHuman() {
+    return false;
+}

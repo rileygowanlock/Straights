@@ -25,6 +25,9 @@ public:
     //virtual void discard() = 0;
     //virtual void play(Deck &d, Card *c);
     virtual void play(Deck &d, Card &c);
+    virtual bool isHuman();
+    bool isStartPlayer();
+    virtual void play(Deck &d, Card *c);
     virtual void play(Deck &d);
     //virtual void discard(Card *c);
     virtual void discard(Card &c); 
