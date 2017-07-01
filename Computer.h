@@ -5,9 +5,9 @@ class Computer : public Player {
 
 public:
     //Computer(int playerNum);
-    Computer(Deck &d, int playerNum);
+    Computer(Deck* d, int playerNum);
     //destructor
-    void play(Deck &d) override;
+    void play() override;
     void discard() override;
     bool isHuman() override;
 };

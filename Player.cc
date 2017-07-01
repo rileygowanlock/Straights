@@ -8,9 +8,9 @@ using std::vector;
     playerNum_ = playerNum;
 }*/
 
-Player::Player(Deck &d, int playerNum): playerNum_(playerNum) {
+Player::Player(Deck* d, int playerNum): playerNum_(playerNum), deck_(d) {
    for (int i=0; i<13; i++) {
-       hand_.push_back(d.getCard(i+playerNum_*13));
+       hand_.push_back(d->getCard(i+playerNum_*13));
     }
    /*for (auto it:hand_) {
 	std::cout<<*it<<std::endl;
@@ -63,11 +63,11 @@ bool Player::isStartPlayer() {
     return false;
 }
 
-void Player::play(Deck &d) {
+void Player::play() {
 
 }
 
-void Player::play(Deck &d, Card &c) {
+void Player::play(Card &c) {
 
 }
 
@@ -101,4 +101,8 @@ vector<Card*> Player::getHand() {
 
 int Player::playerNum() {
     return playerNum_;
+}
+
+Deck* Player::getDeck() {
+    return deck_;
 }

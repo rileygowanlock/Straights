@@ -7,14 +7,15 @@ using std::vector;
 
 //Computer::Computer(int playerNum) {};
 
-Computer::Computer(Deck &d, int playerNum) : Player(d, playerNum) {
+Computer::Computer(Deck* d, int playerNum) : Player(d, playerNum) {
 
 }
 
-void Computer::play(Deck &d) {
+void Computer::play() {
+    Deck* d = getDeck();
     vector<Card*> leg = legalPlay();
     Card* c = leg[0];
-    d.addPlayed(c);
+    d->addPlayed(c);
  
     vector<Card*>::iterator it;
     it = hand_.begin();
