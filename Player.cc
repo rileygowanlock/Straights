@@ -50,6 +50,16 @@ int Player::score() {
   return score;
 }
 
+bool Player::isStartPlayer() {
+    // return if player has 7S
+    for (int i=0; i<13; i++) {
+        if (hand_[i]->suit().suit()==3 && hand_[i]->rank().rank()==6) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void Player::play(Deck &d) {
 
 }

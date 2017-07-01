@@ -34,6 +34,7 @@ void View::run() {
     for (int i = 0; i < 4; i++) {
         model_->getPlayers(i)->printHand();
     }
+    std::cout << "A new round begins. It's player " << std::to_string(model_->startGame()) << "'s turn to play.\n";
     Command command = getCommand();
 }
 
