@@ -17,7 +17,8 @@ Player::Player(Deck &d, int playerNum): playerNum_(playerNum) {
    }*/ // prints hand
 }
 
-vector<Card*> Player::legalPlay (vector<vector<Card*>> &played) {
+vector<Card*> Player::legalPlay () {
+    vector<vector<Card*>> played = deck_->played();
     vector<Card*> legal;
     if (played.size()==0) {
         Card::Suit suit (3); //SPADE?
@@ -92,4 +93,8 @@ void Player::printHand() {
       std::cout<<*it<< " ";
     }
     std::cout<<std::endl;
+}
+
+vector<Card*> Player::getHand() {
+    return hand_;
 }

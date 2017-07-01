@@ -9,6 +9,7 @@ using std::vector;
 class Player {
 private:
     int playerNum_;
+    Deck* deck_;
 
 protected:
     vector<Card*> hand_;
@@ -23,6 +24,7 @@ public:
     int score();
     //virtual void play(Deck &d) = 0;
     //virtual void discard() = 0;
+    vector<Card*> getHand();
     virtual bool isHuman();
     bool isStartPlayer();
     virtual void play(Deck &d, Card *c);
@@ -30,7 +32,7 @@ public:
     virtual void discard(Card *c); 
     virtual void discard();
     void addHand(vector<Card*> cards);
-    vector<Card*> legalPlay (vector<vector<Card*>> &played);
+    vector<Card*> legalPlay ();
     void printHand(); //FOR TEST PURPOSES
 };
 

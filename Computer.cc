@@ -12,8 +12,7 @@ Computer::Computer(Deck &d, int playerNum) : Player(d, playerNum) {
 }
 
 void Computer::play(Deck &d) {
-    vector<vector<Card*>> list = d.played();
-    vector<Card*> leg = legalPlay (list);
+    vector<Card*> leg = legalPlay();
     Card* c = leg[0];
     d.addPlayed(c);
  
