@@ -8,9 +8,9 @@ void Subject::unsubscribe(Observer* observer) {
     observers_.push_back(observer);
 }
 
-void notify(Command::Type &command, Player* player, Card &card, bool isLegal) {
+void Subject::notify(Command::Type &command, Player* player, Card &card, bool isLegal) {
     for (auto it:observers_)  {
-        (*it)->update(command, player, card, isLegal);
+        (*it).update(command, player, card, isLegal);
     }
 
 }

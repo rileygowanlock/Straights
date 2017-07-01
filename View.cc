@@ -11,7 +11,7 @@ void View::run() {
     char playerType;
     // Invite Players
     for (int i = 0; i < 4; i++) {
-        std::cout << "Is player " << std::to_string(i+1) << " a human(h) or a computer(c)?\n";
+        std::cout << "Is player " << std::to_string(i+1) << " a human(h) or a computer(c)?\n>";
         std::cin >> playerType;
         switch(playerType) {
             case 'h': {
@@ -34,6 +34,7 @@ void View::run() {
     int playerNum = model_->startGame();
     std::cout << "A new round begins. It's player " << std::to_string(playerNum+1) << "'s turn to play.\n";
     while (playerNum<4) {
+
         Player *player = model_->getPlayers(playerNum);
         if (player->isHuman()) {
             std::string rank[13] = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K"};
@@ -42,7 +43,7 @@ void View::run() {
             for (int j = 0; j < 4; j++) {
                 std::cout << suitHeader[j];
                 for (int i = 0; i < 13; i++) {
-                    if (model_->getDeck()->played()[0][i] != nullptr) {
+                    if (model_->getDeck()->played()[j][i] != nullptr) {
                         std::cout << " " << rank[i];
                     }
                 }
@@ -64,9 +65,9 @@ void View::run() {
                 std::cout << rank[legal[i]->rank().rank()];
                 std::cout << suit[legal[i]->suit().suit()];
             }
-            std::cout << "\n";
+            std::cout << "\n>";
             Command command = getCommand();
-            controller_->gamePlay(command.type, model_->getPlayers(0), command.card);
+            controller_->gamePlay(command.type, model_->getPlayers(playerNum), command.card);
         } else {
             vector <Card*> legal = player->legalPlay();
             if (legal.size() != 0) {
@@ -115,7 +116,7 @@ void View::run() {
 
 Command View::getCommand() {
     Command command;
-    std::cin.ignore();
+    //std::cin.ignore();
     std::cin>>command;
     return command;
 }
@@ -123,14 +124,14 @@ Command View::getCommand() {
 void View::play (Player *player, Card &card, bool legal) {
     if (!legal) std::cout<<"This is not a legal play.\n";
     else {
-        std::cout<<"Player "<<player->playerNum()<<" plays "<<card.suit()<<card.rank()<<"\n";;
+        std::cout<<"Player "<<player->playerNum()+1<<" plays "<<card.rank()<<card.suit()<<"\n";;
     }
 }
 
 void View::discard (Player *player, Card &card, bool legal) {
     if (legal) std::cout<<"You have a legal play. You may not discard.\n";
     else {
-        std::cout<<"Player "<<player->playerNum()<<" discards "<<card.suit()<<card.rank()<<"\n";
+        std::cout<<"Player "<<player->playerNum()+1<<" discards "<<card.rank()<<card.suit()<<"\n";
     }
 }
 

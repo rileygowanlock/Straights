@@ -11,12 +11,14 @@ istream & operator>>( istream & in, Command & c ) {
 	c.type = Command::Type::BAD_COMMAND;
 	
 	string str;
-	getline( in, str );
-	stringstream ss{ str };
+	//getline( in, str );
+	//stringstream ss{ str };
 	
 	string cmd;
-	ss >> cmd;
-	
+	//ss >> cmd;
+	in>>cmd;
+	getline( in, str );
+	stringstream ss{ str };
 	if ( cmd == "play" ) {
 		c.type = Command::Type::PLAY;
 		ss >> c.card;
