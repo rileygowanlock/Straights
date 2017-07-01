@@ -8,32 +8,26 @@
 View::View(Model* model, Controller* controller): model_(model), controller_(controller) {}
 
 void View::run() {
-    char playerType;
     // Invite Players
+    char playerType;
     for (int i = 0; i < 4; i++) {
         std::cout << "Is player " << std::to_string(i+1) << " a human(h) or a computer(c)?\n>";
         std::cin >> playerType;
-        switch(playerType) {
-            case 'h': {
-                Human* h = new Human(model_->getDeck(), i);
-                model_->appendPlayer(h);
-                break;
-            }
-            case 'c': {
-                Computer* c = new Computer(model_->getDeck(), i);
-                model_->appendPlayer(c);
-                break;
-            }
-        }
+        controller_->invitePlayers(playerType, i);
     }
-    // testing
+    // Testing
     for (int i = 0; i < 4; i++) {
         model_->getPlayers(i)->printHand();
     }
 
-    int startPlayer = model_->startGame();
-    int playerNum = startPlayer;
+    // New Game
+    int startPlayer = controller_->newGame();
     std::cout << "A new round begins. It's player " << std::to_string(startPlayer+1) << "'s turn to play.\n";
+    int playerNum = startPlayer;
+
+
+
+
     while (playerNum<4) {
         Player *player = model_->getPlayers(playerNum);
         std::string rank[13] = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K"};
@@ -84,23 +78,31 @@ void View::run() {
         }
 
         // End round
+        bool endGame;
         if (playerNum == startPlayer-1 && player->getHand().size() == 0) {
             for (int i=0; i<4; i++) {
-                vector<Card*> discard = model_->getPlayers(i)->getDiscard();
+                Player* player = model_->getPlayers(i);
+                vector<Card*> discard = player->getDiscard();
                 std::cout << "Player " << std::to_string(i+1) << "'s discards:";
                 for (int i=0; i<discard.size(); i++) {
                     std::cout << " " << rank[discard[i]->rank().rank()] << suit[discard[i]->suit().suit()];
                 }
                 std::cout << "\n";
                 std::cout << "Player " << std::to_string(i+1) << "'s score:";
-                std::cout << std::to_string(player->getScore()) << "+" << std::to_string(player->score());
+                std::cout << " " << std::to_string(player->getScore()) << " + " << std::to_string(player->score());
                 player->updateScore();
-                std::cout << "=" << std::to_string(player->getScore()) << "\n";
+                std::cout << " = " << std::to_string(player->getScore()) << "\n";
+                if (player->getScore() >= 80) {
+                    endGame = true;
+                }
             }
-            // implement scoring
-            break;
+//            if (endGame) {
+//                // repeat
+//            }
+//            else {
+//                // reset
+//            }
         }
-
 
         if (playerNum == 3) {
             playerNum = 0;
@@ -120,7 +122,7 @@ Command View::getCommand() {
 void View::play (Player *player, Card &card, bool legal) {
     if (!legal) std::cout<<"This is not a legal play.\n";
     else {
-        std::cout<<"Player "<< std::to_string(player->playerNum()+1) <<" plays "<< card.rank() <<card.suit()<<"hellooooooooo\n";
+        std::cout<<"Player "<< std::to_string(player->playerNum()+1) <<" plays "<< card.rank() <<card.suit()<<"\n";
     }
 }
 
@@ -139,3 +141,11 @@ void View::update(Command::Type &command, Player* player, Card &card, bool isLeg
         discard(player, card, isLegal);
     }
 }
+
+//void View::endGame() {
+//    run();
+//}
+//
+//void View::newRound() {
+//    model_->getDeck()->shuffle();
+//}

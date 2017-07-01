@@ -13,9 +13,8 @@ using std::string;
 
 int main() {
     Deck* d = new Deck();
-    d->shuffle();
-    d->print(); //testing
-    // something like this?
+//    d->shuffle();
+//    d->print(); //testing
     Model* model = new Model(d);
     Controller* controller = new Controller(model);
     View* view = new View(model, controller);

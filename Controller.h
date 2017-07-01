@@ -11,8 +11,10 @@ public:
     // for each command updates model and view with data
     Controller(Model* model);
     void run();
+    void invitePlayers(char playerType, int playerNum);
     //void gamePlay (Command::Type &command, Player* player, Card &card);
     bool gamePlay (Command &command, Player* player);
+    int newGame();
 };
 
 #endif //STRAIGHTS_CONTROLLER_H

@@ -31,6 +31,7 @@ public:
     //virtual void discard() = 0;
     vector<Card*> getHand();
     vector<Card*> getDiscard();
+    void resetDiscard();
     //virtual void play(Deck &d, Card *c);
     //virtual void play(Deck &d, Card &c);
     virtual void play(Card& c);
@@ -40,7 +41,7 @@ public:
     //virtual void discard(Card *c);
     virtual void discard(Card& c);
     virtual void discard();
-    void addHand(vector<Card*> cards);
+    void updateHand();
     vector<Card*> legalPlay ();
     void printHand(); //FOR TEST PURPOSES
     int playerNum();
