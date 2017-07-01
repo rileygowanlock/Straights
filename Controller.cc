@@ -12,26 +12,30 @@ Controller::Controller(Model* model): model_(model) {
 
 }
 
-void Controller::gamePlay (Command::Type &command, Player* player, Card &card) {
-    if ( command == Command::Type::PLAY ) {
-	bool isLegal = model_->isLegalPlay(player, card);
+//void Controller::gamePlay (Command::Type &command, Player* player, Card &card) {
+bool Controller::gamePlay (Command &command, Player* player) {
+    if ( command.type == Command::Type::PLAY ) {
+	bool isLegal = model_->isLegalPlay(player, command);
 	if (isLegal) {
-            player->play(card);//play(*(model_->getDeck()), card);
+            player->play(command.card);//play(*(model_->getDeck()), card);
+	    return true;
 	}
-        model_->notify(command, player, card, isLegal);
-    } else if ( command == Command::Type::DISCARD ) {
-	bool isLegal = model_->isLegalPlay(player, card);
+    } else if ( command.type == Command::Type::DISCARD ) {
+	bool isLegal = model_->isLegalPlay(player, command);
 	if (!isLegal) {
-            player->discard(card);
-	}
-	model_->notify(command, player, card, isLegal);
-    } else if ( command == Command::Type::DECK ) {
+            player->discard(command.card);
+	    return true;
+        }
+    } else if ( command.type == Command::Type::DECK ) {
         model_->getDeck()->print();
-    } else if ( command == Command::Type::QUIT ) {
-
-    } else if ( command == Command::Type::RAGEQUIT ) { 
-        
+	return true;
+    } else if ( command.type == Command::Type::QUIT ) {
+	//might need to call destructors and delete stuff
+	exit(0);
+    } else if ( command.type == Command::Type::RAGEQUIT ) { 
+	return true;
     }
+    return false;
 }
 
 void Controller :: run() {
