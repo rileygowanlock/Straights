@@ -28,12 +28,12 @@ public:
     vector<Card*> getHand();
     //virtual void play(Deck &d, Card *c);
     //virtual void play(Deck &d, Card &c);
-    virtual void play(Card &c);
+    virtual void play(Card& c);
     virtual bool isHuman();
     bool isStartPlayer();
     virtual void play();
     //virtual void discard(Card *c);
-    virtual void discard(Card &c); 
+    virtual void discard(Card& c);
     virtual void discard();
     void addHand(vector<Card*> cards);
     vector<Card*> legalPlay ();

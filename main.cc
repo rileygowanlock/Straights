@@ -23,7 +23,7 @@ int main() {
 
 
 
-//    // testing
+// testing
 //    std::cout << "Hello, World!" << std::endl;
 //    Deck* d = new Deck();
 //    d->shuffle();
@@ -41,10 +41,10 @@ int main() {
 //        }
 //    }
 //
-//    Human* p = new Human(*d, 0);
-//    Computer* p1 = new Computer(*d, 1);
-//    Computer* p2 = new Computer(*d, 2);
-//    Computer* p3 = new Computer(*d, 3);
+//    Human* p = new Human(d, 0);
+//    Computer* p1 = new Computer(d, 1);
+//    Computer* p2 = new Computer(d, 2);
+//    Computer* p3 = new Computer(d, 3);
 //    vector<Card*> leg = p->legalPlay (list);
 //    //When players are created, need to make sure to look for player with 7 of spades and start with him/her
 //
@@ -54,7 +54,7 @@ int main() {
 //    } // prints legal plays - had to make legalPlay public instead of protected to test/print
 //
 //    Card* c3 = d->getCard(8);
-//    p->play(*d, c3);
+//    p->play(*c3);
 //
 //    list = d->played();
 //
@@ -69,7 +69,7 @@ int main() {
 //    }
 //    p->printHand();
 //
-//    p1->play(*d);
+//    p1->play();
 //
 //    list = d->played();
 //

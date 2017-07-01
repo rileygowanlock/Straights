@@ -18,6 +18,7 @@ void Controller::gamePlay (Command::Type &command, Player* player, Card &card) {
 	if (isLegal) {
             player->play(card);//play(*(model_->getDeck()), card);
 	}
+        model_->notify(command, player, card, isLegal);
     } else if ( command == Command::Type::DISCARD ) {
 	bool isLegal = model_->isLegalPlay(player, card);
 	if (!isLegal) {

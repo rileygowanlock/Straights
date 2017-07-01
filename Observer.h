@@ -1,5 +1,7 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
+#include "Command.h"
+#include "Player.h"
 
 class Observer {
 public:

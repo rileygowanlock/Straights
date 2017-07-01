@@ -4,9 +4,10 @@
 #include "Command.h"
 #include "Model.h"
 #include "Controller.h"
+#include "Observer.h"
 using std::string;
 
-class View {
+class View : public Observer {
 private:
     Model* model_;
     Controller* controller_;
