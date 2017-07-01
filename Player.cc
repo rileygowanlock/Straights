@@ -52,6 +52,14 @@ int Player::score() {
   return score;
 }
 
+void Player::updateScore() {
+    score_ += score();
+}
+
+int Player::getScore() {
+    return score_;
+}
+
 bool Player::isHuman(){}
 
 bool Player::isStartPlayer() {
@@ -101,7 +109,7 @@ vector<Card*> Player::getHand() {
 }
 
 vector<Card*> Player::getDiscard() {
-    return deck_;
+    return discard_;
 }
 
 int Player::playerNum() {

@@ -10,6 +10,7 @@ class Player {
 private:
     int playerNum_;
     Deck* deck_;
+    int score_;
 
 protected:
     vector<Card*> hand_;
@@ -23,6 +24,8 @@ public:
     Deck* getDeck();
     //destructor
     int score();
+    void updateScore();
+    int getScore();
     //virtual void play(Deck &d) = 0;
     //virtual void discard() = 0;
     vector<Card*> getHand();
