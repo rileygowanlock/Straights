@@ -5,6 +5,7 @@
 #include "Computer.h"
 #include "Model.h"
 #include "View.h"
+#include "Deck.h"
 #include "Controller.h"
 #include <string>
 using std::string;
@@ -12,10 +13,9 @@ using std::string;
 int main() {
     // something like this?
     Model* model = new Model();
-    View* view = new View();
+    View* view = new View(model);
     Controller* controller = new Controller(model, view);
-    controller->run();
-    Command command = view->getCommand();
+    view->run();
 
 
 
