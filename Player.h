@@ -26,6 +26,7 @@ public:
     //virtual void play(Deck &d) = 0;
     //virtual void discard() = 0;
     vector<Card*> getHand();
+    vector<Card*> getDiscard();
     //virtual void play(Deck &d, Card *c);
     //virtual void play(Deck &d, Card &c);
     virtual void play(Card& c);

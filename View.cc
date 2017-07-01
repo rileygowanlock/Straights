@@ -36,7 +36,7 @@ void View::run() {
     while (playerNum<4) {
         Player *player = model_->getPlayers(playerNum);
         if (player->isHuman()) {
-            std::string rank[13] = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K"};
+            std::string rank[13] = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K"};
             std::string suitHeader[4] = {"Clubs:", "Diamonds:", "Hearts:", "Spades:"};
             std::cout << "Cards on the table:\n";
             for (int j = 0; j < 4; j++) {
@@ -50,7 +50,7 @@ void View::run() {
             }
             std::string suit[4] = {"C", "D", "H", "S"};
             std::cout << "Your hand:";
-            vector < Card * > hand = player->getHand();
+            vector <Card*> hand = player->getHand();
             for (int i = 0; i < hand.size(); i++) {
                 std::cout << " ";
                 std::cout << rank[hand[i]->rank().rank()];
@@ -58,7 +58,7 @@ void View::run() {
             }
             std::cout << "\n";
             std::cout << "Legal plays:";
-            vector < Card * > legal = player->legalPlay();
+            vector <Card*> legal = player->legalPlay();
             for (int i = 0; i < legal.size(); i++) {
                 std::cout << " ";
                 std::cout << rank[legal[i]->rank().rank()];
@@ -68,12 +68,47 @@ void View::run() {
             Command command = getCommand();
             controller_->gamePlay(command.type, model_->getPlayers(0), command.card);
         } else {
-            std::cout << "Is computer" << std::endl;
+            vector <Card*> legal = player->legalPlay();
+            if (legal.size() != 0) {
+                std::cout << "Player " << to_string(playerNum+1) << " plays ";
+                std::cout << rank[legal[0]->rank().rank()];
+                std::cout << suit[legal[0]->suit().suit()] << ".\n";
+                player->play(card);
+                // play
+            } else {
+                std::cout << "Player " << to_string(playerNum+1) << " discards ";
+                std::cout << rank[hand_[0]->rank().rank()];
+                std::cout << suit[hand_[0]->suit().suit()] << ".\n";
+                player->discard(card);
+                // discards
+            }
         }
         if (playerNum == 3) {
             playerNum = 0;
         } else {
             playerNum++;
+        }
+
+        // End game
+        bool endGame = false;
+        for (int i=0; i<4; i++) {
+            if (model_->getPlayers(i)->getHand().size() != 0) {
+                endGame = true;
+            }
+        }
+        if (!endGame) {
+            for (int i=0; i<4; i++) {
+                vector<Card*> discard = model_->getPlayers(i).getDiscard();
+                cout << "Player " << to_string(i+1) << "'s discards:";
+                for (int i=0; i<discard.size(); i++) {
+                    cout << rank[discard[i]->rank().rank()] << suit[discard[i]->suit().suit()];
+                }
+
+
+
+            }
+            // implement scoring
+            break;
         }
     }
 }
