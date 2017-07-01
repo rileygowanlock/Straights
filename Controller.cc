@@ -24,6 +24,7 @@ void Controller::gamePlay (Command::Type &command, Player* player, Card &card) {
 	if (!isLegal) {
             player->discard(card);
 	}
+	model_->notify(command, player, card, isLegal);
     } else if ( command == Command::Type::DECK ) {
         model_->getDeck()->print();
     } else if ( command == Command::Type::QUIT ) {

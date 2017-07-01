@@ -7,6 +7,7 @@
 #include "View.h"
 #include "Deck.h"
 #include "Controller.h"
+#include "Subject.h"
 #include <string>
 using std::string;
 
@@ -14,11 +15,11 @@ int main() {
     Deck* d = new Deck();
     d->shuffle();
     d->print(); //testing
-
     // something like this?
     Model* model = new Model(d);
     Controller* controller = new Controller(model);
     View* view = new View(model, controller);
+    model->subscribe(view);
     view->run();
 
 

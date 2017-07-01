@@ -52,6 +52,7 @@ void Human::play(Card& c) {
 	d->addPlayed(*it);
         hand_.erase(it);
     }
+
 }
 
 void Human::discard(Card& c) {
