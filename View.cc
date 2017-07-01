@@ -34,8 +34,14 @@ void View::run() {
     for (int i = 0; i < 4; i++) {
         model_->getPlayers(i)->printHand();
     }
-    std::cout << "A new round begins. It's player " << std::to_string(model_->startGame()) << "'s turn to play.\n";
-    Command command = getCommand();
+    int playerNum = model_->startGame();
+    std::cout << "A new round begins. It's player " << std::to_string(playerNum+1) << "'s turn to play.\n";
+    Player* player = model_->getPlayers(playerNum);
+    if (player->isHuman()) {
+        Command command = getCommand();
+    } else {
+        std::cout << "Is computer" << std::endl;
+    }
 }
 
 Command View::getCommand() {

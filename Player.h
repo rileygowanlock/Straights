@@ -23,6 +23,7 @@ public:
     int score();
     //virtual void play(Deck &d) = 0;
     //virtual void discard() = 0;
+    virtual bool isHuman();
     bool isStartPlayer();
     virtual void play(Deck &d, Card *c);
     virtual void play(Deck &d);

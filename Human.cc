@@ -36,3 +36,7 @@ void Human::discard(Card* c) {
     if(it != hand_.end())
        hand_.erase(it);
 }
+
+bool Human::isHuman() {
+    return true;
+}

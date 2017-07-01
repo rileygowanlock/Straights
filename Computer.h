@@ -9,6 +9,7 @@ public:
     //destructor
     void play(Deck &d) override;
     void discard() override;
+    bool isHuman() override;
 };
 
 #endif //COMPUTER_H

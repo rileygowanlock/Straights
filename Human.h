@@ -11,6 +11,7 @@ public:
     //destructor
     void play(Deck &d, Card* c) override;
     void discard(Card* c) override;
+    bool isHuman() override;
 };
 
 

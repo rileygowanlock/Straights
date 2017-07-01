@@ -50,6 +50,8 @@ int Player::score() {
   return score;
 }
 
+bool Player::isHuman(){}
+
 bool Player::isStartPlayer() {
     // return if player has 7S
     for (int i=0; i<13; i++) {
