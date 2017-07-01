@@ -23,9 +23,11 @@ public:
     int score();
     //virtual void play(Deck &d) = 0;
     //virtual void discard() = 0;
-    virtual void play(Deck &d, Card *c);
+    //virtual void play(Deck &d, Card *c);
+    virtual void play(Deck &d, Card &c);
     virtual void play(Deck &d);
-    virtual void discard(Card *c); 
+    //virtual void discard(Card *c);
+    virtual void discard(Card &c); 
     virtual void discard();
     void addHand(vector<Card*> cards);
     vector<Card*> legalPlay (vector<vector<Card*>> &played);

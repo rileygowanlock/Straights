@@ -8,8 +8,23 @@
 #include <iostream>
 using std::string;
 
-Controller::Controller(Model* model, View* view): model_(model), view_(view) {
+Controller::Controller(Model* model): model_(model) {
 
+}
+
+void Controller::gamePlay (Command::Type &command, Player* player, Card &card) {
+    if ( command == Command::Type::PLAY ) {
+	//bool isLegal = model_->isLegalPlay(player, card);
+        player->play(*(model_->getDeck()), card);
+    } else if ( command == Command::Type::DISCARD ) {
+        player->discard(card);
+    } else if ( command == Command::Type::DECK ) {
+        model_->getDeck()->print();
+    } else if ( command == Command::Type::QUIT ) {
+
+    } else if ( command == Command::Type::RAGEQUIT ) { 
+        
+    }
 }
 
 void Controller :: run() {

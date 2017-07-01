@@ -11,10 +11,14 @@
 using std::string;
 
 int main() {
+    Deck* d = new Deck();
+    d->shuffle();
+    d->print(); //testing
+
     // something like this?
-    Model* model = new Model();
-    View* view = new View(model);
-    Controller* controller = new Controller(model, view);
+    Model* model = new Model(d);
+    Controller* controller = new Controller(model);
+    View* view = new View(model, controller);
     view->run();
 
 
