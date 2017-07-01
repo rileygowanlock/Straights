@@ -7,7 +7,7 @@ using std::vector;
 
 //Human::Human(int playerNum) {}
 
-Human::Human(Deck &d, int playerNum) : Player(d, playerNum) {
+Human::Human(Deck* d, int playerNum) : Player(d, playerNum) {
 
 }
 
@@ -37,7 +37,9 @@ void Human::discard(Card* c) {
        hand_.erase(it);
 }*/
 
-void Human::play(Deck &d, Card& c) {
+void Human::play(Card& c) {
+
+    Deck* d = getDeck();
    
     vector<Card*>::iterator it;
     it = hand_.begin();
@@ -47,7 +49,7 @@ void Human::play(Deck &d, Card& c) {
     }
 
     if(it != hand_.end()) {
-	d.addPlayed(*it);
+	d->addPlayed(*it);
         hand_.erase(it);
     }
 }

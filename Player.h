@@ -19,18 +19,18 @@ public:
     // added this to construct player before call to deck
     // addHand() method?
     //Player(int playerNum);
-    Player(Deck &d, int playerNum);
+    Player(Deck* d, int playerNum);
+    Deck* getDeck();
     //destructor
     int score();
     //virtual void play(Deck &d) = 0;
     //virtual void discard() = 0;
     vector<Card*> getHand();
     //virtual void play(Deck &d, Card *c);
-    virtual void play(Deck &d, Card &c);
+    virtual void play(Card &c);
     virtual bool isHuman();
     bool isStartPlayer();
-    virtual void play(Deck &d, Card *c);
-    virtual void play(Deck &d);
+    virtual void play();
     //virtual void discard(Card *c);
     virtual void discard(Card &c); 
     virtual void discard();
