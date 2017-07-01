@@ -2,6 +2,7 @@
 #include "Deck.h"
 #include "Player.h"
 #include "Human.h"
+#include "Computer.h"
 #include <vector>
 using std::vector;
 
@@ -87,9 +88,4 @@ bool Human::isHuman() {
     return true;
 }
 
-void Human::rageQuit() {
-    Player temp = *this;
-    *this = new Computer(temp.getDeck(), temp.playerNum());
-    std::swap (temp.hand_, (*this).hand_);
-    std::swap (temp.discard_, (*this).discard_);
-}
+

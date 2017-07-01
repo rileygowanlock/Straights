@@ -31,7 +31,7 @@ bool Controller::gamePlay (Command &command, Player* player) {
 	//might need to call destructors and delete stuff
 	exit(0);
     } else if ( command.type == Command::Type::RAGEQUIT ) { 
-	player->rageQuit()
+	player->rageQuit();
 	return true;
     }
     return false;

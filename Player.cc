@@ -1,6 +1,7 @@
 #include "Card.h"
 #include "Deck.h"
 #include "Player.h"
+#include "Computer.h"
 #include <vector>
 using std::vector;
 
@@ -138,4 +139,15 @@ Deck* Player::getDeck() {
 
 void Player::resetDiscard() {
     discard_.clear();
+}
+
+void Player::rageQuit() {
+    std::cout<<"Player "<<playerNum_+1<<" ragequits. A computer will now take over."<<std::endl;
+    Player *temp = new Computer(deck_, playerNum_);
+    std::swap (temp->deck_, deck_);
+    std::swap (temp->discard_, discard_);
+    std::swap (temp->hand_, hand_);
+    std::swap (temp->playerNum_, playerNum_);
+    std::swap (temp->score_, score_);
+    delete temp;
 }

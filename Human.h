@@ -14,7 +14,7 @@ public:
     void play(Card& c) override;
     void discard(Card& c) override;
     bool isHuman() override;
-    void rageQuit();
+
 };
 
 
