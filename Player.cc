@@ -9,9 +9,10 @@ using std::vector;
 }*/
 
 Player::Player(Deck* d, int playerNum): playerNum_(playerNum), deck_(d) {
-   for (int i=0; i<13; i++) {
-       hand_.push_back(d->getCard(i+playerNum_*13));
-    }
+   updateHand();
+//   for (int i=0; i<13; i++) {
+//       hand_.push_back(d->getCard(i+playerNum_*13));
+//    }
    /*for (auto it:hand_) {
 	std::cout<<*it<<std::endl;
    }*/ // prints hand
@@ -90,9 +91,10 @@ void Player::discard(Card& c) {
 
 }
 
-void Player::addHand(vector<Card*> cards) {
-    for (int i=0; i<cards.size(); i++) {
-        hand_.push_back(cards[i]);
+void Player::updateHand() {
+    hand_.clear();
+    for (int i=0; i<13; i++) {
+        hand_.push_back(deck_->getCard(i+playerNum_*13));
     }
 }
 
@@ -119,4 +121,8 @@ int Player::playerNum() {
 
 Deck* Player::getDeck() {
     return deck_;
+}
+
+void Player::resetDiscard() {
+    discard_.clear();
 }

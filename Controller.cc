@@ -8,9 +8,7 @@
 #include <iostream>
 using std::string;
 
-Controller::Controller(Model* model): model_(model) {
-
-}
+Controller::Controller(Model* model): model_(model) {}
 
 //void Controller::gamePlay (Command::Type &command, Player* player, Card &card) {
 bool Controller::gamePlay (Command &command, Player* player) {
@@ -36,6 +34,31 @@ bool Controller::gamePlay (Command &command, Player* player) {
 	return true;
     }
     return false;
+}
+
+void Controller::invitePlayers(char playerType, int playerNum) {
+    switch(playerType) {
+        case 'h': {
+            Human* h = new Human(model_->getDeck(), playerNum);
+            model_->appendPlayer(h);
+            break;
+        }
+        case 'c': {
+            Computer* c = new Computer(model_->getDeck(), playerNum);
+            model_->appendPlayer(c);
+            break;
+        }
+    }
+}
+
+int Controller::newGame() {
+    model_->getDeck()->shuffle();
+    for (int i = 0; i < 4; i++) {
+        model_->getPlayers(i)->updateHand();
+        model_->getPlayers(i)->resetDiscard();
+    }
+    int startPlayer = model_->startGame();
+    return startPlayer;
 }
 
 void Controller :: run() {
