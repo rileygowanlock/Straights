@@ -21,7 +21,7 @@ struct Command {
 	// Ensures: Command is set to invalid state, card is set to AC
 };
 
-std::istream & operator>>( std::istream &, Command & );
+std::istream & operator>>( std::istream &in, Command &c );
 // Modifies: input stream and Command
 // Ensures: Command is set to a valid command and has its associated card argument
 // Throws: fails assertion if unable to read in a valid command and its associated card argument,

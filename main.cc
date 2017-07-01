@@ -15,8 +15,7 @@ int main() {
     View* view = new View();
     Controller* controller = new Controller(model, view);
     controller->run();
-
-
+    Command command = view->getCommand();
 
 
 
