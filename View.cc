@@ -57,6 +57,12 @@ void View::run() {
         }
         std::cout << "\n";
         std::cout << "Legal plays:";
+        vector<Card*> legal = player->legalPlay();
+        for (int i=0; i<legal.size(); i++) {
+            std::cout << " ";
+            std::cout << rank[legal[i]->rank().rank()];
+            std::cout << suit[legal[i]->suit().suit()];
+        }
         std::cout << "\n";
         Command command = getCommand();
         controller_->gamePlay (command.type, model_->getPlayers(0), command.card);

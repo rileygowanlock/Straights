@@ -20,11 +20,12 @@ Player::Player(Deck* d, int playerNum): playerNum_(playerNum), deck_(d) {
 vector<Card*> Player::legalPlay () {
     vector<vector<Card*>> played = deck_->played();
     vector<Card*> legal;
-    if (played.size()==0) {
+    if (played[3][6] == nullptr) {
         Card::Suit suit (3); //SPADE?
         Card::Rank rank (6); //SEVEN?
         Card* card = new Card (rank, suit);
         legal.push_back(card);
+        return legal;
     }
     for (auto it:hand_)  {
 	int suit = it->suit().suit();
