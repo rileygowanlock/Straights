@@ -68,8 +68,12 @@ void View::run() {
                 std::cout << suit[legal[i]->suit().suit()];
             }
             std::cout << "\n";
-            Command command = getCommand();
-            controller_->gamePlay(command.type, model_->getPlayers(playerNum), command.card);
+            bool legCommand = false;
+            while (!legCommand) {
+                std::cout <<">";
+                    Command command = getCommand();
+                    legCommand = controller_->gamePlay(command, model_->getPlayers(playerNum));
+            }
         } else {
             std::cout << playerNum << "hi";
             vector <Card*> legal = player->legalPlay();

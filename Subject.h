@@ -7,9 +7,9 @@ private:
     vector <Observer*> observers_;
 
 protected:
-    
-public:
-    void notify(Command::Type &command, Player* player, Card &card, bool isLegal);    
+    void notify(Command::Type &command, Player* player, Card &card, bool isLegal);
+
+public:    
     void subscribe(Observer* observer);
     void unsubscribe(Observer* observer);
 };
