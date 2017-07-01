@@ -35,15 +35,16 @@ void Deck::print() {
         }
     }
 }
-// for testing
 Card* Deck::getCard(int pos) {
     return cards_[pos];
 }
+
 void Deck::addPlayed(Card* card) {
     int suit = card->suit().suit();
     int rank = card->rank().rank();
     played_[suit][rank] = card;
 }
+
 void Deck::shuffle() {
     static mt19937 rng(seed);
     int n = 52;

@@ -15,6 +15,7 @@ Controller::Controller(Model* model, View* view): model_(model), view_(view) {
 void Controller :: run() {
     Deck* d = new Deck();
     d->shuffle(); //I think
+    d->print();
 
     char playerType;
     // Invite Players
@@ -25,15 +26,19 @@ void Controller :: run() {
             case 'h': {
                 Human* h = new Human(*d, i);
                 model_->appendPlayer(h);
-		break;
-	    }
+                break;
+	        }
             case 'c': {
                 Computer* c = new Computer(*d, i);
                 model_->appendPlayer(c);
-		break;
-	    }
+                break;
+	        }
         }
+    }
 
+    // Add hand
+    for (int i = 0; i < 4; i++) {
+        model_->getPlayers(i)->printHand();
     }
 
     // continue

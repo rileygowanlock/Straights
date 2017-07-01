@@ -26,7 +26,8 @@ public:
     virtual void play(Deck &d, Card *c);
     virtual void play(Deck &d);
     virtual void discard(Card *c); 
-    virtual void discard();   
+    virtual void discard();
+    void addHand(vector<Card*> cards);
     vector<Card*> legalPlay (vector<vector<Card*>> &played);
     void printHand(); //FOR TEST PURPOSES
 };

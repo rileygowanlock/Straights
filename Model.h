@@ -10,6 +10,7 @@ private:
     vector<Player*> players;
 public:
     void appendPlayer(Player*);
+    Player* getPlayers(int pos);
 };
 
 #endif //STRAIGHTS_MODEL_H

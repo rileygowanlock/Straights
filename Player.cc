@@ -10,7 +10,7 @@ using std::vector;
 
 Player::Player(Deck &d, int playerNum): playerNum_(playerNum) {
    for (int i=0; i<13; i++) {
-       hand_.push_back(d.getCard(i+playerNum*13));
+       hand_.push_back(d.getCard(i+playerNum_*13));
     }
    /*for (auto it:hand_) {
 	std::cout<<*it<<std::endl;
@@ -66,6 +66,13 @@ void Player::discard(Card *c) {
 
 
 }
+
+void Player::addHand(vector<Card*> cards) {
+    for (int i=0; i<cards.size(); i++) {
+        hand_.push_back(cards[i]);
+    }
+}
+
 
 void Player::printHand() {
     std::cout<<"Hand: "<<std::endl;
