@@ -73,6 +73,7 @@ bool Player::isStartPlayer() {
 }
 
 void Player::play() {
+    std::cout << "player";
 
 }
 
