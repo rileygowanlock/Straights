@@ -14,9 +14,10 @@ public:
     View(Model* model, Controller* controller);
     void invitePlayers(int playerNum);
     void run();
-    void print();
-    void discard();
+    void play (Player *player, Card &card, bool legal);
+    void discard (Player *player, Card &card, bool legal);
     Command getCommand();
+    void update(Command::Type &command, Player* player, Card &card, bool isLegal);
 };
 
 #endif //STRAIGHTS_VIEW_H

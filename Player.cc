@@ -100,6 +100,10 @@ vector<Card*> Player::getHand() {
     return hand_;
 }
 
+int Player::playerNum() {
+    return playerNum_;
+}
+
 Deck* Player::getDeck() {
     return deck_;
 }

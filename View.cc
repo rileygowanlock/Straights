@@ -77,3 +77,25 @@ Command View::getCommand() {
     std::cin>>command;
     return command;
 }
+
+void View::play (Player *player, Card &card, bool legal) {
+    if (!legal) std::cout<<"This is not a legal play.\n";
+    else {
+        std::cout<<"Player "<<player->playerNum()<<" plays "<<card.suit()<<card.rank()<<"\n";;
+    }
+}
+
+void View::discard (Player *player, Card &card, bool legal) {
+    if (legal) std::cout<<"You have a legal play. You may not discard.\n";
+    else {
+        std::cout<<"Player "<<player->playerNum()<<" discards "<<card.suit()<<card.rank()<<"\n";
+    }
+}
+
+void View::update(Command::Type &command, Player* player, Card &card, bool isLegal) {
+    if ( command == Command::Type::PLAY ) {
+        play(player, card, isLegal);
+    } else if ( command == Command::Type::DISCARD ) {
+        discard(player, card, isLegal);
+    }
+}

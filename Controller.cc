@@ -14,10 +14,15 @@ Controller::Controller(Model* model): model_(model) {
 
 void Controller::gamePlay (Command::Type &command, Player* player, Card &card) {
     if ( command == Command::Type::PLAY ) {
-	//bool isLegal = model_->isLegalPlay(player, card);
-        player->play(card);
+	bool isLegal = model_->isLegalPlay(player, card);
+	if (isLegal) {
+            player->play(card);//play(*(model_->getDeck()), card);
+	}
     } else if ( command == Command::Type::DISCARD ) {
-        player->discard(card);
+	bool isLegal = model_->isLegalPlay(player, card);
+	if (!isLegal) {
+            player->discard(card);
+	}
     } else if ( command == Command::Type::DECK ) {
         model_->getDeck()->print();
     } else if ( command == Command::Type::QUIT ) {
