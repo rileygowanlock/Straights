@@ -15,7 +15,7 @@ public:
     void appendPlayer(Player*);
     Player* getPlayers(int pos);
     Deck* getDeck();
-    //bool isLegalPlay(Player* player, Card &card);
+    bool isLegalPlay(Player* player, Card &card);
     int startGame();
 };
 

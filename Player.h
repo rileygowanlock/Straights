@@ -26,7 +26,7 @@ public:
     //virtual void discard() = 0;
     vector<Card*> getHand();
     //virtual void play(Deck &d, Card *c);
-    virtual void play(Deck &d, Card &c);
+    //virtual void play(Deck &d, Card &c);
     virtual bool isHuman();
     bool isStartPlayer();
     virtual void play(Deck &d, Card *c);
@@ -37,6 +37,7 @@ public:
     void addHand(vector<Card*> cards);
     vector<Card*> legalPlay ();
     void printHand(); //FOR TEST PURPOSES
+    int playerNum();
 };
 
 #endif //PLAYER_H

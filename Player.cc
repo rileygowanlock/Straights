@@ -98,3 +98,7 @@ void Player::printHand() {
 vector<Card*> Player::getHand() {
     return hand_;
 }
+
+int Player::playerNum() {
+    return playerNum_;
+}

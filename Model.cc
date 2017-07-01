@@ -26,13 +26,13 @@ Deck* Model::getDeck() {
     return deck_;
 }
 
-/*bool Model::isLegalPlay(Player* player, Card &card) {
+bool Model::isLegalPlay(Player* player, Card &card) {
     bool isLegal = false;
     vector<Card*> cards = player->legalPlay();
     for (auto it:cards)  {
-        if ((*it)->suit().suit() == c.suit().suit() && (*it)->rank().rank() == c.rank().rank()) {
+        if ((*it).suit().suit() == card.suit().suit() && (*it).rank().rank() == card.rank().rank()) {
             return true;
 	}
     }
     return isLegal;
-}*/
+}

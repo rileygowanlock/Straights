@@ -16,12 +16,12 @@ void View::run() {
         std::cin >> playerType;
         switch(playerType) {
             case 'h': {
-                Human* h = new Human(*(model_->getDeck()), i);
+                Human* h = new Human(i);
                 model_->appendPlayer(h);
                 break;
             }
             case 'c': {
-                Computer* c = new Computer(*(model_->getDeck()), i);
+                Computer* c = new Computer(i);
                 model_->appendPlayer(c);
                 break;
             }
@@ -73,4 +73,26 @@ Command View::getCommand() {
     std::cin.ignore();
     std::cin>>command;
     return command;
+}
+
+void View::play (Player *player, Card &card, bool legal) {
+    if (!legal) std::cout<<"This is not a legal play.\n";
+    else {
+        std::cout<<"Player "<<player->playerNum()<<" plays "<<card->suit()<<card->rank()<<"\n";;
+    }
+}
+
+void View::discard (Player *player, Card &card, bool legal) {
+    if (legal) std::cout<<"You have a legal play. You may not discard.\n";
+    else {
+        std::cout<<"Player "<<player->playerNum()<<" discards "<<card->suit()<<card->rank()<<"\n";
+    }
+}
+
+void View::update(Command::Type &command, Player* player, Card &card, bool isLegal) {
+    if ( command == Command::Type::PLAY ) {
+        play(player, card, isLegal);
+    } else if ( command == Command::Type::DISCARD ) {
+        discard(player, card, isLegal);
+    }
 }
