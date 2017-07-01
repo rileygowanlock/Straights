@@ -24,9 +24,27 @@ Deck::Deck() {
         played_.push_back(card);
     }
 }
+
+Deck::~Deck() {
+    for (auto it:cards_) {
+        delete it;
+    }
+
+    for(auto i1 = played_.begin(); i1 != played_.end(); i1++) {
+        for(auto i2 = i1->begin(); i2 != i1->end(); i2++) {
+            delete *i2;
+	}
+    }
+
+    cards_.resize(0);
+    played_.resize(0);
+
+}
+
 vector<vector<Card*>> Deck::played() {
     return played_;
 }
+
 void Deck::print() {
     for (int i=0; i<cards_.size(); i++) {
         std::cout << *cards_[i] << " ";
@@ -35,6 +53,7 @@ void Deck::print() {
         }
     }
 }
+
 Card* Deck::getCard(int pos) {
     return cards_[pos];
 }

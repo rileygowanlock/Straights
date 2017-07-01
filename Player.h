@@ -21,6 +21,7 @@ public:
     // addHand() method?
     //Player(int playerNum);
     Player(Deck* d, int playerNum);
+    virtual ~Player();
     Deck* getDeck();
     //destructor
     int score();

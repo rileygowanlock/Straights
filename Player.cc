@@ -4,10 +4,6 @@
 #include <vector>
 using std::vector;
 
-/*Player::Player(int playerNum) {
-    playerNum_ = playerNum;
-}*/
-
 Player::Player(Deck* d, int playerNum): playerNum_(playerNum), deck_(d) {
    for (int i=0; i<13; i++) {
        hand_.push_back(d->getCard(i+playerNum_*13));
@@ -16,6 +12,23 @@ Player::Player(Deck* d, int playerNum): playerNum_(playerNum), deck_(d) {
 	std::cout<<*it<<std::endl;
    }*/ // prints hand
 }
+
+Player::~Player() {
+    for (auto it:hand_) {
+        delete it;
+    }
+
+    for (auto it2:discard_) {
+        delete it2;
+    }
+
+    hand_.resize(0);
+    discard_.resize(0);
+
+    //player responsible for deleting deck?
+
+}
+
 
 vector<Card*> Player::legalPlay () {
     vector<vector<Card*>> played = deck_->played();

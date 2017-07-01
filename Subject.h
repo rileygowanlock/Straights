@@ -9,7 +9,8 @@ private:
 protected:
     void notify(Command::Type &command, Player* player, Card &card, bool isLegal);
 
-public:    
+public:   
+    ~Subject (); 
     void subscribe(Observer* observer);
     void unsubscribe(Observer* observer);
 };

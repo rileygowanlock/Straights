@@ -1,6 +1,14 @@
 #include "Subject.h"
 #include <iostream>
 
+Subject::~Subject() {
+    for (auto it:observers_) {
+        delete it;
+    }
+    observers_.resize(0);
+
+}
+
 void Subject::subscribe(Observer* observer) {
     observers_.push_back(observer);
 }

@@ -11,6 +11,19 @@ Human::Human(Deck* d, int playerNum) : Player(d, playerNum) {
 
 }
 
+Human::~Human() {
+    for (auto it:hand_) {
+        delete it;
+    }
+
+    for (auto it2:discard_) {
+        delete it2;
+    }
+
+    hand_.resize(0);
+    discard_.resize(0);
+}
+
 /*void Human::play(Deck &d, Card* c) {
     d.addPlayed(c);
     
@@ -72,4 +85,11 @@ void Human::discard(Card& c) {
 
 bool Human::isHuman() {
     return true;
+}
+
+void Human::rageQuit() {
+    Player temp = *this;
+    *this = new Computer(temp.getDeck(), temp.playerNum());
+    std::swap (temp.hand_, (*this).hand_);
+    std::swap (temp.discard_, (*this).discard_);
 }

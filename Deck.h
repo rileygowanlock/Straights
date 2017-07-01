@@ -11,6 +11,7 @@ private:
     vector<vector<Card*>> played_;
 public:
     Deck();
+    ~Deck();
     vector<vector<Card*>> played();
     void print();
     Card* getCard(int pos);

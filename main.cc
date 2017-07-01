@@ -23,7 +23,10 @@ int main() {
     view->run();
 
 
-
+    delete model;
+    delete view;
+    delete controller;
+    delete d;
 // testing
 //    std::cout << "Hello, World!" << std::endl;
 //    Deck* d = new Deck();
