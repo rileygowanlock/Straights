@@ -5,12 +5,9 @@
 #include <string>
 #include <iostream>
 
-View::View(Model* model): model_(model) {}
+View::View(Model* model, Controller* controller): model_(model), controller_(controller) {}
 
 void View::run() {
-    Deck* d = new Deck();
-    d->shuffle();
-    d->print(); //testing
 
     char playerType;
     // Invite Players
@@ -19,12 +16,12 @@ void View::run() {
         std::cin >> playerType;
         switch(playerType) {
             case 'h': {
-                Human* h = new Human(*d, i);
+                Human* h = new Human(*(model_->getDeck()), i);
                 model_->appendPlayer(h);
                 break;
             }
             case 'c': {
-                Computer* c = new Computer(*d, i);
+                Computer* c = new Computer(*(model_->getDeck()), i);
                 model_->appendPlayer(c);
                 break;
             }
@@ -34,6 +31,10 @@ void View::run() {
     for (int i = 0; i < 4; i++) {
         model_->getPlayers(i)->printHand();
     }
+    
+    Command command = getCommand();
+    controller_->gamePlay (command.type, model_->getPlayers(0), command.card);
+
     int playerNum = model_->startGame();
     std::cout << "A new round begins. It's player " << std::to_string(playerNum+1) << "'s turn to play.\n";
     Player* player = model_->getPlayers(playerNum);

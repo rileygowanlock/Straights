@@ -1,17 +1,17 @@
 #ifndef STRAIGHTS_CONTROLLER_H
 #define STRAIGHTS_CONTROLLER_H
-#include "View.h"
 #include "Model.h"
+#include "Command.h"
 
 class Controller {
 private:
-    View* view_;
     Model* model_;
 public:
     // queries user input
     // for each command updates model and view with data
-    Controller(Model* model, View* view);
+    Controller(Model* model);
     void run();
+    void gamePlay (Command::Type &command, Player* player, Card &card);
 };
 
 #endif //STRAIGHTS_CONTROLLER_H

@@ -11,7 +11,7 @@ Human::Human(Deck &d, int playerNum) : Player(d, playerNum) {
 
 }
 
-void Human::play(Deck &d, Card* c) {
+/*void Human::play(Deck &d, Card* c) {
     d.addPlayed(c);
     
     vector<Card*>::iterator it;
@@ -35,6 +35,36 @@ void Human::discard(Card* c) {
     
     if(it != hand_.end())
        hand_.erase(it);
+}*/
+
+void Human::play(Deck &d, Card& c) {
+   
+    vector<Card*>::iterator it;
+    it = hand_.begin();
+    while (it!=hand_.end() ) {
+	if ((*it)->suit().suit() == c.suit().suit() && (*it)->rank().rank() == c.rank().rank()) break;
+        it++;
+    }
+
+    if(it != hand_.end()) {
+	d.addPlayed(*it);
+        hand_.erase(it);
+    }
+}
+
+void Human::discard(Card& c) {
+
+    vector<Card*>::iterator it;
+    it = hand_.begin();
+    while (it!=hand_.end() ) {
+	if ((*it)->suit().suit() == c.suit().suit() && (*it)->rank().rank() == c.rank().rank()) break;
+        it++;
+    }
+    
+    if(it != hand_.end()) {
+        discard_.push_back(*it);       
+        hand_.erase(it);
+    }
 }
 
 bool Human::isHuman() {

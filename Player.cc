@@ -67,7 +67,7 @@ void Player::play(Deck &d) {
 
 }
 
-void Player::play(Deck &d, Card *c) {
+void Player::play(Deck &d, Card &c) {
 
 }
 
@@ -75,7 +75,7 @@ void Player::discard() {
 
 }
 
-void Player::discard(Card *c) {
+void Player::discard(Card &c) {
 
 
 }
