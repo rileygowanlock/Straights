@@ -12,53 +12,107 @@ int View::newGame() {
     std::cout << "A new round begins. It's player " << std::to_string(startPlayer+1) << "'s turn to play.\n";
     return startPlayer;
 }
-void View::playRound(int playerNum, int startPlayer) {
+
+void View::computer(int playerNum) {
+    Player *player = model_->getPlayers(playerNum);
+    vector <Card*> legal = player->legalPlay();
+    if (legal.size() != 0) {
+        std::cout << "Player " << player->playerNum()+1 <<" plays "<< legal[0]->rank() << legal[0]->suit() << "\n";
+        player->play();
+    } else {
+        std::cout << "Player "<< player->playerNum()+1 << " discards " << player->getHand()[0]->rank() << player->getHand()[0]->suit() << "\n";
+        player->discard();
+    }
+}
+
+void View::human(int playerNum) {
     Player *player = model_->getPlayers(playerNum);
     std::string suitHeader[4] = {"Clubs:", "Diamonds:", "Hearts:", "Spades:"};
-    if (player->isHuman()) {
-        std::cout << "Cards on the table:\n";
-        for (int j = 0; j < 4; j++) {
-            std::cout << suitHeader[j];
-            for (int i = 0; i < 13; i++) {
-                Card* card = model_->getDeck()->played()[j][i];
-                if (card != nullptr) {
-                    std::cout << " " << card->rank();
-                }
+    std::cout << "Cards on the table:\n";
+    for (int j = 0; j < 4; j++) {
+        std::cout << suitHeader[j];
+        for (int i = 0; i < 13; i++) {
+            Card *card = model_->getDeck()->played()[j][i];
+            if (card != nullptr) {
+                std::cout << " " << card->rank();
             }
-            std::cout << "\n";
-        }
-        std::cout << "Your hand:";
-        vector <Card*> hand = player->getHand();
-        for (int i = 0; i < hand.size(); i++) {
-            std::cout << " ";
-            std::cout << hand[i]->rank();
-            std::cout << hand[i]->suit();
         }
         std::cout << "\n";
-        std::cout << "Legal plays:";
-        vector <Card*> legal = player->legalPlay();
-        for (int i = 0; i < legal.size(); i++) {
-            std::cout << " ";
-            std::cout << legal[i]->rank();
-            std::cout << legal[i]->suit();
-        }
-        std::cout << "\n";
-        bool legCommand = false;
-        while (!legCommand) {
-            std::cout <<">";
-            Command command = getCommand();
-            legCommand = controller_->gamePlay(command, model_->getPlayers(playerNum));
-        }
-    } else {
-        vector <Card*> legal = player->legalPlay();
-        if (legal.size() != 0) {
-            std::cout << "Player " << player->playerNum()+1 <<" plays "<< legal[0]->rank() << legal[0]->suit() << "\n";
-            player->play();
-        } else {
-            std::cout << "Player "<< player->playerNum()+1 << " discards " << player->getHand()[0]->rank() << player->getHand()[0]->suit() << "\n";
-            player->discard();
-        }
     }
+    std::cout << "Your hand:";
+    vector <Card*> hand = player->getHand();
+    for (int i = 0; i < hand.size(); i++) {
+        std::cout << " ";
+        std::cout << hand[i]->rank();
+        std::cout << hand[i]->suit();
+    }
+    std::cout << "\n";
+    std::cout << "Legal plays:";
+    vector <Card*> legal = player->legalPlay();
+    for (int i = 0; i < legal.size(); i++) {
+        std::cout << " ";
+        std::cout << legal[i]->rank();
+        std::cout << legal[i]->suit();
+    }
+    std::cout << "\n";
+    bool legCommand = false;
+    while (!legCommand) {
+        std::cout << ">";
+        Command command = getCommand();
+        legCommand = controller_->gamePlay(command, model_->getPlayers(playerNum));
+    }
+}
+
+void View::playRound(int playerNum, int startPlayer) {
+    Player *player = model_->getPlayers(playerNum);
+    if (player->isHuman()) {
+        human(playerNum);
+    } else {
+        computer(playerNum);
+    }
+//        std::cout << "Cards on the table:\n";
+//        for (int j = 0; j < 4; j++) {
+//            std::cout << suitHeader[j];
+//            for (int i = 0; i < 13; i++) {
+//                Card* card = model_->getDeck()->played()[j][i];
+//                if (card != nullptr) {
+//                    std::cout << " " << card->rank();
+//                }
+//            }
+//            std::cout << "\n";
+//        }
+//        std::cout << "Your hand:";
+//        vector <Card*> hand = player->getHand();
+//        for (int i = 0; i < hand.size(); i++) {
+//            std::cout << " ";
+//            std::cout << hand[i]->rank();
+//            std::cout << hand[i]->suit();
+//        }
+//        std::cout << "\n";
+//        std::cout << "Legal plays:";
+//        vector <Card*> legal = player->legalPlay();
+//        for (int i = 0; i < legal.size(); i++) {
+//            std::cout << " ";
+//            std::cout << legal[i]->rank();
+//            std::cout << legal[i]->suit();
+//        }
+//        std::cout << "\n";
+//        bool legCommand = false;
+//        while (!legCommand) {
+//            std::cout <<">";
+//            Command command = getCommand();
+//            legCommand = controller_->gamePlay(command, model_->getPlayers(playerNum));
+//        }
+//    } else {
+//        vector <Card*> legal = player->legalPlay();
+//        if (legal.size() != 0) {
+//            std::cout << "Player " << player->playerNum()+1 <<" plays "<< legal[0]->rank() << legal[0]->suit() << "\n";
+//            player->play();
+//        } else {
+//            std::cout << "Player "<< player->playerNum()+1 << " discards " << player->getHand()[0]->rank() << player->getHand()[0]->suit() << "\n";
+//            player->discard();
+//        }
+//    }
     if (playerNum == startPlayer-1 && player->getHand().size() == 0) {
         endRound();
     }

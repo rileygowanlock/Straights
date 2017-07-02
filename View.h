@@ -16,6 +16,8 @@ public:
     void invitePlayers(int playerNum);
     void run();
     void play (Player *player, Card &card, bool legal);
+    void human(int playerNum);
+    void computer(int playerNum);
     void discard (Player *player, Card &card, bool legal);
     void playRound(int playerNum, int startPlayer);
     void endRound();
