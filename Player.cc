@@ -83,7 +83,9 @@ int Player::getScore() {
     return score_;
 }
 
-bool Player::isHuman(){}
+bool Player::isHuman(){
+    return false;
+}
 
 bool Player::isStartPlayer() {
     // return if player has 7S
@@ -149,13 +151,20 @@ void Player::resetDiscard() {
     discard_.clear();
 }
 
-void Player::rageQuit() {
+Player* Player::rageQuit() {
     std::cout<<"Player "<<playerNum_+1<<" ragequits. A computer will now take over."<<std::endl;
     Player *temp = new Computer(deck_, playerNum_);
-    std::swap (temp->deck_, deck_);
-    std::swap (temp->discard_, discard_);
-    std::swap (temp->hand_, hand_);
-    std::swap (temp->playerNum_, playerNum_);
-    std::swap (temp->score_, score_);
-    delete temp;
+    //Player *temp = new Computer(deck_, playerNum_);
+    //Computer temp = {deck_, playerNum_};
+    //std::swap(temp, *this);
+    //std::swap (temp.deck_, deck_);
+    //std::swap (temp.discard_, discard_);
+    //std::swap (temp.hand_, hand_);
+    //std::swap (temp.playerNum_, playerNum_);
+    //std::swap (temp.score_, score_);
+    //std::swap ((*this), *temp);
+    //if ((*temp).isHuman()) std::cout<<"YES"<<std::endl;
+    //else std::cout<<"NO"<<std::endl;
+    //delete temp;
+    return temp;
 }

@@ -61,15 +61,24 @@ void View::human(int playerNum) {
         Command command = getCommand();
         legCommand = controller_->gamePlay(command, model_->getPlayers(playerNum));
     }
+
 }
 
 void View::playRound(int playerNum, int startPlayer) {
     Player *player = model_->getPlayers(playerNum);
-    if (player->isHuman()) {
+    /*if (player->isHuman()) {
         human(playerNum);
     } else {
         computer(playerNum);
+    }*/
+
+    if (player->isHuman()) {
+        human(playerNum);
+    } if (!(player->isHuman())) {
+        computer(playerNum);
     }
+
+
 //        std::cout << "Cards on the table:\n";
 //        for (int j = 0; j < 4; j++) {
 //            std::cout << suitHeader[j];

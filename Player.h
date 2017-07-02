@@ -45,7 +45,7 @@ public:
     vector<Card*> legalPlay ();
     void printHand(); //FOR TEST PURPOSES
     int playerNum();
-    void rageQuit();
+    Player* rageQuit();
 };
 
 #endif //PLAYER_H
