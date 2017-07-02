@@ -17,6 +17,9 @@ public:
     void run();
     void play (Player *player, Card &card, bool legal);
     void discard (Player *player, Card &card, bool legal);
+    void playRound(int playerNum, int startPlayer);
+    void endRound();
+    int newGame();
     Command getCommand();
     void update(Command::Type &command, Player* player, Card &card, bool isLegal);
 };

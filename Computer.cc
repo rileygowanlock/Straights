@@ -23,8 +23,9 @@ void Computer::play() {
         it++;
     }
 
-    if(it != hand_.end())
+    if(it != hand_.end()) {
         hand_.erase(it);
+    }
 }
 
 void Computer::discard() {
