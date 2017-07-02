@@ -16,16 +16,16 @@ Player::Player(Deck* d, int playerNum): playerNum_(playerNum), deck_(d) {
 }
 
 Player::~Player() {
-    for (auto it:hand_) {
-        delete it;
-    }
-
-    for (auto it2:discard_) {
-        delete it2;
-    }
-
-    hand_.resize(0);
-    discard_.resize(0);
+//    for (auto it:hand_) {
+//        delete it;
+//    }
+//
+//    for (auto it2:discard_) {
+//        delete it2;
+//    }
+//
+//    hand_.resize(0);
+//    discard_.resize(0);
 
     //player responsible for deleting deck?
 

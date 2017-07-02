@@ -17,6 +17,7 @@ public:
     Card* getCard(int pos);
     void addPlayed(Card* card);
     void shuffle();
+    void removePlayed();
 };
 
 #endif //STRAIGHTS_DECK_H

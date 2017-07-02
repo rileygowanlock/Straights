@@ -11,10 +11,10 @@
 #include <string>
 using std::string;
 
-int main() {
+int main(iny argc, char *argv[]) {
     Deck* d = new Deck();
-//    d->shuffle();
-//    d->print(); //testing
+    //    d->shuffle();
+    //    d->print(); //testing
     Model* model = new Model(d);
     Controller* controller = new Controller(model);
     View* view = new View(model, controller);
@@ -22,10 +22,12 @@ int main() {
     view->run();
 
 
-    delete model;
-    delete view;
-    delete controller;
-    delete d;
+//    delete model;
+//    delete view;
+//    delete controller;
+//    delete d;
+
+
 // testing
 //    std::cout << "Hello, World!" << std::endl;
 //    Deck* d = new Deck();

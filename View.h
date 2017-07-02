@@ -19,8 +19,8 @@ public:
     void human(int playerNum);
     void computer(int playerNum);
     void discard (Player *player, Card &card, bool legal);
-    void playRound(int playerNum, int startPlayer);
-    void endRound();
+    int playRound(int playerNum, int startPlayer);
+    int endRound();
     int newGame();
     Command getCommand();
     void update(Command::Type &command, Player* player, Card &card, bool isLegal);

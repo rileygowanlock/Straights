@@ -59,6 +59,7 @@ int Controller::newGame() {
         model_->getPlayers(i)->updateHand();
         model_->getPlayers(i)->resetDiscard();
     }
+    model_->getDeck()->removePlayed();
     int startPlayer = model_->startGame();
     return startPlayer;
 }

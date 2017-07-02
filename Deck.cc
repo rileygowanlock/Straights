@@ -26,18 +26,18 @@ Deck::Deck() {
 }
 
 Deck::~Deck() {
-    for (auto it:cards_) {
-        delete it;
-    }
-
-    for(auto i1 = played_.begin(); i1 != played_.end(); i1++) {
-        for(auto i2 = i1->begin(); i2 != i1->end(); i2++) {
-            delete *i2;
-	}
-    }
-
-    cards_.resize(0);
-    played_.resize(0);
+//    for (auto it:cards_) {
+//        delete it;
+//    }
+//
+//    for(auto i1 = played_.begin(); i1 != played_.end(); i1++) {
+//        for(auto i2 = i1->begin(); i2 != i1->end(); i2++) {
+//            delete *i2;
+//	}
+//    }
+//
+//    cards_.resize(0);
+//    played_.resize(0);
 
 }
 
@@ -75,5 +75,15 @@ void Deck::shuffle() {
         cards_[n] = cards_[k];
         cards_[k] = c;
     } // while
+}
+
+void Deck::removePlayed() {
+    vector<vector<Card*>> temp;
+    for (int i=0; i<4; i++) {
+        vector<Card*> card;
+        card.resize(13);
+        temp.push_back(card);
+    }
+    played_ = temp;
 }
 
