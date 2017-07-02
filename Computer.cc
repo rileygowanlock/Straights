@@ -27,6 +27,7 @@ Computer::~Computer() {
 void Computer::play() {
     Deck* d = getDeck();
     vector<Card*> leg = legalPlay();
+    
     Card* c = leg[0];
     d->addPlayed(c);
  

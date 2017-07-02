@@ -11,15 +11,15 @@
 #include <string>
 using std::string;
 
-int main(iny argc, char *argv[]) {
-    Deck* d = new Deck();
-    //    d->shuffle();
-    //    d->print(); //testing
-    Model* model = new Model(d);
-    Controller* controller = new Controller(model);
-    View* view = new View(model, controller);
-    model->subscribe(view);
-    view->run();
+int main(int argc, char *argv[]) {
+    Deck* d = new Deck(); //create a new Deck
+//    d->shuffle();
+//    d->print(); //testing
+    Model* model = new Model(d); // create a Model instance
+    Controller* controller = new Controller(model); // create a Controller instance
+    View* view = new View(model, controller); // create a View instance
+    model->subscribe(view); // add view as an observer of model
+    view->run(); // initialize user interface
 
 
 //    delete model;
