@@ -12,16 +12,16 @@ Computer::Computer(Deck* d, int playerNum) : Player(d, playerNum) {
 }
 
 Computer::~Computer() {
-    for (auto it:hand_) {
-        delete it;
-    }
-
-    for (auto it2:discard_) {
-        delete it2;
-    }
-
-    hand_.resize(0);
-    discard_.resize(0);
+//    for (auto it:hand_) {
+//        delete it;
+//    }
+//
+//    for (auto it2:discard_) {
+//        delete it2;
+//    }
+//
+//    hand_.resize(0);
+//    discard_.resize(0);
 }
 
 void Computer::play() {

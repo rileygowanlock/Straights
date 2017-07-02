@@ -5,17 +5,12 @@
 
 class Controller {
 private:
-    Model* model_;
+    Model* model_; //model instance
 public:
-    // queries user input
-    // for each command updates model and view with data
     Controller(Model* model);
-    void run();
-    void invitePlayers(char playerType, int playerNum);
-    //void gamePlay (Command::Type &command, Player* player, Card &card);
-    bool gamePlay (Command &command, Player* player);
-    int newGame();
-    int table();
+    void invitePlayers(char playerType, int playerNum); //choose human or computer player
+    bool gamePlay (Command &command, Player* player); //directs logic based on human's commands
+    int newGame(); //returns first player's number 
 };
 
 #endif //STRAIGHTS_CONTROLLER_H

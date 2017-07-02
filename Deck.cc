@@ -7,10 +7,8 @@ using std::vector;
 using std::string;
 using std::mt19937;
 
-int seed = 0;
-
 //create deck
-Deck::Deck() {
+Deck::Deck(int seed): seed_(seed) {
     //create 52 cards and store in order
     for (int i=0; i<4; i++) {
         for (int j=0; j<13; j++) {
@@ -30,21 +28,20 @@ Deck::Deck() {
 
 //destroy deck
 Deck::~Deck() {
-    //delete each card in cards_ vector
-    for (auto it:cards_) {
-        delete it;
-    }
+        //delete each card in cards_ vector
+//    for (auto it:cards_) {
+//        delete it;
+//    }
 
-    //delete each card in played_ vector
-    for(auto i1 = played_.begin(); i1 != played_.end(); i1++) {
-        for(auto i2 = i1->begin(); i2 != i1->end(); i2++) {
-            delete *i2;
-	}
-    }
-
-    cards_.resize(0);
-    played_.resize(0);
-
+//      //delete each card in played_ vector
+//    for(auto i1 = played_.begin(); i1 != played_.end(); i1++) {
+//        for(auto i2 = i1->begin(); i2 != i1->end(); i2++) {
+//            delete *i2;
+//	}
+//    }
+//
+//    cards_.resize(0);
+//    played_.resize(0);
 }
 
 //return played cards
@@ -76,7 +73,7 @@ void Deck::addPlayed(Card* card) {
 
 //shuffle deck
 void Deck::shuffle() {
-    static mt19937 rng(seed); // create random number using seed value
+    static mt19937 rng(seed_); // create random number using seed value
     int n = 52;
 
     while ( n > 1 ) {
@@ -86,5 +83,15 @@ void Deck::shuffle() {
         cards_[n] = cards_[k];
         cards_[k] = c;
     } // while
+}
+
+void Deck::removePlayed() {
+    vector<vector<Card*>> temp;
+    for (int i=0; i<4; i++) {
+        vector<Card*> card;
+        card.resize(13);
+        temp.push_back(card);
+    }
+    played_ = temp;
 }
 

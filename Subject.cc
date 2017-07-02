@@ -3,10 +3,10 @@
 
 //deletes all observers
 Subject::~Subject() {
-    for (auto it:observers_) {
-        delete it;
-    }
-    observers_.resize(0);
+//    for (auto it:observers_) {
+//        delete it;
+//    }
+//    observers_.resize(0);
 
 }
 
