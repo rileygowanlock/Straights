@@ -17,10 +17,10 @@ void View::computer(int playerNum) {
     Player *player = model_->getPlayers(playerNum);
     vector <Card*> legal = player->legalPlay();
     if (legal.size() != 0) {
-        std::cout << "Player " << player->playerNum()+1 <<" plays "<< legal[0]->rank() << legal[0]->suit() << "\n";
+        std::cout << "Player " << player->playerNum()+1 <<" plays "<< legal[0]->rank() << legal[0]->suit() << ".\n";
         player->play();
     } else {
-        std::cout << "Player "<< player->playerNum()+1 << " discards " << player->getHand()[0]->rank() << player->getHand()[0]->suit() << "\n";
+        std::cout << "Player "<< player->playerNum()+1 << " discards " << player->getHand()[0]->rank() << player->getHand()[0]->suit() << ".\n";
         player->discard();
     }
 }
@@ -71,6 +71,9 @@ int View::playRound(int playerNum, int startPlayer) {
         human(playerNum);
     } if (!(player->isHuman())) {
         computer(playerNum);
+    }
+    if (startPlayer==0 && playerNum == 3 && player->getHand().size() == 0) {
+        return endRound();
     }
 
     if (playerNum == startPlayer-1 && player->getHand().size() == 0) {
