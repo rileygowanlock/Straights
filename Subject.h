@@ -4,15 +4,15 @@
 
 class Subject {
 private:
-    vector <Observer*> observers_;
+    vector <Observer*> observers_; //vector of subject's observers
 
 protected:
-    void notify(Command::Type &command, Player* player, Card &card, bool isLegal);
+    void notify(Command::Type &command, Player* player, Card &card, bool isLegal); //notifies each observer of an update
 
 public:   
     ~Subject (); 
-    void subscribe(Observer* observer);
-    void unsubscribe(Observer* observer);
+    void subscribe(Observer* observer); //add observer to subject's observer list
+    void unsubscribe(Observer* observer); //remove observer from subject's observer list
 };
 
 

@@ -36,25 +36,33 @@ vector<Card*> Player::legalPlay () {
     vector<vector<Card*>> played = deck_->played();
     vector<Card*> legal;
     if (played[3][6] == nullptr) {
-        Card::Suit suit (3); //SPADE?
-        Card::Rank rank (6); //SEVEN?
-        Card* card = new Card (rank, suit);
-        legal.push_back(card);
+        for (auto it:hand_) {
+            int suit = it->suit().suit();
+            int rank = it->rank().rank();
+            if (rank == 6 && suit == 3) {
+                legal.push_back(it);
+            }
+        }
+//        Card::Suit suit (3); //SPADE?
+//        Card::Rank rank (6); //SEVEN?
+//        Card* card = new Card (rank, suit);
+//        legal.push_back(card);
+//        return legal;
         return legal;
     }
     for (auto it:hand_)  {
-	int suit = it->suit().suit();
-	int rank = it->rank().rank();
+        int suit = it->suit().suit();
+        int rank = it->rank().rank();
 
-	if (rank == 6) {
-	    legal.push_back(it);
-	}
-	else if (rank!=12 && played[suit][rank+1] != nullptr) {
-	    legal.push_back(it);
-	}
-	else if (rank!=0 && played[suit][rank-1] != nullptr) {
-	    legal.push_back(it);
-	}
+        if (rank == 6) {
+            legal.push_back(it);
+        }
+        else if (rank!=12 && played[suit][rank+1] != nullptr) {
+            legal.push_back(it);
+        }
+        else if (rank!=0 && played[suit][rank-1] != nullptr) {
+            legal.push_back(it);
+        }
     }
     return legal;
 }

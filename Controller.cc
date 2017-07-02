@@ -38,6 +38,8 @@ bool Controller::gamePlay (Command &command, Player* player) {
 }
 
 void Controller::invitePlayers(char playerType, int playerNum) {
+
+
     switch(playerType) {
         case 'h': {
             Human* h = new Human(model_->getDeck(), playerNum);
@@ -53,13 +55,24 @@ void Controller::invitePlayers(char playerType, int playerNum) {
 }
 
 int Controller::newGame() {
-    model_->getDeck()->shuffle();
     for (int i = 0; i < 4; i++) {
         model_->getPlayers(i)->updateHand();
         model_->getPlayers(i)->resetDiscard();
     }
     int startPlayer = model_->startGame();
     return startPlayer;
+}
+
+int Controller::table() {
+    return 1;
+//    for (int i = 0; i < 13; i++) {
+//        Card* card = model_->getDeck()->played()[j][i];
+//        if (card != nullptr) {
+//            std::cout << " " << card->rank();
+//        }
+//    }
+//        std::cout << "\n";
+//    }
 }
 
 void Controller :: run() {

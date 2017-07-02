@@ -15,6 +15,7 @@ public:
     //void gamePlay (Command::Type &command, Player* player, Card &card);
     bool gamePlay (Command &command, Player* player);
     int newGame();
+    int table();
 };
 
 #endif //STRAIGHTS_CONTROLLER_H

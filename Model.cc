@@ -47,14 +47,14 @@ bool Model::isLegalPlay(Player* player, Command &command) {
     bool isLegal = false;
     vector<Card*> cards = player->legalPlay();
 
-    //
+    //checks if card entered is part of legal plays vector
     for (auto it:cards)  {
         if ((*it).suit().suit() == command.card.suit().suit() && (*it).rank().rank() == command.card.rank().rank()) {
             isLegal = true;
 	    break;
 	}
     }
-    //call notify from 
+    //call notify from subject with state passed in
     notify(command.type, player, command.card, isLegal);
     return isLegal;
 }
