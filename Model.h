@@ -13,6 +13,7 @@ private:
     Deck* deck_;
 public:
     Model(Deck* d);
+    ~Model();
     void appendPlayer(Player*);
     Player* getPlayers(int pos);
     Deck* getDeck();

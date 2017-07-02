@@ -1,12 +1,9 @@
 #include "Card.h"
 #include "Deck.h"
 #include "Player.h"
+#include "Computer.h"
 #include <vector>
 using std::vector;
-
-/*Player::Player(int playerNum) {
-    playerNum_ = playerNum;
-}*/
 
 Player::Player(Deck* d, int playerNum): playerNum_(playerNum), deck_(d) {
    updateHand();
@@ -17,6 +14,23 @@ Player::Player(Deck* d, int playerNum): playerNum_(playerNum), deck_(d) {
 	std::cout<<*it<<std::endl;
    }*/ // prints hand
 }
+
+Player::~Player() {
+    for (auto it:hand_) {
+        delete it;
+    }
+
+    for (auto it2:discard_) {
+        delete it2;
+    }
+
+    hand_.resize(0);
+    discard_.resize(0);
+
+    //player responsible for deleting deck?
+
+}
+
 
 vector<Card*> Player::legalPlay () {
     vector<vector<Card*>> played = deck_->played();
@@ -133,4 +147,15 @@ Deck* Player::getDeck() {
 
 void Player::resetDiscard() {
     discard_.clear();
+}
+
+void Player::rageQuit() {
+    std::cout<<"Player "<<playerNum_+1<<" ragequits. A computer will now take over."<<std::endl;
+    Player *temp = new Computer(deck_, playerNum_);
+    std::swap (temp->deck_, deck_);
+    std::swap (temp->discard_, discard_);
+    std::swap (temp->hand_, hand_);
+    std::swap (temp->playerNum_, playerNum_);
+    std::swap (temp->score_, score_);
+    delete temp;
 }

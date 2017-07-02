@@ -21,6 +21,7 @@ public:
     // addHand() method?
     //Player(int playerNum);
     Player(Deck* d, int playerNum);
+    virtual ~Player();
     Deck* getDeck();
     //destructor
     int score();
@@ -44,6 +45,7 @@ public:
     vector<Card*> legalPlay ();
     void printHand(); //FOR TEST PURPOSES
     int playerNum();
+    void rageQuit();
 };
 
 #endif //PLAYER_H

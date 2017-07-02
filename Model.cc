@@ -6,6 +6,18 @@ Model::Model(Deck* d) : deck_(d) {
 
 }
 
+Model::~Model() {
+    for (auto it:players) {
+        delete it;
+    }
+
+    delete deck_;
+    deck_ = nullptr;
+
+    players.resize(0);
+
+}
+
 void Model::appendPlayer(Player* player) {
     players.push_back(player);
 }

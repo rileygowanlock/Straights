@@ -2,6 +2,7 @@
 #include "Deck.h"
 #include "Player.h"
 #include "Human.h"
+#include "Computer.h"
 #include <vector>
 using std::vector;
 
@@ -9,6 +10,19 @@ using std::vector;
 
 Human::Human(Deck* d, int playerNum) : Player(d, playerNum) {
 
+}
+
+Human::~Human() {
+    for (auto it:hand_) {
+        delete it;
+    }
+
+    for (auto it2:discard_) {
+        delete it2;
+    }
+
+    hand_.resize(0);
+    discard_.resize(0);
 }
 
 /*void Human::play(Deck &d, Card* c) {
@@ -73,3 +87,5 @@ void Human::discard(Card& c) {
 bool Human::isHuman() {
     return true;
 }
+
+
