@@ -9,7 +9,9 @@ using std::mt19937;
 
 int seed = 0;
 
+//create deck
 Deck::Deck() {
+    //create 52 cards and store in order
     for (int i=0; i<4; i++) {
         for (int j=0; j<13; j++) {
             Card::Suit suit (i);
@@ -18,6 +20,7 @@ Deck::Deck() {
             cards_.push_back(card);
         }
     }
+    //create a 4x13 2D vector of nullptrs
     for (int i=0; i<4; i++) {
         vector<Card*> card;
         card.resize(13);
@@ -25,11 +28,14 @@ Deck::Deck() {
     }
 }
 
+//destroy deck
 Deck::~Deck() {
+    //delete each card in cards_ vector
     for (auto it:cards_) {
         delete it;
     }
 
+    //delete each card in played_ vector
     for(auto i1 = played_.begin(); i1 != played_.end(); i1++) {
         for(auto i2 = i1->begin(); i2 != i1->end(); i2++) {
             delete *i2;
@@ -41,10 +47,12 @@ Deck::~Deck() {
 
 }
 
+//return played cards
 vector<vector<Card*>> Deck::played() {
     return played_;
 }
 
+//print deck in rows of 13 cards
 void Deck::print() {
     for (int i=0; i<cards_.size(); i++) {
         std::cout << *cards_[i] << " ";
@@ -54,18 +62,21 @@ void Deck::print() {
     }
 }
 
+//retrieve a card based on position in deck
 Card* Deck::getCard(int pos) {
     return cards_[pos];
 }
 
+//add card to vector of played_ cards
 void Deck::addPlayed(Card* card) {
     int suit = card->suit().suit();
     int rank = card->rank().rank();
     played_[suit][rank] = card;
 }
 
+//shuffle deck
 void Deck::shuffle() {
-    static mt19937 rng(seed);
+    static mt19937 rng(seed); // create random number using seed value
     int n = 52;
 
     while ( n > 1 ) {

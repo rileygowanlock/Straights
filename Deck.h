@@ -7,16 +7,16 @@ using std::vector;
 
 class Deck {
 private:
-    vector<Card*> cards_;
-    vector<vector<Card*>> played_;
+    vector<Card*> cards_; //holds all 52 cards of a deck 
+    vector<vector<Card*>> played_; //stores cards already played
 public:
-    Deck();
-    ~Deck();
-    vector<vector<Card*>> played();
-    void print();
-    Card* getCard(int pos);
-    void addPlayed(Card* card);
-    void shuffle();
+    Deck(); //create deck
+    ~Deck(); //destroy deck
+    vector<vector<Card*>> played(); //returns played cards
+    void print(); //prints deck in rows of 13 cards
+    Card* getCard(int pos); //retrieves a card based on position in deck
+    void addPlayed(Card* card); //add card to vector of played_ cards
+    void shuffle(); //shuffle deck
 };
 
 #endif //STRAIGHTS_DECK_H

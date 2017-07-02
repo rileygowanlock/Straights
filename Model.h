@@ -9,16 +9,16 @@ using std::vector;
 
 class Model : public Subject {
 private:
-    vector<Player*> players;
-    Deck* deck_;
+    vector<Player*> players; //vector of all players in game
+    Deck* deck_; //store game's deck
 public:
     Model(Deck* d);
     ~Model();
-    void appendPlayer(Player*);
-    Player* getPlayers(int pos);
-    Deck* getDeck();
-    bool isLegalPlay(Player* player, Command &command);
-    int startGame();
+    void appendPlayer(Player*); //add player to game
+    Player* getPlayers(int pos); //retrieve player by playerNum
+    Deck* getDeck(); //return deck
+    bool isLegalPlay(Player* player, Command &command); //returns if command is a legal play
+    int startGame(); //starts the game - returns first player's number
 };
 
 #endif //STRAIGHTS_MODEL_H

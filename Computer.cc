@@ -27,6 +27,7 @@ Computer::~Computer() {
 void Computer::play() {
     Deck* d = getDeck();
     vector<Card*> leg = legalPlay();
+    
     Card* c = leg[0];
     d->addPlayed(c);
  
@@ -38,6 +39,8 @@ void Computer::play() {
 
     if(it != hand_.end())
         hand_.erase(it);
+
+
 }
 
 void Computer::discard() {
