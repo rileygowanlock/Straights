@@ -7,10 +7,9 @@
 
 View::View(Model* model, Controller* controller): model_(model), controller_(controller) {}
 
-int View::newGame() {
-    int startPlayer = controller_->newGame();
-    std::cout << "A new round begins. It's player " << std::to_string(startPlayer+1) << "'s turn to play.\n";
-    return startPlayer;
+void View::newGame() {
+    startPlayer_ = controller_->newGame();
+    std::cout << "A new round begins. It's player " << std::to_string(startPlayer_+1) << "'s turn to play.\n";
 }
 
 void View::computer(int playerNum) {
@@ -72,11 +71,9 @@ int View::playRound(int playerNum, int startPlayer) {
     } if (!(player->isHuman())) {
         computer(playerNum);
     }
-    if (startPlayer==0 && playerNum == 3 && player->getHand().size() == 0) {
+    if (startPlayer_==0 && playerNum == 3 && player->getHand().size() == 0) {
         return endRound();
-    }
-
-    if (playerNum == startPlayer-1 && player->getHand().size() == 0) {
+    } else if (playerNum!=3 && playerNum == startPlayer_-1 && player->getHand().size() == 0) {
         return endRound();
     }
     return playerNum;
@@ -108,7 +105,7 @@ int View::endRound() {
             if (player->getScore() < lowScore) {
                 winners.clear();
                 winners.push_back(i);
-		lowScore = player->getScore();
+		        lowScore = player->getScore();
             } else if (player->getScore() == lowScore) {
                 winners.push_back(i);
             }
@@ -120,11 +117,11 @@ int View::endRound() {
     }
     else {
         model_->getDeck()->shuffle();
-        int startPlayer = newGame();
-        if (startPlayer == 0) {
+        newGame();
+        if (startPlayer_ == 0) {
             return 3;
         } else {
-            return startPlayer - 1;
+            return startPlayer_ - 1;
         }
     }
 }
@@ -139,10 +136,10 @@ void View::run() {
         controller_->invitePlayers(playerType, i);
     }
 
-    int startPlayer = newGame();
-    int playerNum = startPlayer;
+    newGame();
+    int playerNum = startPlayer_;
     while (playerNum < 4) {
-        playerNum = playRound(playerNum, startPlayer);
+        playerNum = playRound(playerNum, startPlayer_);
         if (playerNum == 3) {
             playerNum = 0;
         } else {

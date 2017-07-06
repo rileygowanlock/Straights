@@ -11,6 +11,7 @@ class View : public Observer {
 private:
     Model* model_;
     Controller* controller_;
+    int startPlayer_;
 public:
     View(Model* model, Controller* controller);
     void invitePlayers(int playerNum);
@@ -21,7 +22,7 @@ public:
     void discard (Player *player, Card &card, bool legal);
     int playRound(int playerNum, int startPlayer);
     int endRound();
-    int newGame();
+    void newGame();
     Command getCommand();
     void update(Command::Type &command, Player* player, Card &card, bool isLegal);
 };
