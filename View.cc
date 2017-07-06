@@ -159,14 +159,14 @@ Command View::getCommand() {
 void View::play (Player *player, Card &card, bool legal) {
     if (!legal) std::cout<<"This is not a legal play.\n";
     else {
-        std::cout<<"Player "<< std::to_string(player->playerNum()+1) <<" plays "<< card.rank() <<card.suit()<<"\n";
+        std::cout<<"Player "<< std::to_string(player->playerNum()+1) <<" plays "<< card.rank() <<card.suit()<<".\n";
     }
 }
 
 void View::discard (Player *player, Card &card, bool legal) {
     if (legal) std::cout<<"You have a legal play. You may not discard.\n";
     else {
-        std::cout<<"Player "<<player->playerNum()+1<<" discards "<<card.rank()<<card.suit()<<"\n";
+        std::cout<<"Player "<<player->playerNum()+1<<" discards "<<card.rank()<<card.suit()<<".\n";
     }
 
 }
