@@ -151,9 +151,9 @@ void Player::resetDiscard() {
     discard_.clear();
 }
 
-Player* Player::rageQuit() {
+void Player::rageQuit() {
     std::cout<<"Player "<<playerNum_+1<<" ragequits. A computer will now take over."<<std::endl;
-    Player *temp = new Computer(deck_, playerNum_);
+    //Player *temp = new Computer(deck_, playerNum_);
     //Player *temp = new Computer(deck_, playerNum_);
     //Computer temp = {deck_, playerNum_};
     //std::swap(temp, *this);
@@ -166,5 +166,5 @@ Player* Player::rageQuit() {
     //if ((*temp).isHuman()) std::cout<<"YES"<<std::endl;
     //else std::cout<<"NO"<<std::endl;
     //delete temp;
-    return temp;
+    //return temp;
 }

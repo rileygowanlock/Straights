@@ -9,7 +9,7 @@ private:
 public:
     Controller(Model* model);
     void invitePlayers(char playerType, int playerNum); //choose human or computer player
-    bool gamePlay (Command &command, Player* player); //directs logic based on human's commands
+    bool gamePlay (Command &command, Player*& player); //directs logic based on human's commands
     int newGame(); //returns first player's number 
 };
 

@@ -2,9 +2,9 @@
 #define STRAIGHTS_MODEL_H
 #include "Subject.h"
 #include "Player.h"
+#include "Computer.h"
 #include <vector>
 #include "Deck.h"
-#include "Player.h"
 using std::vector;
 
 class Model : public Subject {
@@ -19,6 +19,7 @@ public:
     Deck* getDeck(); //return deck
     bool isLegalPlay(Player* player, Command &command); //returns if command is a legal play
     int startGame(); //starts the game - returns first player's number
+    void updatePlayers(int playerNum);
 };
 
 #endif //STRAIGHTS_MODEL_H

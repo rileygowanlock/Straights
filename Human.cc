@@ -8,9 +8,7 @@ using std::vector;
 
 //Human::Human(int playerNum) {}
 
-Human::Human(Deck* d, int playerNum) : Player(d, playerNum) {
-
-}
+Human::Human(Deck* d, int playerNum) : Player(d, playerNum) {}
 
 Human::~Human() {
 //    for (auto it:hand_) {

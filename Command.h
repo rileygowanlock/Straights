@@ -24,8 +24,7 @@ struct Command {
 std::istream & operator>>( std::istream &in, Command &c );
 // Modifies: input stream and Command
 // Ensures: Command is set to a valid command and has its associated card argument
-// Throws: fails assertion if unable to read in a valid command and its associated card argument,
-//    if applicable.
+// Throws: fails assertion if unable to read in a valid command and its associated card argument, if applicable.
 // Returns: input stream
 
 #endif

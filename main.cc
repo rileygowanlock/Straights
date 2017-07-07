@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
     //std::cout<<argc;
     int seed = 0;
     if (argc>1) {
-     seed = atoi(argv[1]);
+        seed = atoi(argv[1]);
     }
     Deck* d = new Deck(seed); //create a new Deck
     

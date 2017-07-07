@@ -58,7 +58,8 @@ void View::human(int playerNum) {
     while (!legCommand) {
         std::cout << ">";
         Command command = getCommand();
-        legCommand = controller_->gamePlay(command, model_->getPlayers(playerNum));
+        Player* player = model_->getPlayers(playerNum);
+        legCommand = controller_->gamePlay(command, player);
     }
 
 }
@@ -164,7 +165,7 @@ void View::play (Player *player, Card &card, bool legal) {
 }
 
 void View::discard (Player *player, Card &card, bool legal) {
-    if (legal) std::cout<<"You have a legal play. You may not discard.\n";
+    if (!legal) std::cout<<"You have a legal play. You may not discard.\n";
     else {
         std::cout<<"Player "<<player->playerNum()+1<<" discards "<<card.rank()<<card.suit()<<".\n";
     }

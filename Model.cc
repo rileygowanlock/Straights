@@ -46,15 +46,26 @@ Deck* Model::getDeck() {
 bool Model::isLegalPlay(Player* player, Command &command) {
     bool isLegal = false;
     vector<Card*> cards = player->legalPlay();
+    vector<Card*> hand = player->getHand();
 
     //checks if card entered is part of legal plays vector
-    for (auto it:cards)  {
-        if ((*it).suit().suit() == command.card.suit().suit() && (*it).rank().rank() == command.card.rank().rank()) {
-            isLegal = true;
-	    break;
-	}
+    if (command.type==Command::Type::PLAY) {
+        for (auto it:cards)  {
+            if ((*it).suit().suit() == command.card.suit().suit() && (*it).rank().rank() == command.card.rank().rank()) {
+                isLegal = true;
+                break;
+            }
+        }
     }
+    else if (command.type==Command::Type::DISCARD && cards.size()==0) {
+        isLegal = true;
+    }
+
     //call notify from subject with state passed in
     notify(command.type, player, command.card, isLegal);
     return isLegal;
+}
+
+void Model::updatePlayers(int playerNum) {
+    players[playerNum] = new Computer(deck_, playerNum);
 }

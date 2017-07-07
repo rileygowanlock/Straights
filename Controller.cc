@@ -11,29 +11,28 @@ using std::string;
 Controller::Controller(Model* model): model_(model) {}
 
 //directs logic based on human's commands
-bool Controller::gamePlay (Command &command, Player* player) {
+bool Controller::gamePlay (Command &command, Player*& player) {
     if ( command.type == Command::Type::PLAY ) { //play a card
 	bool isLegal = model_->isLegalPlay(player, command); //checls if legal card is played
 	if (isLegal) {
-            player->play(command.card); //play card from command
+        player->play(command.card); //play card from command
 	    return true;
-	}
+	    }
     } else if ( command.type == Command::Type::DISCARD ) { //discard a card
-	bool isLegal = model_->isLegalPlay(player, command); //checks if legal card is discarded
-	if (!isLegal) {
+	    bool isLegal = model_->isLegalPlay(player, command); //checks if legal card is discarded
+	    if (isLegal) {
             player->discard(command.card); //discard card from command
-	    return true;
+	        return true;
         }
     } else if ( command.type == Command::Type::DECK ) { //print deck
         model_->getDeck()->print();
-	return true;
+	    return false;
     } else if ( command.type == Command::Type::QUIT ) { //quit
-	exit(0);
+	    exit(0);
     } else if ( command.type == Command::Type::RAGEQUIT ) { //ragequit
-	Player* temp = player->rageQuit(); //changes from human to computer
-	player = temp;
-	delete temp;	
-	return true;
+        player->rageQuit(); //changes from human to computer
+        model_->updatePlayers(player->playerNum());
+	    return true;
     }
     return false;
 }
