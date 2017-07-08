@@ -1,6 +1,8 @@
 #include "GUI.h"
 
-GUI::GUI(): m_Window(Gtk::ORIENTATION_VERTICAL,5), m_Header(Gtk::ORIENTATION_HORIZONTAL,5) {
+GUI::GUI(Model* model, Controller* controller): m_Window(Gtk::ORIENTATION_VERTICAL,5),
+                                                m_Header(Gtk::ORIENTATION_HORIZONTAL,5),
+                                                View(model, controller) {
     set_title("Straights");
     set_default_size(600, 400);
     set_resizable(false);
@@ -42,8 +44,8 @@ GUI::GUI(): m_Window(Gtk::ORIENTATION_VERTICAL,5), m_Header(Gtk::ORIENTATION_HOR
     show_all_children();
 }
 void GUI::new_game() {
-    std::cout << "New Game" << std::endl;
+    run();
 }
 void GUI::end_game() {
-    std::cout << "End Game" << std::endl;
+    exit(0);
 }

@@ -23,14 +23,12 @@ int main(int argc, char *argv[]) {
 //    if (argc>1) {
 //        seed = atoi(argv[1]);
 //    }
-    //Deck* d = new Deck(seed); //create a new Deck
 
-    //Model* model = new Model(d); // create a Model instance
-    //Controller* controller = new Controller(model); // create a Controller instance
+    Deck* d = new Deck(0); //create a new Deck
+    Model* model = new Model(d); // create a Model instance
+    Controller* controller = new Controller(model); // create a Controller instance
 
-
-    GUI* gui = new GUI(); // create a View instance
-
+    GUI* gui = new GUI(model, controller); // create a View instance
 
     //model->subscribe(gui); // add view as an observer of model
     //view->run(); // initialize user interface

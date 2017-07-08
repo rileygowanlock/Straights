@@ -1,13 +1,17 @@
 #ifndef STRAIGHTS_GUI_H
 #define STRAIGHTS_GUI_H
+#include "View.h"
 #include <gtkmm.h>
 #include <iostream>
 #include <vector>
 #include <string>
 
-class GUI : public Gtk::Window {
+class GUI : public View, public Gtk::Window {
+private:
+    Controller* controller;
+    Model* model;
 public:
-    GUI();
+    GUI(Model* model, Controller* controller);
     void new_game();
     void end_game();
 
