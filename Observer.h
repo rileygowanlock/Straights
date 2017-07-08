@@ -2,6 +2,8 @@
 #define OBSERVER_H
 #include "Command.h"
 #include "Player.h"
+#include <gtkmm/button.h>
+#include <gtkmm/window.h>
 
 class Observer {
 public:

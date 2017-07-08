@@ -6,33 +6,41 @@
 #include "Computer.h"
 #include "Model.h"
 #include "View.h"
+#include "GUI.h"
 #include "Deck.h"
 #include "Controller.h"
 #include "Subject.h"
+#include <gtkmm.h>
 #include <string>
 using std::string;
 
 int main(int argc, char *argv[]) {
-    //std::cout<<argc;
-    int seed = 0;
-    if (argc>1) {
-        seed = atoi(argv[1]);
-    }
-    Deck* d = new Deck(seed); //create a new Deck
-    
-//    d->shuffle();
-//    d->print(); //testing
-    Model* model = new Model(d); // create a Model instance
-    Controller* controller = new Controller(model); // create a Controller instance
-    View* view = new View(model, controller); // create a View instance
-    model->subscribe(view); // add view as an observer of model
-    view->run(); // initialize user interface
+    auto app = Gtk::Application::create( argc, argv, "org.Straights" );
+    //View view;
+    //window.set_default_size(800, 400);
+
+//    int seed = 0;
+//    if (argc>1) {
+//        seed = atoi(argv[1]);
+//    }
+    //Deck* d = new Deck(seed); //create a new Deck
+
+    //Model* model = new Model(d); // create a Model instance
+    //Controller* controller = new Controller(model); // create a Controller instance
+
+
+    GUI* gui = new GUI(); // create a View instance
+
+
+    //model->subscribe(gui); // add view as an observer of model
+    //view->run(); // initialize user interface
 
 
 //    delete model;
 //    delete view;
 //    delete controller;
 //    delete d;
+    return app->run( *gui );
 
 
 }

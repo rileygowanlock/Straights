@@ -5,6 +5,8 @@
 #include "Model.h"
 #include "Controller.h"
 #include "Observer.h"
+#include <gtkmm/button.h>
+#include <gtkmm/window.h>
 using std::string;
 
 class View : public Observer {
