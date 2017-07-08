@@ -1,6 +1,6 @@
 #include "GUI.h"
 
-GUI::GUI(): m_Box(Gtk::ORIENTATION_VERTICAL,5) {
+GUI::GUI(): m_Box(Gtk::ORIENTATION_VERTICAL,5), m_Box2(Gtk::ORIENTATION_HORIZONTAL,5) {
     set_title("Straights");
     set_default_size(600, 400);
     set_resizable(false);
@@ -17,11 +17,20 @@ GUI::GUI(): m_Box(Gtk::ORIENTATION_VERTICAL,5) {
         }
     }
 
-    m_Button = Gtk::Button("Start new game with seed");
+    m_Button = Gtk::Button("Start new game with seed:");
     m_Button.signal_clicked().connect(sigc::mem_fun(*this, &GUI::new_game));
 
+    m_Entry.set_max_length(10);
+    m_Entry.set_text("0");
+
+    m_End = Gtk::Button("End current game");
+    m_End.signal_clicked().connect(sigc::mem_fun(*this, &GUI::end_game));
+
     add(m_Box);
-    m_Box.pack_start(m_Button);
+    m_Box2.pack_start(m_Button);
+    m_Box2.pack_start(m_Entry);
+    m_Box2.pack_start(m_End);
+    m_Box.pack_start(m_Box2);
     m_Box.pack_start(m_Frame);
 
     m_Grid.set_column_spacing(10);
@@ -34,4 +43,7 @@ GUI::GUI(): m_Box(Gtk::ORIENTATION_VERTICAL,5) {
 }
 void GUI::new_game() {
     std::cout << "New Game" << std::endl;
+}
+void GUI::end_game() {
+    std::cout << "End Game" << std::endl;
 }
