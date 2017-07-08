@@ -1,6 +1,6 @@
 #include "GUI.h"
 
-GUI::GUI(): m_Box(Gtk::ORIENTATION_VERTICAL,5), m_Box2(Gtk::ORIENTATION_HORIZONTAL,5) {
+GUI::GUI(): m_Window(Gtk::ORIENTATION_VERTICAL,5), m_Header(Gtk::ORIENTATION_HORIZONTAL,5) {
     set_title("Straights");
     set_default_size(600, 400);
     set_resizable(false);
@@ -17,27 +17,27 @@ GUI::GUI(): m_Box(Gtk::ORIENTATION_VERTICAL,5), m_Box2(Gtk::ORIENTATION_HORIZONT
         }
     }
 
-    m_Button = Gtk::Button("Start new game with seed:");
-    m_Button.signal_clicked().connect(sigc::mem_fun(*this, &GUI::new_game));
+    m_Start = Gtk::Button("Start new game with seed:");
+    m_Start.signal_clicked().connect(sigc::mem_fun(*this, &GUI::new_game));
 
-    m_Entry.set_max_length(10);
-    m_Entry.set_text("0");
+    m_Seed.set_max_length(10);
+    m_Seed.set_text("0");
 
     m_End = Gtk::Button("End current game");
     m_End.signal_clicked().connect(sigc::mem_fun(*this, &GUI::end_game));
 
-    add(m_Box);
-    m_Box2.pack_start(m_Button);
-    m_Box2.pack_start(m_Entry);
-    m_Box2.pack_start(m_End);
-    m_Box.pack_start(m_Box2);
-    m_Box.pack_start(m_Frame);
+    add(m_Window);
+    m_Header.pack_start(m_Start);
+    m_Header.pack_start(m_Seed);
+    m_Header.pack_start(m_End);
+    m_Window.pack_start(m_Header);
+    m_Window.pack_start(m_Table);
 
     m_Grid.set_column_spacing(10);
     m_Grid.set_row_spacing(5);
 
-    m_Frame.add(m_Grid);
-    m_Frame.set_label("Cards on the table");
+    m_Table.add(m_Grid);
+    m_Table.set_label("Cards on the table");
 
     show_all_children();
 }

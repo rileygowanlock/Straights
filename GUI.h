@@ -13,17 +13,14 @@ public:
 
 protected:
     //Child widgets:
-    Gtk::Frame m_Frame;
-    Gtk::Frame m_Frame2;
-    Gtk::Box m_Box;
-    Gtk::Box m_Box2;
+    Gtk::Frame m_Table;
+    Gtk::Box m_Window;
+    Gtk::Box m_Header;
     Gtk::Grid m_Grid;
     Gtk::Image m_Card;
-    Gtk::Image* m_Card2;
-    Gtk::Button m_Button;
+    Gtk::Button m_Start;
     Gtk::Button m_End;
-    Gtk::Entry m_Entry;
-    std::vector<std::vector<Gtk::Image>> m_Table;
+    Gtk::Entry m_Seed;
 };
 
 #endif //STRAIGHTS_GUI_H
