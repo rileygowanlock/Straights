@@ -1,6 +1,6 @@
 #include "GUI.h"
 
-GUI::GUI() {
+GUI::GUI(): m_Box(Gtk::ORIENTATION_VERTICAL,5) {
     set_title("Straights");
     set_default_size(600, 400);
     set_resizable(false);
@@ -16,7 +16,13 @@ GUI::GUI() {
             m_Grid.attach(m_Card, j, i, 1, 1);
         }
     }
-    add(m_Frame);
+
+    m_Button = Gtk::Button("Start new game with seed");
+    m_Button.signal_clicked().connect(sigc::mem_fun(*this, &GUI::new_game));
+
+    add(m_Box);
+    m_Box.pack_start(m_Button);
+    m_Box.pack_start(m_Frame);
 
     m_Grid.set_column_spacing(10);
     m_Grid.set_row_spacing(5);
@@ -25,4 +31,7 @@ GUI::GUI() {
     m_Frame.set_label("Cards on the table");
 
     show_all_children();
+}
+void GUI::new_game() {
+    std::cout << "New Game" << std::endl;
 }
