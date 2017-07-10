@@ -16,7 +16,6 @@ using std::string;
 
 int main(int argc, char *argv[]) {
     auto app = Gtk::Application::create( argc, argv, "org.Straights" );
-    //View view;
     //window.set_default_size(800, 400);
 
 //    int seed = 0;
@@ -27,10 +26,12 @@ int main(int argc, char *argv[]) {
     Deck* d = new Deck(0); //create a new Deck
     Model* model = new Model(d); // create a Model instance
     Controller* controller = new Controller(model); // create a Controller instance
+    //View* view = new View(model, controller); // create a View instance
 
     GUI* gui = new GUI(model, controller); // create a View instance
 
-    //model->subscribe(gui); // add view as an observer of model
+    model->subscribe(gui); // add gui view as an observer of model
+    //model->subscribe(view); // add gui cli as an observer of model
     //view->run(); // initialize user interface
 
 

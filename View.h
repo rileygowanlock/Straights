@@ -10,14 +10,15 @@
 using std::string;
 
 class View : public Observer {
-private:
+//private:
+protected:
     Model* model_;
     Controller* controller_;
     int startPlayer_;
 public:
     View(Model* model, Controller* controller);
     void invitePlayers(int playerNum);
-    void run();
+    virtual void run();
     void play (Player *player, Card &card, bool legal);
     void human(int playerNum);
     void computer(int playerNum);

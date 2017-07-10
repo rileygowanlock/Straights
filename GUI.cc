@@ -11,11 +11,11 @@ GUI::GUI(Model* model, Controller* controller): m_Window(Gtk::ORIENTATION_VERTIC
         for (int j=0; j<13; j++) {
             if (i==2 && j==3) {
                 std::string imgUrl = "img/"+std::to_string(i)+"_"+std::to_string(j)+".png";
-                m_Card = Gtk::Image(imgUrl);
+                m_Cards[i][j] = Gtk::Image(imgUrl);
             } else {
-                m_Card = Gtk::Image("img/nothing.png");
+                m_Cards[i][j] = Gtk::Image("img/nothing.png");
             }
-            m_Grid.attach(m_Card, j, i, 1, 1);
+            m_Grid.attach(m_Cards[i][j], j, i, 1, 1);
         }
     }
 
@@ -35,11 +35,45 @@ GUI::GUI(Model* model, Controller* controller): m_Window(Gtk::ORIENTATION_VERTIC
     m_Window.pack_start(m_Header);
     m_Window.pack_start(m_Table);
 
-    m_Grid.set_column_spacing(10);
+    m_Grid.set_column_spacing(25);
     m_Grid.set_row_spacing(5);
 
     m_Table.add(m_Grid);
     m_Table.set_label("Cards on the table");
+
+    for (int i = 0; i < 4; i++) {
+	title[i].set_text("Player " + std::to_string(i+1));
+	frame[i].set_label_widget(title[i]);//attach(title, i, 0, 1, 1);
+	rageQuit[i].set_label("Human");
+	frame[i].add(rageQuit[i]);
+	Players.attach(frame[i], i, 0, 1, 1);
+	//Players.attach(rageQuit[i], i, 0, 1, 1);
+	//Players.attach(Player, i, 0, 1, 1);
+    }
+
+    m_Window.pack_start(Players);
+
+    int j=0;
+
+    /*for (int i = 0; i < 13; i++) {
+        std::string imgUrl = "img/"+std::to_string(0)+"_"+std::to_string(i)+".png";
+	m_Card = Gtk::Image(imgUrl);
+        cards[i].set_image(m_Card);
+        m_Hand.attach((cards[i]), i, 0, 1, 1);
+	int position[2] = {i,j};
+        cards[i].signal_clicked().connect( sigc::bind<int, int>(sigc::mem_fun(*this,&GUI::cardPlayed),i,j));
+    }*/
+    yourHand.set_label("Your hand");
+    m_Hand.attach(yourHand, 0, 0, 1, 1);
+    for (int i = 0; i < 13; i++) {
+        std::string imgUrl = "img/nothing.png";
+	m_Card = Gtk::Image(imgUrl);
+        cards[i].set_image(m_Card);
+        m_Hand.attach((cards[i]), i+1, 0, 1, 1);
+    }
+
+    m_Window.pack_start(m_Hand);
+
 
     show_all_children();
 }
@@ -48,4 +82,25 @@ void GUI::new_game() {
 }
 void GUI::end_game() {
     exit(0);
+}
+
+void GUI::run() {
+    model_->getDeck()->shuffle();
+    for (int i = 0; i < 4; i++) {
+        controller_->invitePlayers('h', i);
+    }
+    Player *player = model_->getPlayers(0);
+    vector <Card*> hand = player->getHand();
+    for (int i = 0; i < hand.size(); i++) {
+        std::string imgUrl = "img/"+std::to_string(hand[i]->suit().suit())+"_"+std::to_string(hand[i]->rank().rank())+".png";
+	m_Card = Gtk::Image(imgUrl);
+        cards[i].set_image(m_Card);
+        cards[i].signal_clicked().connect( sigc::bind<int, int>(sigc::mem_fun(*this,&GUI::cardPlayed),hand[i]->rank().rank(),hand[i]->suit().suit()));
+    }
+}
+
+void GUI::cardPlayed(int i, int j) {
+    std::string imgUrl = "img/"+std::to_string(j)+"_"+std::to_string(i)+".png";
+    m_Cards[j][i].set(imgUrl);
+    show_all_children();
 }
