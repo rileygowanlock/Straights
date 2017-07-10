@@ -3,6 +3,7 @@
 #include "Subject.h"
 #include "Player.h"
 #include "Computer.h"
+#include "Human.h"
 #include <vector>
 #include "Deck.h"
 using std::vector;

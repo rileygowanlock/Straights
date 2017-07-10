@@ -9,13 +9,8 @@ GUI::GUI(Model* model, Controller* controller): m_Window(Gtk::ORIENTATION_VERTIC
 
     for (int i=0; i<4; i++) {
         for (int j=0; j<13; j++) {
-            if (i==2 && j==3) {
-                std::string imgUrl = "img/"+std::to_string(i)+"_"+std::to_string(j)+".png";
-                m_Cards[i][j] = Gtk::Image(imgUrl);
-            } else {
-                m_Cards[i][j] = Gtk::Image("img/nothing.png");
-            }
-            m_Cards[0][0].set_size_request(53);
+            m_Cards[i][j] = Gtk::Image("img/nothing.png");
+            m_Cards[0][0].set_size_request(53); //formatting
             m_Grid.attach(m_Cards[i][j], j, i, 1, 1);
         }
     }
@@ -46,6 +41,7 @@ GUI::GUI(Model* model, Controller* controller): m_Window(Gtk::ORIENTATION_VERTIC
         title[i].set_text("Player " + std::to_string(i+1));
         frame[i].set_label_widget(title[i]);//attach(title, i, 0, 1, 1);
         rageQuit[i].set_label("Human");
+        rageQuit[i].signal_clicked().connect(sigc::bind<int>(sigc::mem_fun(*this, &GUI::rage_quit),i));
         player[i] = Gtk::Box(Gtk::ORIENTATION_VERTICAL);
         player[i].pack_start(rageQuit[i]);
         points[i] = Gtk::Label("0 points");
@@ -88,24 +84,45 @@ GUI::GUI(Model* model, Controller* controller): m_Window(Gtk::ORIENTATION_VERTIC
     show_all_children();
 }
 void GUI::new_game() {
+    m_Start.set_sensitive(false);
     run();
 }
 void GUI::end_game() {
     exit(0);
 }
 
+void GUI::rage_quit(int i) {
+    std::string label = rageQuit[i].get_label();
+    if (label=="Computer") {
+        rageQuit[i].set_label("Human");
+    } else if (label=="Human") {
+        rageQuit[i].set_label("Computer");
+    } else if (label=="Rage!" && rageQuit[i].get_sensitive()) {
+        rageQuit[i].set_sensitive(false);
+        model_->updatePlayers(i);
+    }
+}
+
 void GUI::run() {
+    model_->getDeck()->createDeck(std::stoi(m_Seed.get_text()));
     model_->getDeck()->shuffle();
     for (int i = 0; i < 4; i++) {
-        controller_->invitePlayers('h', i);
+        if (rageQuit[i].get_label()=="Human") {
+            controller_->invitePlayers('h', i);
+        } else if (rageQuit[i].get_label()=="Computer") {
+            controller_->invitePlayers('c', i);
+        }
     }
     Player *player = model_->getPlayers(0);
     vector <Card*> hand = player->getHand();
     for (int i = 0; i < hand.size(); i++) {
         std::string imgUrl = "img/"+std::to_string(hand[i]->suit().suit())+"_"+std::to_string(hand[i]->rank().rank())+".png";
-	m_Card = Gtk::Image(imgUrl);
+	    m_Card = Gtk::Image(imgUrl);
         cards[i].set_image(m_Card);
-        cards[i].signal_clicked().connect( sigc::bind<int, int>(sigc::mem_fun(*this,&GUI::cardPlayed),hand[i]->rank().rank(),hand[i]->suit().suit()));
+        cards[i].signal_clicked().connect(sigc::bind<int, int>(sigc::mem_fun(*this,&GUI::cardPlayed),hand[i]->rank().rank(),hand[i]->suit().suit()));
+    }
+    for (int i=0; i<4; i++) {
+        rageQuit[i].set_label("Rage!");
     }
 }
 

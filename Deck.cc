@@ -9,7 +9,6 @@ using std::mt19937;
 
 //create deck
 Deck::Deck(int seed): seed_(seed) {
-    //create 52 cards and store in order
     for (int i=0; i<4; i++) {
         for (int j=0; j<13; j++) {
             Card::Suit suit (i);
@@ -42,6 +41,10 @@ Deck::~Deck() {
 //
 //    cards_.resize(0);
 //    played_.resize(0);
+}
+
+void Deck::createDeck(int seed) {
+    seed_ = seed;
 }
 
 //return played cards
@@ -94,4 +97,3 @@ void Deck::removePlayed() {
     }
     played_ = temp;
 }
-

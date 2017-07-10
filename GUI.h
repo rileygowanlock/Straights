@@ -16,6 +16,7 @@ public:
     void end_game();
     void run() override;
     void cardPlayed(int i, int j);
+    void rage_quit(int i);
 
 protected:
     //Child widgets:

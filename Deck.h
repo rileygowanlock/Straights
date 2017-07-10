@@ -19,6 +19,7 @@ public:
     void addPlayed(Card* card); //add card to vector of played_ cards
     void shuffle(); //shuffle deck
     void removePlayed();
+    void createDeck(int seed);
 };
 
 #endif //STRAIGHTS_DECK_H

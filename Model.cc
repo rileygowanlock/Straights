@@ -67,5 +67,9 @@ bool Model::isLegalPlay(Player* player, Command &command) {
 }
 
 void Model::updatePlayers(int playerNum) {
-    players[playerNum] = new Computer(deck_, playerNum);
+    if (players[playerNum]->isHuman()) {
+        players[playerNum] = new Computer(deck_, playerNum);
+    } else {
+        players[playerNum] = new Human(deck_, playerNum);
+    }
 }
