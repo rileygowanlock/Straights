@@ -34,10 +34,13 @@ protected:
     Gtk::Frame frame[4];
     Gtk::Button rageQuit[4];
     Gtk::Grid Players;
+    Gtk::Box player[4];
     //Gtk::Button button[4];
     Gtk::Grid m_Hand;
     Gtk::Image m_Card;
     Gtk::Button cards[13];
+    Gtk::Label points[4];
+    Gtk::Label discards[4];
 
     //Glib::RefPtr<Gio::SimpleActionGroup> m_refActionGroup;
     //Glib::RefPtr<Gio::SimpleAction> m_refAction;
