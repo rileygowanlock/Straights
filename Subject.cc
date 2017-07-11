@@ -20,6 +20,11 @@ void Subject::unsubscribe(Observer* observer) {
     observers_.push_back(observer);
 }
 
+void Subject::notify(Player* player) {
+    for (auto it:observers_) {
+        (*it).update(player);
+    }
+}
 //notifies each observer of an update
 void Subject::notify(Command::Type &command, Player* player, Card &card, bool isLegal) {
     for (auto it:observers_)  {

@@ -27,7 +27,8 @@ public:
     int endRound();
     void newGame();
     Command getCommand();
-    void update(Command::Type &command, Player* player, Card &card, bool isLegal);
+    virtual void update(Player* player);
+    virtual void update(Command::Type &command, Player* player, Card &card, bool isLegal);
 };
 
 #endif //STRAIGHTS_VIEW_H

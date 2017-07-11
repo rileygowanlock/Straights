@@ -8,7 +8,7 @@
 View::View(Model* model, Controller* controller): model_(model), controller_(controller) {}
 
 void View::newGame() {
-    startPlayer_ = controller_->newGame();
+    //startPlayer_ = controller_->newGame();
     std::cout << "A new round begins. It's player " << std::to_string(startPlayer_+1) << "'s turn to play.\n";
 }
 
@@ -172,10 +172,12 @@ void View::discard (Player *player, Card &card, bool legal) {
 
 }
 
+void View::update(Player* player) {}
+
 void View::update(Command::Type &command, Player* player, Card &card, bool isLegal) {
-    if ( command == Command::Type::PLAY ) {
-        play(player, card, isLegal);
-    } else if ( command == Command::Type::DISCARD ) {
-        discard(player, card, isLegal);
-    }
+//    if ( command == Command::Type::PLAY ) {
+//        play(player, card, isLegal);
+//    } else if ( command == Command::Type::DISCARD ) {
+//        discard(player, card, isLegal);
+//    }
 }

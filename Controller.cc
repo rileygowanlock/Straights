@@ -55,13 +55,34 @@ void Controller::invitePlayers(char playerType, int playerNum) {
 }
 
 //returns first player's number
-int Controller::newGame() {
+//int Controller::newGame() {
+//    for (int i = 0; i < 4; i++) {
+//        model_->getPlayers(i)->updateHand();
+//        model_->getPlayers(i)->resetDiscard();
+//    }
+//    model_->getDeck()->removePlayed();
+//    int startPlayer = model_->startGame();
+//    return startPlayer;
+//}
+
+//returns first player's number
+void Controller::newGame(std::vector<std::string> playerType, int seed) {
+    model_->getDeck()->createDeck(seed);
+    model_->getDeck()->shuffle();
+    // Invite players
+    for (int i = 0; i < 4; i++) {
+        if (playerType[i]=="h") {
+            invitePlayers('h', i);
+        } else {
+            invitePlayers('c', i);
+        }
+    }
     for (int i = 0; i < 4; i++) {
         model_->getPlayers(i)->updateHand();
-        model_->getPlayers(i)->resetDiscard();
+        //model_->getPlayers(i)->resetDiscard();
     }
-    model_->getDeck()->removePlayed();
+    //model_->getDeck()->removePlayed();
     int startPlayer = model_->startGame();
-    return startPlayer;
+    model_->notify(model_->getPlayers(startPlayer));
 }
 

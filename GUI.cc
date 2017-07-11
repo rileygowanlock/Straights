@@ -6,6 +6,7 @@ GUI::GUI(Model* model, Controller* controller): m_Window(Gtk::ORIENTATION_VERTIC
     set_title("Straights");
     set_default_size(500, 400);
     set_resizable(false);
+    playerType = {"h","h","h","h"};
 
     for (int i=0; i<4; i++) {
         for (int j=0; j<13; j++) {
@@ -84,8 +85,12 @@ GUI::GUI(Model* model, Controller* controller): m_Window(Gtk::ORIENTATION_VERTIC
     show_all_children();
 }
 void GUI::new_game() {
-    m_Start.set_sensitive(false);
-    run();
+    // Change buttons to Rage!
+    for (int i=0; i<4; i++) {
+        rageQuit[i].set_label("Rage!");
+    }
+    m_Start.set_sensitive(false); // Disable start button
+    controller_->newGame(playerType,std::stoi(m_Seed.get_text())); // Start game
 }
 void GUI::end_game() {
     exit(0);
@@ -95,8 +100,10 @@ void GUI::rage_quit(int i) {
     std::string label = rageQuit[i].get_label();
     if (label=="Computer") {
         rageQuit[i].set_label("Human");
+        playerType[i] = "h";
     } else if (label=="Human") {
         rageQuit[i].set_label("Computer");
+        playerType[i] = "c";
     } else if (label=="Rage!" && rageQuit[i].get_sensitive()) {
         rageQuit[i].set_sensitive(false);
         model_->updatePlayers(i);
@@ -130,4 +137,14 @@ void GUI::cardPlayed(int i, int j) {
     std::string imgUrl = "img/"+std::to_string(j)+"_"+std::to_string(i)+".png";
     m_Cards[j][i].set(imgUrl);
     show_all_children();
+}
+
+void GUI::update(Player* player) {
+    vector<Card*> hand = player->getHand();
+    for (int i = 0; i < hand.size(); i++) {
+        std::string imgUrl = "img/"+std::to_string(hand[i]->suit().suit())+"_"+std::to_string(hand[i]->rank().rank())+".png";
+        m_Card = Gtk::Image(imgUrl);
+        cards[i].set_image(m_Card);
+        cards[i].signal_clicked().connect(sigc::bind<int, int>(sigc::mem_fun(*this,&GUI::cardPlayed),hand[i]->rank().rank(),hand[i]->suit().suit()));
+    }
 }

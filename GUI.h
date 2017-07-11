@@ -10,6 +10,7 @@ class GUI : public View, public Gtk::Window {
 private:
     Controller* controller;
     Model* model;
+    std::vector<std::string> playerType;
 public:
     GUI(Model* model, Controller* controller);
     void new_game();
@@ -17,6 +18,7 @@ public:
     void run() override;
     void cardPlayed(int i, int j);
     void rage_quit(int i);
+    void update(Player* player);
 
 protected:
     //Child widgets:
