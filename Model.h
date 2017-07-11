@@ -21,6 +21,7 @@ public:
     bool isLegalPlay(Player* player, Command &command); //returns if command is a legal play
     int startGame(); //starts the game - returns first player's number
     void updatePlayers(int playerNum);
+    bool isPlay(int playerNum);
 };
 
 #endif //STRAIGHTS_MODEL_H

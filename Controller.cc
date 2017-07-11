@@ -11,31 +11,31 @@ using std::string;
 Controller::Controller(Model* model): model_(model) {}
 
 //directs logic based on human's commands
-bool Controller::gamePlay (Command &command, Player*& player) {
-    if ( command.type == Command::Type::PLAY ) { //play a card
-	bool isLegal = model_->isLegalPlay(player, command); //checls if legal card is played
-	if (isLegal) {
-        player->play(command.card); //play card from command
-	    return true;
-	    }
-    } else if ( command.type == Command::Type::DISCARD ) { //discard a card
-	    bool isLegal = model_->isLegalPlay(player, command); //checks if legal card is discarded
-	    if (isLegal) {
-            player->discard(command.card); //discard card from command
-	        return true;
-        }
-    } else if ( command.type == Command::Type::DECK ) { //print deck
-        model_->getDeck()->print();
-	    return false;
-    } else if ( command.type == Command::Type::QUIT ) { //quit
-	    exit(0);
-    } else if ( command.type == Command::Type::RAGEQUIT ) { //ragequit
-        player->rageQuit(); //changes from human to computer
-        model_->updatePlayers(player->playerNum());
-	    return true;
-    }
-    return false;
-}
+//bool Controller::gamePlay (Command &command, Player*& player) {
+//    if ( command.type == Command::Type::PLAY ) { //play a card
+//	bool isLegal = model_->isLegalPlay(player, command); //checls if legal card is played
+//	if (isLegal) {
+//        player->play(command.card); //play card from command
+//	    return true;
+//	    }
+//    } else if ( command.type == Command::Type::DISCARD ) { //discard a card
+//	    bool isLegal = model_->isLegalPlay(player, command); //checks if legal card is discarded
+//	    if (isLegal) {
+//            player->discard(command.card); //discard card from command
+//	        return true;
+//        }
+//    } else if ( command.type == Command::Type::DECK ) { //print deck
+//        model_->getDeck()->print();
+//	    return false;
+//    } else if ( command.type == Command::Type::QUIT ) { //quit
+//	    exit(0);
+//    } else if ( command.type == Command::Type::RAGEQUIT ) { //ragequit
+//        player->rageQuit(); //changes from human to computer
+//        model_->updatePlayers(player->playerNum());
+//	    return true;
+//    }
+//    return false;
+//}
 
 //choose human or computer player
 void Controller::invitePlayers(char playerType, int playerNum) {
@@ -65,7 +65,25 @@ void Controller::invitePlayers(char playerType, int playerNum) {
 //    return startPlayer;
 //}
 
-//returns first player's number
+bool Controller::gamePlay (Card* card, Player* player) {
+    if (model_->isPlay(player->playerNum())) {
+        Command command(Command::Type::PLAY, *card);
+        bool isLegal = model_->isLegalPlay(player, command); //checks if legal card is played
+        if (isLegal) {
+            player->play(*card); //play card from command
+            return true;
+        }
+    } else {
+        Command command(Command::Type::DISCARD, *card);
+        bool isLegal = model_->isLegalPlay(player, command); //checks if legal card is discarded
+        if (isLegal) {
+            player->discard(*card); //discard card from command
+            return true;
+        }
+    }
+    return false;
+}
+
 void Controller::newGame(std::vector<std::string> playerType, int seed) {
     model_->getDeck()->createDeck(seed);
     model_->getDeck()->shuffle();

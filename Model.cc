@@ -73,3 +73,11 @@ void Model::updatePlayers(int playerNum) {
         players[playerNum] = new Human(deck_, playerNum);
     }
 }
+
+bool Model::isPlay(int playerNum) {
+    vector<Card*> cards = players[playerNum]->legalPlay();
+    if (cards.size()==0) {
+        return false;
+    }
+    return true;
+}

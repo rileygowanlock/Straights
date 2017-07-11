@@ -59,7 +59,7 @@ void View::human(int playerNum) {
         std::cout << ">";
         Command command = getCommand();
         Player* player = model_->getPlayers(playerNum);
-        legCommand = controller_->gamePlay(command, player);
+        //legCommand = controller_->gamePlay(command, player);
     }
 
 }

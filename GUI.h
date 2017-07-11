@@ -15,8 +15,9 @@ public:
     GUI(Model* model, Controller* controller);
     void new_game();
     void end_game();
-    void run() override;
-    void cardPlayed(int i, int j);
+//    void run() override;
+    void setPlayer(int playerNum);
+    void cardPlayed(int i, int j, Player* player, Card* card);
     void rage_quit(int i);
     void update(Player* player);
 

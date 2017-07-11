@@ -106,45 +106,57 @@ void GUI::rage_quit(int i) {
         playerType[i] = "c";
     } else if (label=="Rage!" && rageQuit[i].get_sensitive()) {
         rageQuit[i].set_sensitive(false);
-        model_->updatePlayers(i);
+        model_->updatePlayers(i); // move to controller?
     }
 }
 
-void GUI::run() {
-    model_->getDeck()->createDeck(std::stoi(m_Seed.get_text()));
-    model_->getDeck()->shuffle();
-    for (int i = 0; i < 4; i++) {
-        if (rageQuit[i].get_label()=="Human") {
-            controller_->invitePlayers('h', i);
-        } else if (rageQuit[i].get_label()=="Computer") {
-            controller_->invitePlayers('c', i);
-        }
-    }
-    Player *player = model_->getPlayers(0);
-    vector <Card*> hand = player->getHand();
-    for (int i = 0; i < hand.size(); i++) {
-        std::string imgUrl = "img/"+std::to_string(hand[i]->suit().suit())+"_"+std::to_string(hand[i]->rank().rank())+".png";
-	    m_Card = Gtk::Image(imgUrl);
-        cards[i].set_image(m_Card);
-        cards[i].signal_clicked().connect(sigc::bind<int, int>(sigc::mem_fun(*this,&GUI::cardPlayed),hand[i]->rank().rank(),hand[i]->suit().suit()));
-    }
-    for (int i=0; i<4; i++) {
-        rageQuit[i].set_label("Rage!");
-    }
-}
+//void GUI::run() {
+//    model_->getDeck()->createDeck(std::stoi(m_Seed.get_text()));
+//    model_->getDeck()->shuffle();
+//    for (int i = 0; i < 4; i++) {
+//        if (rageQuit[i].get_label()=="Human") {
+//            controller_->invitePlayers('h', i);
+//        } else if (rageQuit[i].get_label()=="Computer") {
+//            controller_->invitePlayers('c', i);
+//        }
+//    }
+//    Player *player = model_->getPlayers(0);
+//    vector <Card*> hand = player->getHand();
+//    for (int i = 0; i < hand.size(); i++) {
+//        std::string imgUrl = "img/"+std::to_string(hand[i]->suit().suit())+"_"+std::to_string(hand[i]->rank().rank())+".png";
+//	    m_Card = Gtk::Image(imgUrl);
+//        cards[i].set_image(m_Card);
+//        cards[i].signal_clicked().connect(sigc::bind<int, int>(sigc::mem_fun(*this,&GUI::cardPlayed),hand[i]->rank().rank(),hand[i]->suit().suit()));
+//    }
+//    for (int i=0; i<4; i++) {
+//        rageQuit[i].set_label("Rage!");
+//    }
+//}
 
-void GUI::cardPlayed(int i, int j) {
+void GUI::cardPlayed(int i, int j, Player* player, Card* card) {
+    controller_->gamePlay(card, player);
     std::string imgUrl = "img/"+std::to_string(j)+"_"+std::to_string(i)+".png";
     m_Cards[j][i].set(imgUrl);
     show_all_children();
 }
 
+void GUI::setPlayer(int playerNum) {
+    for (int i=0; i<4; i++) {
+        if (i!=playerNum) {
+            rageQuit[i].set_sensitive(false);
+        }
+    }
+}
+
 void GUI::update(Player* player) {
     vector<Card*> hand = player->getHand();
+    setPlayer(player->playerNum());
     for (int i = 0; i < hand.size(); i++) {
         std::string imgUrl = "img/"+std::to_string(hand[i]->suit().suit())+"_"+std::to_string(hand[i]->rank().rank())+".png";
         m_Card = Gtk::Image(imgUrl);
         cards[i].set_image(m_Card);
-        cards[i].signal_clicked().connect(sigc::bind<int, int>(sigc::mem_fun(*this,&GUI::cardPlayed),hand[i]->rank().rank(),hand[i]->suit().suit()));
+        cards[i].signal_clicked().connect(sigc::bind<int, int, Player*, Card*>(sigc::mem_fun(*this,&GUI::cardPlayed),
+                                                                               hand[i]->rank().rank(),hand[i]->suit().suit(),
+                                                                               player,hand[i]));
     }
 }

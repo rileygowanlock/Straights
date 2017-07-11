@@ -9,8 +9,9 @@ private:
 public:
     Controller(Model* model);
     void invitePlayers(char playerType, int playerNum); //choose human or computer player
-    bool gamePlay(Command &command, Player*& player); //directs logic based on human's commands
+    //bool gamePlay(Command &command, Player* player); //directs logic based on human's commands
     void newGame(std::vector<std::string> playerType, int seed);
+    bool gamePlay(Card* card, Player* player);
 };
 
 #endif //STRAIGHTS_CONTROLLER_H
