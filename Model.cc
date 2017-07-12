@@ -43,7 +43,8 @@ Deck* Model::getDeck() {
 }
 
 //returns if command is a legal play
-bool Model::isLegalPlay(Player* player, Command &command) {
+bool Model::isLegalPlay(int playerNum, Command &command) {
+    Player* player = getPlayers(playerNum);
     bool isLegal = false;
     vector<Card*> cards = player->legalPlay();
     vector<Card*> hand = player->getHand();
@@ -56,13 +57,24 @@ bool Model::isLegalPlay(Player* player, Command &command) {
                 break;
             }
         }
+        if (isLegal) {
+            if (playerNum == 3) {
+                playerNum = 0;
+            } else {
+            playerNum++;
+            }
+	}	
     }
     else if (command.type==Command::Type::DISCARD && cards.size()==0) {
         isLegal = true;
     }
+    
+    if (isLegal) {
+        //call notify from subject with state passed in
+        //notify(command.type, player, command.card, isLegal);
+	notify(command.type, playerNum, command.card, isLegal);
 
-    //call notify from subject with state passed in
-    notify(command.type, player, command.card, isLegal);
+    } 
     return isLegal;
 }
 

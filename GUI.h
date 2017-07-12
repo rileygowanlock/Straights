@@ -11,15 +11,27 @@ private:
     Controller* controller;
     Model* model;
     std::vector<std::string> playerType;
+    int startPlayer_;
+    int currPlayer_;
+
 public:
     GUI(Model* model, Controller* controller);
     void new_game();
     void end_game();
 //    void run() override;
     void setPlayer(int playerNum);
-    void cardPlayed(int i, int j, Player* player, Card* card);
+    //void cardPlayed(int i, int j, Player* player, Card* card);
+    //void cardPlayed(int i, int j, Card* card);
+    void cardPlayed(int index);
     void rage_quit(int i);
     void update(Player* player);
+    //void update(Command::Type &command, Player* player, Card &card, bool isLegal);
+    void update(Command::Type &command, int playerNum, Card &card, bool isLegal);
+    void startDialog(int playerNum);
+
+    void playRound();
+    void endRound();
+    void human(int playerNum);
 
 protected:
     //Child widgets:

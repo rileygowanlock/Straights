@@ -65,27 +65,33 @@ void Controller::invitePlayers(char playerType, int playerNum) {
 //    return startPlayer;
 //}
 
-bool Controller::gamePlay (Card* card, Player* player) {
-    if (model_->isPlay(player->playerNum())) {
+Command::Type Controller::gamePlay (Card* card, int playerNum) {
+    std::cout<<"Gameplay top: "<<*card<<" and player num: "<<playerNum<<std::endl;
+    Player* player = model_->getPlayers(playerNum);
+    if (model_->isPlay(playerNum)) { //checks is player has a legal play
         Command command(Command::Type::PLAY, *card);
-        bool isLegal = model_->isLegalPlay(player, command); //checks if legal card is played
+        bool isLegal = model_->isLegalPlay(playerNum, command); //checks if legal card is played
         if (isLegal) {
+	    std::cout<<"Gameplay play: "<<*card<<std::endl;
             player->play(*card); //play card from command
-            return true;
+            return command.type;
         }
     } else {
         Command command(Command::Type::DISCARD, *card);
-        bool isLegal = model_->isLegalPlay(player, command); //checks if legal card is discarded
+        bool isLegal = model_->isLegalPlay(playerNum, command); //checks if legal card is discarded
         if (isLegal) {
+            std::cout<<"Gameplay discard: "<<*card<<" "<<playerNum<<std::endl;
             player->discard(*card); //discard card from command
-            return true;
+            //return true;
+	    return command.type;
         }
     }
-    return false;
+    return Command::Type::BAD_COMMAND;
 }
 
-void Controller::newGame(std::vector<std::string> playerType, int seed) {
+int Controller::newGame(std::vector<std::string> playerType, int seed) { //Note to self: changed this from void to int
     model_->getDeck()->createDeck(seed);
+   
     model_->getDeck()->shuffle();
     // Invite players
     for (int i = 0; i < 4; i++) {
@@ -102,5 +108,6 @@ void Controller::newGame(std::vector<std::string> playerType, int seed) {
     //model_->getDeck()->removePlayed();
     int startPlayer = model_->startGame();
     model_->notify(model_->getPlayers(startPlayer));
+    return startPlayer;
 }
 

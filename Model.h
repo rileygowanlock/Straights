@@ -18,7 +18,8 @@ public:
     void appendPlayer(Player*); //add player to game
     Player* getPlayers(int pos); //retrieve player by playerNum
     Deck* getDeck(); //return deck
-    bool isLegalPlay(Player* player, Command &command); //returns if command is a legal play
+    //bool isLegalPlay(Player* player, Command &command); //returns if command is a legal play
+    bool isLegalPlay(int playerNum, Command &command); //returns if command is a legal play
     int startGame(); //starts the game - returns first player's number
     void updatePlayers(int playerNum);
     bool isPlay(int playerNum);

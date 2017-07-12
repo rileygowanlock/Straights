@@ -43,7 +43,6 @@ void Computer::play() {
 }
 
 void Computer::discard() {
-    Card* c = hand_[0];
     discard_.push_back(c);
 
     vector<Card*>::iterator it;

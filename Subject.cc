@@ -25,10 +25,19 @@ void Subject::notify(Player* player) {
         (*it).update(player);
     }
 }
+
 //notifies each observer of an update
-void Subject::notify(Command::Type &command, Player* player, Card &card, bool isLegal) {
+/*void Subject::notify(Command::Type &command, Player* player, Card &card, bool isLegal) {
     for (auto it:observers_)  {
         (*it).update(command, player, card, isLegal);
+    }
+
+}*/
+
+//notifies each observer of an update
+void Subject::notify(Command::Type &command, int playerNum, Card &card, bool isLegal) {
+    for (auto it:observers_)  {
+        (*it).update(command, playerNum, card, isLegal);
     }
 
 }

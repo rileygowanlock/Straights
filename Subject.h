@@ -15,7 +15,8 @@ public:
     void subscribe(Observer* observer); //add observer to subject's observer list
     void unsubscribe(Observer* observer); //remove observer from subject's observer list
     void notify(Player* player);
-    void notify(Command::Type &command, Player* player, Card &card, bool isLegal); //notifies each observer of an update
+    //void notify(Command::Type &command, Player* player, Card &card, bool isLegal); //notifies each observer of an update
+    void notify(Command::Type &command, int playerNum, Card &card, bool isLegal); //notifies each observer of an update
 };
 
 
