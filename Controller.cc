@@ -55,15 +55,17 @@ void Controller::invitePlayers(char playerType, int playerNum) {
 }
 
 //returns first player's number
-//int Controller::newGame() {
-//    for (int i = 0; i < 4; i++) {
-//        model_->getPlayers(i)->updateHand();
-//        model_->getPlayers(i)->resetDiscard();
-//    }
-//    model_->getDeck()->removePlayed();
-//    int startPlayer = model_->startGame();
-//    return startPlayer;
-//}
+int Controller::newRound() {
+    std::cout<<"Reached New Game"<<std::endl;
+    for (int i = 0; i < 4; i++) {
+        model_->getPlayers(i)->updateHand();
+        model_->getPlayers(i)->resetDiscard();
+    }
+    model_->getDeck()->removePlayed();
+    int startPlayer = model_->startGame();
+    model_->notify(model_->getPlayers(startPlayer));
+    return startPlayer;
+}
 
 Command::Type Controller::gamePlay (Card* card, int playerNum) {
     std::cout<<"Gameplay top: "<<*card<<" and player num: "<<playerNum<<std::endl;

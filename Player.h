@@ -10,9 +10,9 @@ class Player {
 private:
     int playerNum_;
     Deck* deck_;
-    int score_;
 
 protected:
+    int score_;
     vector<Card*> hand_;
     vector<Card*> discard_;
 

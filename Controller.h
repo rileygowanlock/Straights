@@ -11,6 +11,7 @@ public:
     void invitePlayers(char playerType, int playerNum); //choose human or computer player
     //bool gamePlay(Command &command, Player* player); //directs logic based on human's commands
     int newGame(std::vector<std::string> playerType, int seed);
+    int newRound();
     Command::Type gamePlay(Card* card, int playerNum);
 };
 

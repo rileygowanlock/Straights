@@ -28,7 +28,8 @@ public:
     //void update(Command::Type &command, Player* player, Card &card, bool isLegal);
     void update(Command::Type &command, int playerNum, Card &card, bool isLegal);
     void startDialog(int playerNum);
-
+    
+    void resetScreen();
     void playRound();
     void endRound();
     void human(int playerNum);

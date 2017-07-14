@@ -73,7 +73,7 @@ GUI::GUI(Model* model, Controller* controller): m_Window(Gtk::ORIENTATION_VERTIC
     //m_Hand.attach(yourHand, 0, 0, 1, 1);
     for (int i = 0; i < 13; i++) {
         std::string imgUrl = "img/nothing.png";
-	    m_Card = Gtk::Image(imgUrl);
+	m_Card = Gtk::Image(imgUrl);
         cards[i].set_image(m_Card);
         m_Hand.attach((cards[i]), i+1, 0, 1, 1);
     }
@@ -130,9 +130,12 @@ void GUI::playRound() {
         }*/	
     }
     std::cout<<"playRound"<<std::endl;
-    if (startPlayer_==0 && currPlayer_ == 3 && player->getHand().size() == 1) {
+    /*if (startPlayer_==0 && currPlayer_ == 3 && player->getHand().size() == 0) {
         endRound();
-    } else if (currPlayer_!=3 && currPlayer_ == startPlayer_-1 && player->getHand().size() == 1) {
+    } else if (currPlayer_!=3 && currPlayer_ == startPlayer_-1 && player->getHand().size() == 0) {
+        endRound();
+    }*/
+    if (startPlayer_== currPlayer_ && player->getHand().size() == 0) {
         endRound();
     }
 }
@@ -140,19 +143,24 @@ void GUI::playRound() {
 void GUI::endRound() {
     bool endGame = false;
     int lowScore = 10000;
+    int score = 0;
     vector<int> winners;
     string text = "";
+    string suits = "CDHS";
+    string ranks = "A23456789TJQK";
     for (int i = 0; i < 4; i++) {
         Player *player = model_->getPlayers(i);
         vector <Card*> discard = player->getDiscard();
         text += "Player " + std::to_string(i + 1) + "'s discards:";
-        /*for (int j = 0; j < discard.size(); j++) {
+        for (int j = 0; j < discard.size(); j++) {
             text +=  " ";
-	    text<<discard[j];
-        }*/
+	    text+=ranks[discard[j]->rank().rank()];
+	    text+=suits[discard[j]->suit().suit()];
+	}
         text +=  "\n";
         text +=  "Player " + std::to_string(i + 1) + "'s score:";
-        text +=  " " + std::to_string(player->getScore()) + " + " + std::to_string(player->score());
+	score = player->score();
+        text +=  " " + std::to_string(player->getScore()) + " + " + std::to_string(score);
         player->updateScore();
         text +=  " = " + std::to_string(player->getScore()) + "\n";
         if (player->getScore() >= 80) {
@@ -161,7 +169,7 @@ void GUI::endRound() {
     }
     Gtk::MessageDialog dialog(*this, text);
     dialog.run();
-    /*if (endGame) {
+    if (endGame) {
         for (int i = 0; i < 4; i++) {
             Player *player = model_->getPlayers(i);
             if (player->getScore() < lowScore) {
@@ -173,19 +181,35 @@ void GUI::endRound() {
             }
         }
         for (int i=0; i<winners.size(); i++) {
-            std::cout << "Player " << winners[i]+1 << " wins!\n";
+            text = "Player " + std::to_string(winners[i]+1) + " wins!";
+            Gtk::MessageDialog dialog(*this, text);
+            dialog.run();
         }
       //  return 4;
     }
     else {
+	resetScreen();
         model_->getDeck()->shuffle();
-        newGame();
+        controller_->newRound();
         if (startPlayer_ == 0) {
            // return 3;
         } else {
            // return startPlayer_ - 1;
         }
-    }*/
+    }
+}
+
+void GUI::resetScreen() {
+    for (int i=0; i<4; i++) {
+        for (int j=0; j<13; j++) {
+            m_Cards[i][j].set("img/nothing.png");  
+        }
+    }
+    for (int i = 0; i < 4; i++) {
+        points[i].set_label("0 points");
+        discards[i].set_label("0 discards");
+    }
+    show_all_children();
 }
 
 
@@ -240,6 +264,7 @@ void GUI::rage_quit(int i) {
 //}
 
 void GUI::cardPlayed(int index) { 
+    if (index>=model_->getPlayers(currPlayer_)->getHand().size()) return;
     Card* card = model_->getPlayers(currPlayer_)->getHand()[index];
     int i = card->rank().rank();
     int j = card->suit().suit();
@@ -256,7 +281,7 @@ void GUI::cardPlayed(int index) {
         m_Cards[j][i].set(imgUrl);
         show_all_children();
     }
-
+    playRound();
 }
 
 void GUI::setPlayer(int playerNum) {
@@ -271,7 +296,7 @@ void GUI::setPlayer(int playerNum) {
 }
 
 void GUI::startDialog(int playerNum) {
-  string text = "A new round begins. It's player " + std::to_string(playerNum) + "\'s turn to play.";
+  string text = "A new round begins. It's player " + std::to_string(playerNum+1) + "\'s turn to play.";
   Gtk::MessageDialog dialog(*this, text);
   //dialog.set_secondary_text("And this is the secondary text that explains things.");
   dialog.run();
@@ -319,5 +344,4 @@ void GUI::update(Command::Type &command, int playerNum, Card &card, bool isLegal
         }
     }
     show_all_children();
-    playRound();
 }
