@@ -206,6 +206,7 @@ void GUI::endRound() {
                 dialog.run();
             }
             resetScreen();
+            //start_ = true;
             show_all_children();
             //  return 4;
         } else {
@@ -341,6 +342,7 @@ void GUI::computer(Player* player) {
     }
     show_all_children();
     playRound();*/
+    std::cout << "comp" << std::endl;
     int index = -1;
 	while (playerType[currPlayer_]=="c") {
         if (reset_) {
@@ -411,8 +413,12 @@ void GUI::update(Player* player) {
             cards[i].set_image(m_Card);
             //cards[i].signal_clicked().connect(sigc::bind<int, int, Player*, Card*>(sigc::mem_fun(*this,&GUI::cardPlayed),hand[i]->rank().rank(),hand[i]->suit().suit(),player,hand[i]));
             //cards[i].signal_clicked().connect(sigc::bind<int, int, Card*>(sigc::mem_fun(*this,&GUI::cardPlayed),hand[i]->rank().rank(),hand[i]->suit().suit(),hand[i]));
-            cards[i].signal_clicked().connect(sigc::bind<int>(sigc::mem_fun(*this, &GUI::cardPlayed), i));
+            if (start_) {
+                std::cout << 'trruuuuu';
+                cards[i].signal_clicked().connect(sigc::bind<int>(sigc::mem_fun(*this, &GUI::cardPlayed), i));
+            }
         }
+    start_ = false;
     //}
 }
 
@@ -459,6 +465,7 @@ void GUI::update(Command::Type &command, int playerNum, Card &card, bool isLegal
             std::string imgUrl = "img/"+std::to_string(hand[i]->suit().suit())+"_"+std::to_string(hand[i]->rank().rank())+".png";
             m_Card = Gtk::Image(imgUrl);
             cards[i].set_image(m_Card);
+            //cards[i].signal_clicked().connect(sigc::bind<int>(sigc::mem_fun(*this, &GUI::cardPlayed), i));
             //cards[i].signal_clicked().connect(sigc::bind<int>(sigc::mem_fun(*this, &GUI::cardPlayed), i));
             //cards[i].signal_clicked().connect(sigc::bind<int, int, Card*>(sigc::mem_fun(*this,&GUI::cardPlayed), hand[i]->rank().rank(),hand[i]->suit().suit(),hand[i]));
         }

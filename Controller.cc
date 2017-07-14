@@ -70,7 +70,7 @@ int Controller::newRound() {
 Command::Type Controller::gamePlay (Card* card, int playerNum) {
     std::cout<<"Gameplay top: "<<*card<<" and player num: "<<playerNum<<std::endl;
     Player* player = model_->getPlayers(playerNum);
-    if (model_->isPlay(playerNum)) { //checks is player has a legal play
+    if (model_->isPlay(playerNum)) { //checks if player has a legal play
         Command command(Command::Type::PLAY, *card);
         bool isLegal = model_->isLegalPlay(playerNum, command); //checks if legal card is played
         if (isLegal) {
