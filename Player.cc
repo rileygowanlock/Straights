@@ -5,38 +5,22 @@
 #include <vector>
 using std::vector;
 
+//Player constructor
 Player::Player(Deck* d, int playerNum): playerNum_(playerNum), deck_(d) {
    updateHand();
        score_ = 0;
-//   for (int i=0; i<13; i++) {
-//       hand_.push_back(d->getCard(i+playerNum_*13));
-//    }
-   /*for (auto it:hand_) {
-	std::cout<<*it<<std::endl;
-   }*/ // prints hand
 }
 
+//Player destructor
 Player::~Player() {
-//    for (auto it:hand_) {
-//        delete it;
-//    }
-//
-//    for (auto it2:discard_) {
-//        delete it2;
-//    }
-//
-//    hand_.resize(0);
-//    discard_.resize(0);
-
-    //player responsible for deleting deck?
 
 }
 
-
+//returns legal plays of player based on current hand
 vector<Card*> Player::legalPlay () {
-    vector<vector<Card*>> played = deck_->played();
-    vector<Card*> legal;
-    if (played[3][6] == nullptr) {
+    vector<vector<Card*>> played = deck_->played(); //all cards that are already played
+    vector<Card*> legal; //vector to hold legal cards
+    if (played[3][6] == nullptr) { //if (start) player has 7S, return 7S
         for (auto it:hand_) {
             int suit = it->suit().suit();
             int rank = it->rank().rank();
@@ -44,30 +28,26 @@ vector<Card*> Player::legalPlay () {
                 legal.push_back(it);
             }
         }
-//        Card::Suit suit (3); //SPADE?
-//        Card::Rank rank (6); //SEVEN?
-//        Card* card = new Card (rank, suit);
-//        legal.push_back(card);
-//        return legal;
         return legal;
     }
-    for (auto it:hand_)  {
+    for (auto it:hand_)  { // iterate through hand
         int suit = it->suit().suit();
         int rank = it->rank().rank();
 
-        if (rank == 6) {
+        if (rank == 6) { //add any 7's to legal
             legal.push_back(it);
         }
-        else if (rank!=12 && played[suit][rank+1] != nullptr) {
+        else if (rank!=12 && played[suit][rank+1] != nullptr) { //checks if card of 1 higher rank (and same suit) is played
             legal.push_back(it);
         }
-        else if (rank!=0 && played[suit][rank-1] != nullptr) {
+        else if (rank!=0 && played[suit][rank-1] != nullptr) { //checks if card of 1 lower rank (and same suit) is played
             legal.push_back(it);
         }
     }
     return legal;
 }
 
+//returns sum of ranks of all discards
 int Player::score() {
   int score = 0;
   for (auto it:discard_) {
@@ -76,20 +56,23 @@ int Player::score() {
   return score;
 }
 
+// returns last stored score + sum of ranks of all discards and updates score_
 void Player::updateScore() {
     score_ += score();
 }
 
+//returns player's current score (score_)
 int Player::getScore() {
     return score_;
 }
 
+//returns if player is human
 bool Player::isHuman(){
     return false;
 }
 
+//returns whether player is the start player
 bool Player::isStartPlayer() {
-    // return if player has 7S
     for (int i=0; i<13; i++) {
         if (hand_[i]->suit().suit()==3 && hand_[i]->rank().rank()==6) {
             return true;
@@ -100,17 +83,13 @@ bool Player::isStartPlayer() {
 
 Card* Player::play() {}
 
-void Player::play(Card& c) {
-
-}
+void Player::play(Card& c) { }
 
 Card* Player::discard() {}
 
-void Player::discard(Card& c) {
+void Player::discard(Card& c) { }
 
-
-}
-
+//sets player's hand
 void Player::updateHand() {
     hand_.clear();
     for (int i=0; i<13; i++) {
@@ -118,7 +97,7 @@ void Player::updateHand() {
     }
 }
 
-
+//Prints hand - FOR TEST PURPOSES
 void Player::printHand() {
     std::cout<<"Hand: "<<std::endl;
     for(auto it: hand_) {
@@ -127,40 +106,32 @@ void Player::printHand() {
     std::cout<<std::endl;
 }
 
+//returns vector of cards remaining in player's hand (hand_)
 vector<Card*> Player::getHand() {
     return hand_;
 }
 
+//returns vector of cards player has discarded
 vector<Card*> Player::getDiscard() {
     return discard_;
 }
 
+//returns player's number (position in player array)
 int Player::playerNum() {
     return playerNum_;
 }
 
+//returns game's deck (deck_)
 Deck* Player::getDeck() {
     return deck_;
 }
 
+//removes all cards in player's discard pile
 void Player::resetDiscard() {
     discard_.clear();
 }
 
+//CLI ragequit 
 void Player::rageQuit() {
     std::cout<<"Player "<<playerNum_+1<<" ragequits. A computer will now take over."<<std::endl;
-    //Player *temp = new Computer(deck_, playerNum_);
-    //Player *temp = new Computer(deck_, playerNum_);
-    //Computer temp = {deck_, playerNum_};
-    //std::swap(temp, *this);
-    //std::swap (temp.deck_, deck_);
-    //std::swap (temp.discard_, discard_);
-    //std::swap (temp.hand_, hand_);
-    //std::swap (temp.playerNum_, playerNum_);
-    //std::swap (temp.score_, score_);
-    //std::swap ((*this), *temp);
-    //if ((*temp).isHuman()) std::cout<<"YES"<<std::endl;
-    //else std::cout<<"NO"<<std::endl;
-    //delete temp;
-    //return temp;
 }
