@@ -3,6 +3,7 @@
 
 #include "Card.h"
 #include "Deck.h"
+#include "Command.h"
 #include <vector>
 using std::vector;
 
@@ -37,10 +38,10 @@ public:
     virtual void play(Card& c);
     virtual bool isHuman();
     bool isStartPlayer();
-    virtual void play();
+    virtual Card* play();
     //virtual void discard(Card *c);
     virtual void discard(Card& c);
-    virtual void discard();
+    virtual Card* discard();
     void updateHand();
     vector<Card*> legalPlay ();
     void printHand(); //FOR TEST PURPOSES

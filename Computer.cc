@@ -24,7 +24,7 @@ Computer::~Computer() {
 //    discard_.resize(0);
 }
 
-void Computer::play() {
+Card* Computer::play() {
     Deck* d = getDeck();
     vector<Card*> leg = legalPlay();
     
@@ -40,9 +40,11 @@ void Computer::play() {
     if(it != hand_.end()) {
         hand_.erase(it);
     }
+    return c;
 }
 
-void Computer::discard() {
+Card* Computer::discard() {
+    Card* c = hand_[0];
     discard_.push_back(c);
 
     vector<Card*>::iterator it;
@@ -53,6 +55,7 @@ void Computer::discard() {
 
     if(it != hand_.end())
         hand_.erase(it);
+    return c;
 }
 
 bool Computer::isHuman() {

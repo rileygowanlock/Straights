@@ -105,9 +105,37 @@ int Controller::newGame(std::vector<std::string> playerType, int seed) { //Note 
         model_->getPlayers(i)->updateHand();
         //model_->getPlayers(i)->resetDiscard();
     }
-    //model_->getDeck()->removePlayed();
+//    //model_->getDeck()->removePlayed();
     int startPlayer = model_->startGame();
-    model_->notify(model_->getPlayers(startPlayer));
+    //model_->notify(model_->getPlayers(startPlayer));
     return startPlayer;
 }
+
+// just added
+void Controller::playRound(int playerNum) {
+    std::cout << "computer or human";
+    Player *player = model_->getPlayers(playerNum);
+    if (!(player->isHuman())) {
+        Card *card = player->getHand()[0];
+        vector <Card*> legal = player->legalPlay();
+        if (legal.size() != 0) {
+            Card *c = player->play();
+            Command command(Command::Type::PLAY, *c);
+            card_ = c;
+            std::cout << std::to_string(c->rank().rank());
+            std::cout << std::to_string(c->suit().suit());
+            model_->notify(command.type, playerNum, *c, true);
+        } else {
+            Card *c = player->discard();
+            Command command(Command::Type::DISCARD, *c);
+            card_ = c;
+            model_->notify(command.type, playerNum, *c, true);
+        }
+    }
+}
+
+Card* Controller::getCard() {
+    return card_;
+}
+
 

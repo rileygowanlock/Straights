@@ -9,10 +9,12 @@
 class GUI : public View, public Gtk::Window {
 private:
     Controller* controller;
+    Card* card_;
     Model* model;
     std::vector<std::string> playerType;
     int startPlayer_;
     int currPlayer_;
+    bool start_;
 
 public:
     GUI(Model* model, Controller* controller);
@@ -28,6 +30,7 @@ public:
     //void update(Command::Type &command, Player* player, Card &card, bool isLegal);
     void update(Command::Type &command, int playerNum, Card &card, bool isLegal);
     void startDialog(int playerNum);
+    void computer();
 
     void playRound();
     void endRound();

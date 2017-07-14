@@ -97,18 +97,13 @@ bool Player::isStartPlayer() {
     return false;
 }
 
-void Player::play() {
-    std::cout << "player";
-
-}
+Card* Player::play() {}
 
 void Player::play(Card& c) {
 
 }
 
-void Player::discard() {
-
-}
+Card* Player::discard() {}
 
 void Player::discard(Card& c) {
 

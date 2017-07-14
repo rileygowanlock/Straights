@@ -72,7 +72,7 @@ bool Model::isLegalPlay(int playerNum, Command &command) {
     if (isLegal) {
         //call notify from subject with state passed in
         //notify(command.type, player, command.card, isLegal);
-	notify(command.type, playerNum, command.card, isLegal);
+	    notify(command.type, playerNum, command.card, isLegal);
 
     } 
     return isLegal;

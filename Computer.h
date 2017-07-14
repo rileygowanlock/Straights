@@ -6,8 +6,8 @@ class Computer : public Player {
 public:
     Computer(Deck* d, int playerNum);
     ~Computer();
-    void play() override;
-    void discard() override;
+    Card* play() override;
+    Card* discard() override;
     bool isHuman() override;
 };
 
