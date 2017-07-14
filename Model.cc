@@ -2,19 +2,12 @@
 #include <vector>
 using std::vector;
 
-Model::Model(Deck* d) : deck_(d) {
+//Model constructor
+Model::Model(Deck* d) : deck_(d) { //initialize deck
 
 }
 
 Model::~Model() {
-//    for (auto it:players) {
-//        delete it;
-//    }
-//
-//    //delete deck_;
-//    deck_ = nullptr;
-//
-//    players.resize(0);
 
 }
 
@@ -76,6 +69,7 @@ bool Model::isLegalPlay(int playerNum, Command &command) {
     return isLegal;
 }
 
+//create human and computer players - for start of game and ragequit
 void Model::updatePlayers(int playerNum) {
     if (players[playerNum]->isHuman()) {
         players[playerNum] = new Computer(deck_, playerNum);
@@ -84,6 +78,7 @@ void Model::updatePlayers(int playerNum) {
     }
 }
 
+//returns whether player has any legal plays
 bool Model::isPlay(int playerNum) {
     vector<Card*> cards = players[playerNum]->legalPlay();
     if (cards.size()==0) {
@@ -92,6 +87,7 @@ bool Model::isPlay(int playerNum) {
     return true;
 }
 
+//deletes all players
 void Model::resetPlayers() {
     if (players.size()!=0) {
         players.clear();

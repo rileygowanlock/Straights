@@ -9,44 +9,35 @@ using std::vector;
 
 class Player {
 private:
-    int playerNum_;
-    Deck* deck_;
+    int playerNum_; //player's number (position in player array)
+    Deck* deck_; //game's deck
 
 protected:
-    int score_;
-    vector<Card*> hand_;
-    vector<Card*> discard_;
+    int score_; //player's score
+    vector<Card*> hand_; //cards remaining in player's hand
+    vector<Card*> discard_; //cards player has discarded
 
 public:
-    // added this to construct player before call to deck
-    // addHand() method?
-    //Player(int playerNum);
-    Player(Deck* d, int playerNum);
-    virtual ~Player();
-    Deck* getDeck();
-    //destructor
-    int score();
-    void updateScore();
-    int getScore();
-    //virtual void play(Deck &d) = 0;
-    //virtual void discard() = 0;
-    vector<Card*> getHand();
-    vector<Card*> getDiscard();
-    void resetDiscard();
-    //virtual void play(Deck &d, Card *c);
-    //virtual void play(Deck &d, Card &c);
+    Player(Deck* d, int playerNum); //Player constructor
+    virtual ~Player(); //Player destructor
+    Deck* getDeck(); //returns game's deck (deck_)
+    int score(); //returns sum of ranks of all discards
+    void updateScore(); // returns last stored score + sum of ranks of all discards and updates score_
+    int getScore(); //returns player's current score (score_)
+    vector<Card*> getHand(); //returns vector of cards remaining in player's hand (hand_)
+    vector<Card*> getDiscard(); //returns vector of cards player has discarded
+    void resetDiscard(); //removes all cards in player's discard pile 
+    virtual bool isHuman(); //returns if player is human
+    bool isStartPlayer(); //returns whether player is the start player
     virtual void play(Card& c);
-    virtual bool isHuman();
-    bool isStartPlayer();
-    virtual Card* play();
-    //virtual void discard(Card *c);
+    virtual Card* play(); 
     virtual void discard(Card& c);
     virtual Card* discard();
-    void updateHand();
-    vector<Card*> legalPlay ();
-    void printHand(); //FOR TEST PURPOSES
-    int playerNum();
-    void rageQuit();
+    void updateHand(); //sets player's hand
+    vector<Card*> legalPlay (); //returns legal plays of player based on current hand
+    void printHand(); //Prints hand - FOR TEST PURPOSES
+    int playerNum(); //returns player's number (position in player array)
+    void rageQuit(); //CLI ragequit
 };
 
 #endif //PLAYER_H

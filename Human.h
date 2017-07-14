@@ -6,14 +6,11 @@
 class Human : public Player {
 
 public:
-    //Human(int playerNum);
-    Human(Deck* d, int playerNum);
-    ~Human();
-    //void play(Deck &d, Card* c) override;
-    //void discard(Card* c) override;
-    void play(Card& c) override;
-    void discard(Card& c) override;
-    bool isHuman() override;
+    Human(Deck* d, int playerNum); //Human constructor
+    ~Human(); //Human destructor
+    void play(Card& c) override; //plays card c
+    void discard(Card& c) override; //discards card c
+    bool isHuman() override; //returns if human (true)
 
 };
 
