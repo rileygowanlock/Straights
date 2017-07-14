@@ -13,6 +13,7 @@ public:
     void playRound(int playerNum);
     //bool gamePlay(Command &command, Player* player); //directs logic based on human's commands
     int newGame(std::vector<std::string> playerType, int seed);
+    int newRound();
     Command::Type gamePlay(Card* card, int playerNum);
     Card* getCard();
 };

@@ -74,7 +74,7 @@ GUI::GUI(Model* model, Controller* controller): m_Window(Gtk::ORIENTATION_VERTIC
     //m_Hand.attach(yourHand, 0, 0, 1, 1);
     for (int i = 0; i < 13; i++) {
         std::string imgUrl = "img/nothing.png";
-	    m_Card = Gtk::Image(imgUrl);
+	m_Card = Gtk::Image(imgUrl);
         cards[i].set_image(m_Card);
         m_Hand.attach((cards[i]), i+1, 0, 1, 1);
     }
@@ -132,69 +132,96 @@ void GUI::playRound() {
 //        } else {
 //            player->discard();
 //        }
-        /*if (currPlayer_ == 3) {
-            currPlayer_ = 0;
-        } else {
-            currPlayer_++;
-        }*/
+    /*if (currPlayer_ == 3) {
+        currPlayer_ = 0;
+    } else {
+        currPlayer_++;
+    }*/
+    std::cout << "playRound" << std::endl;
+    /*if (startPlayer_==0 && currPlayer_ == 3 && player->getHand().size() == 0) {
+        endRound();
+    } else if (currPlayer_!=3 && currPlayer_ == startPlayer_-1 && player->getHand().size() == 0) {
+        endRound();
+    }*/
+    if (startPlayer_ == currPlayer_ && player->getHand().size() == 0) {
+        endRound();
     }
-//    std::cout<<"playRound"<<std::endl;
-//    if (startPlayer_==0 && currPlayer_ == 3 && player->getHand().size() == 1) {
-//        endRound();
-//    } else if (currPlayer_!=3 && currPlayer_ == startPlayer_-1 && player->getHand().size() == 1) {
-//        endRound();
-//    }
-//}
+}
 
 void GUI::endRound() {
     bool endGame = false;
     int lowScore = 10000;
+    int score = 0;
     vector<int> winners;
     string text = "";
+    string suits = "CDHS";
+    string ranks = "A23456789TJQK";
     for (int i = 0; i < 4; i++) {
         Player *player = model_->getPlayers(i);
         vector < Card * > discard = player->getDiscard();
         text += "Player " + std::to_string(i + 1) + "'s discards:";
-        /*for (int j = 0; j < discard.size(); j++) {
-            text +=  " ";
-	    text<<discard[j];
-        }*/
-        text += "\n";
-        text += "Player " + std::to_string(i + 1) + "'s score:";
-        text += " " + std::to_string(player->getScore()) + " + " + std::to_string(player->score());
-        player->updateScore();
-        text += " = " + std::to_string(player->getScore()) + "\n";
-        if (player->getScore() >= 80) {
-            endGame = true;
-        }
-    }
-    Gtk::MessageDialog dialog(*this, text);
-    dialog.run();
-    /*if (endGame) {
-        for (int i = 0; i < 4; i++) {
-            Player *player = model_->getPlayers(i);
-            if (player->getScore() < lowScore) {
-                winners.clear();
-                winners.push_back(i);
-		        lowScore = player->getScore();
-            } else if (player->getScore() == lowScore) {
-                winners.push_back(i);
+        for (int j = 0; j < discard.size(); j++) {
+            text += " ";
+            text << discard[j];
+            text += "\n";
+            text += "Player " + std::to_string(i + 1) + "'s score:";
+            text += " " + std::to_string(player->getScore()) + " + " + std::to_string(player->score());
+            //	    text+=ranks[discard[j]->rank().rank()];
+            //	    text+=suits[discard[j]->suit().suit()];
+            //	}
+//        text +=  "\n";
+//        text +=  "Player " + std::to_string(i + 1) + "'s score:";
+//	score = player->score();
+//        text +=  " " + std::to_string(player->getScore()) + " + " + std::to_string(score);
+            player->updateScore();
+            text += " = " + std::to_string(player->getScore()) + "\n";
+            if (player->getScore() >= 80) {
+                endGame = true;
             }
         }
-        for (int i=0; i<winners.size(); i++) {
-            std::cout << "Player " << winners[i]+1 << " wins!\n";
-        }
-      //  return 4;
-    }
-    else {
-        model_->getDeck()->shuffle();
-        newGame();
-        if (startPlayer_ == 0) {
-           // return 3;
+        Gtk::MessageDialog dialog(*this, text);
+        dialog.run();
+        if (endGame) {
+            for (int i = 0; i < 4; i++) {
+                Player *player = model_->getPlayers(i);
+                if (player->getScore() < lowScore) {
+                    winners.clear();
+                    winners.push_back(i);
+                    lowScore = player->getScore();
+                } else if (player->getScore() == lowScore) {
+                    winners.push_back(i);
+                }
+            }
+            for (int i = 0; i < winners.size(); i++) {
+                text = "Player " + std::to_string(winners[i] + 1) + " wins!";
+                Gtk::MessageDialog dialog(*this, text);
+                dialog.run();
+            }
+            //  return 4;
         } else {
-           // return startPlayer_ - 1;
+            resetScreen();
+            model_->getDeck()->shuffle();
+            controller_->newRound();
+            if (startPlayer_ == 0) {
+                // return 3;
+            } else {
+                // return startPlayer_ - 1;
+            }
         }
-    }*/
+    }
+}
+
+void GUI::resetScreen() {
+    for (int i=0; i<4; i++) {
+        for (int j=0; j<13; j++) {
+            m_Cards[i][j].set("img/nothing.png");
+        }
+    }
+    for (int i = 0; i < 4; i++) {
+        points[i].set_label("0 points");
+        discards[i].set_label("0 discards");
+    }
+    show_all_children();
 }
 
 void GUI::end_game() {
@@ -239,7 +266,9 @@ void GUI::rage_quit(int i) {
 //    }
 //}
 
+
 void GUI::cardPlayed(int index) {
+    if (index>=model_->getPlayers(currPlayer_)->getHand().size()) return;
     Card* card = model_->getPlayers(currPlayer_)->getHand()[index];
     int i = card->rank().rank();
     int j = card->suit().suit();
@@ -270,6 +299,7 @@ void GUI::computer() {
         currPlayer_ = 0;
     }
     show_all_children();
+    playRound();
 }
 
 void GUI::setPlayer(int playerNum) {
@@ -292,7 +322,7 @@ void GUI::startDialog(int playerNum) {
     Gtk::MessageDialog dialog(*this, text);
     //dialog.set_secondary_text("And this is the secondary text that explains things.");
     dialog.run();
-    show_all_children();
+    //show_all_children();
 }
 
 void GUI::update(Player* player) {
@@ -355,3 +385,4 @@ void GUI::update(Command::Type &command, int playerNum, Card &card, bool isLegal
 //        controller_->playRound(playerNum);
 //    }
 }
+
