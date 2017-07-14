@@ -74,7 +74,7 @@ Command::Type Controller::gamePlay (Card* card, int playerNum) {
         Command command(Command::Type::PLAY, *card);
         bool isLegal = model_->isLegalPlay(playerNum, command); //checks if legal card is played
         if (isLegal) {
-	    std::cout<<"Gameplay play: "<<*card<<std::endl;
+	    std::cout<<"Gameplay play: "<<*card<<" and player num: "<<playerNum<<std::endl;
             player->play(*card); //play card from command
             return command.type;
         }
@@ -82,7 +82,7 @@ Command::Type Controller::gamePlay (Card* card, int playerNum) {
         Command command(Command::Type::DISCARD, *card);
         bool isLegal = model_->isLegalPlay(playerNum, command); //checks if legal card is discarded
         if (isLegal) {
-            std::cout<<"Gameplay discard: "<<*card<<" "<<playerNum<<std::endl;
+            std::cout<<"Gameplay discard: "<<*card<<" and player num: "<<playerNum<<std::endl;
             player->discard(*card); //discard card from command
             //return true;
 	    return command.type;
@@ -114,23 +114,53 @@ int Controller::newGame(std::vector<std::string> playerType, int seed) { //Note 
 }
 
 // just added
-void Controller::playRound(int playerNum) {
-    std::cout << "computer or human";
+int Controller::index(int playerNum) {
     Player *player = model_->getPlayers(playerNum);
+    int index = -1;
     if (!(player->isHuman())) {
-        Card *card = player->getHand()[0];
+        //Card *card = player->getHand()[0];
+        vector <Card*> legal = player->legalPlay();
+        if (legal.size() != 0) {
+	    for (int i=0; i<player->getHand().size(); i++) {
+		std::cout<<"Leg[0]: "<<*(legal[0])<<* (player->getHand()[i])<<std::endl;
+                if (legal[0] == player->getHand()[i]) index=i;
+            }
+	}
+    }
+
+    return index;
+}
+
+// just added
+void Controller::playRound(int playerNum) {
+    //std::cout << "computer or human";
+    Player *player = model_->getPlayers(playerNum);
+    std::cout<<"PLAYERNUM: "<<playerNum<<std::endl;
+    if (!(player->isHuman())) {
+	    std::cout << "computer"<<std::endl;
+        //Card *card = player->getHand()[0];
         vector <Card*> legal = player->legalPlay();
         if (legal.size() != 0) {
             Card *c = player->play();
             Command command(Command::Type::PLAY, *c);
             card_ = c;
-            std::cout << std::to_string(c->rank().rank());
-            std::cout << std::to_string(c->suit().suit());
+            //std::cout << std::to_string(c->rank().rank());
+            //std::cout << std::to_string(c->suit().suit());
+	     std::cout <<*c<<std::endl;
+	  playerNum++;
+          if (playerNum == 4) {
+            playerNum = 0;
+	    
+          }
             model_->notify(command.type, playerNum, *c, true);
+
         } else {
             Card *c = player->discard();
             Command command(Command::Type::DISCARD, *c);
             card_ = c;
+	    //std::cout << std::to_string(c->rank().rank());
+            //std::cout << std::to_string(c->suit().suit());
+	    std::cout <<*c<<std::endl;
             model_->notify(command.type, playerNum, *c, true);
         }
     }

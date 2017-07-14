@@ -7,6 +7,7 @@ using std::vector;
 
 Player::Player(Deck* d, int playerNum): playerNum_(playerNum), deck_(d) {
    updateHand();
+       score_ = 0;
 //   for (int i=0; i<13; i++) {
 //       hand_.push_back(d->getCard(i+playerNum_*13));
 //    }

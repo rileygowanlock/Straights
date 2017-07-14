@@ -97,6 +97,8 @@ void GUI::new_game() {
     model_->notify(model_->getPlayers(startPlayer_)); // change this
 
     std::cout<<"HERE"<<std::endl;
+    Player* player = model_->getPlayers(startPlayer_);
+    computer(player);
 
     /*int playerNum = startPlayer_;
     std::cout<<playerNum<<std::endl;
@@ -113,8 +115,12 @@ void GUI::new_game() {
 }
 
 void GUI::playRound() {
-    controller_->playRound(currPlayer_);
-//    Player *player = model_->getPlayers(currPlayer_);
+    Player *player = model_->getPlayers(currPlayer_);
+    std::cout << "playRound" << std::endl;
+    std::cout<<startPlayer_ <<" "<< currPlayer_ <<" "<< player->getHand().size()<<std::endl; //SEGFAULTING HERE
+
+
+    //controller_->playRound(currPlayer_);
 //    if (!(player->isHuman())) {
 //        std::cout << "computer";
 //        vector <Card*> legal = player->legalPlay();
@@ -137,7 +143,6 @@ void GUI::playRound() {
     } else {
         currPlayer_++;
     }*/
-    std::cout << "playRound" << std::endl;
     /*if (startPlayer_==0 && currPlayer_ == 3 && player->getHand().size() == 0) {
         endRound();
     } else if (currPlayer_!=3 && currPlayer_ == startPlayer_-1 && player->getHand().size() == 0) {
@@ -162,17 +167,13 @@ void GUI::endRound() {
         text += "Player " + std::to_string(i + 1) + "'s discards:";
         for (int j = 0; j < discard.size(); j++) {
             text += " ";
-            text << discard[j];
-            text += "\n";
-            text += "Player " + std::to_string(i + 1) + "'s score:";
-            text += " " + std::to_string(player->getScore()) + " + " + std::to_string(player->score());
-            //	    text+=ranks[discard[j]->rank().rank()];
-            //	    text+=suits[discard[j]->suit().suit()];
-            //	}
-//        text +=  "\n";
-//        text +=  "Player " + std::to_string(i + 1) + "'s score:";
-//	score = player->score();
-//        text +=  " " + std::to_string(player->getScore()) + " + " + std::to_string(score);
+            text+=ranks[discard[j]->rank().rank()];
+            text+=suits[discard[j]->suit().suit()];
+	}
+        text +=  "\n";
+        text +=  "Player " + std::to_string(i + 1) + "'s score:";
+	score = player->score();
+        text +=  " " + std::to_string(player->getScore()) + " + " + std::to_string(score);
             player->updateScore();
             text += " = " + std::to_string(player->getScore()) + "\n";
             if (player->getScore() >= 80) {
@@ -208,7 +209,7 @@ void GUI::endRound() {
                 // return startPlayer_ - 1;
             }
         }
-    }
+  
 }
 
 void GUI::resetScreen() {
@@ -268,11 +269,14 @@ void GUI::rage_quit(int i) {
 
 
 void GUI::cardPlayed(int index) {
-    if (index>=model_->getPlayers(currPlayer_)->getHand().size()) return;
-    Card* card = model_->getPlayers(currPlayer_)->getHand()[index];
+    Player* player = model_->getPlayers(currPlayer_);
+    if (index>=player->getHand().size()) return;
+    Card* card = player->getHand()[index];
     int i = card->rank().rank();
     int j = card->suit().suit();
+    //std::cout<<*card<<" "<<currPlayer_<<std::endl;
     Command::Type validPlay = controller_->gamePlay(card, currPlayer_);
+        //std::cout<<"TEST 2"<<std::endl;
     if (validPlay != Command::Type::BAD_COMMAND) {
         currPlayer_++;
         if (currPlayer_ == 4) {
@@ -285,10 +289,15 @@ void GUI::cardPlayed(int index) {
         m_Cards[j][i].set(imgUrl);
         show_all_children();
     }
+    playRound();
+        std::cout<<"NUM: "<<currPlayer_<<std::endl;
+	computer(player);
+    
 }
 
-void GUI::computer() {
-    int i = controller_->getCard()->rank().rank();
+
+void GUI::computer(Player* player) {
+    /*int i = controller_->getCard()->rank().rank();
     int j = controller_->getCard()->suit().suit();
     std::cout << i;
     std::cout << j;
@@ -299,11 +308,39 @@ void GUI::computer() {
         currPlayer_ = 0;
     }
     show_all_children();
-    playRound();
+    playRound();*/
+      int index = -1;
+	while (playerType[currPlayer_]=="c") {
+	std::cout<<"GUI::cardPlayed says computer"<<std::endl;
+        index = controller_->index(currPlayer_);
+	std::cout<<"Index: "<<index<<std::endl;
+	if (index != -1) {
+  	  player = model_->getPlayers(currPlayer_);
+          Card* card = player->getHand()[index];
+          int i = card->rank().rank();
+          int j = card->suit().suit();
+	  std::string imgUrl = "img/"+std::to_string(j)+"_"+std::to_string(i)+".png";
+          m_Cards[j][i].set(imgUrl);
+	                show_all_children();
+	 //cardPlayed(index);
+	}
+		  		      playRound();
+  	  controller_->playRound(currPlayer_);
+	if (index != -1) {
+
+	  currPlayer_++;
+          if (currPlayer_ == 4) {
+            currPlayer_ = 0;
+	    
+          }
+	}
+			 playRound();
+      }
+	//std::cout<<"PLAYERNUMBER: "<<currPlayer_<<std::endl;
 }
 
 void GUI::setPlayer(int playerNum) {
-    std::cout << "setPlayer";
+    //std::cout << "setPlayer";
     for (int i=0; i<4; i++) {
         if (playerType[i]=="c") {
             rageQuit[i].set_sensitive(false);
@@ -329,9 +366,9 @@ void GUI::update(Player* player) {
     startDialog(player->playerNum());
     vector<Card*> hand = player->getHand();
     setPlayer(player->playerNum());
-    if (playerType[player->playerNum()]=="c") {
-        controller_->playRound(currPlayer_);
-    } else {
+    //if (playerType[player->playerNum()]=="c") {
+    //    controller_->playRound(currPlayer_);
+    //} else {
         // Show hand
         for (int i = 0; i < hand.size(); i++) {
             std::string imgUrl = "img/" + std::to_string(hand[i]->suit().suit()) + "_" + std::to_string(hand[i]->rank().rank()) + ".png";
@@ -341,25 +378,42 @@ void GUI::update(Player* player) {
             //cards[i].signal_clicked().connect(sigc::bind<int, int, Card*>(sigc::mem_fun(*this,&GUI::cardPlayed),hand[i]->rank().rank(),hand[i]->suit().suit(),hand[i]));
             cards[i].signal_clicked().connect(sigc::bind<int>(sigc::mem_fun(*this, &GUI::cardPlayed), i));
         }
-    }
+    //}
 }
 
 void GUI::update(Command::Type &command, int playerNum, Card &card, bool isLegal) {
-    std::cout << std::to_string(currPlayer_);
-    std::cout << std::to_string(playerNum);
-    std::cout << "running";
-    if (playerType[playerNum]=="c" && command==Command::Type::PLAY) {
+    //std::cout << std::to_string(currPlayer_);
+    std::cout << std::to_string(playerNum) << " (in update function) " <<playerType.size()<<std::endl;
+    //std::cout << "running";
+    /*if (playerType[playerNum]=="c" && command==Command::Type::PLAY) {
         std::cout << "hi";
         computer();
         playerNum++;
         if (playerNum == 4) {
             playerNum = 0;
         }
-    }
-    Player* player = model_->getPlayers(playerNum);
+    }*/
+    Player* player = model_->getPlayers(playerNum);    
+    vector <Card*> discardPile = (player->getDiscard());
     if (command == Command::Type::DISCARD && isLegal) {
-        discards[playerNum].set_label(std::to_string(player->getDiscard().size()+1) + " discards");
-        playerNum = currPlayer_;
+	if (player->isHuman()) {
+            discards[playerNum].set_label(std::to_string(player->getDiscard().size()+1) + " discards");
+	}
+	else if (!(player->isHuman())) {
+            discards[playerNum].set_label(std::to_string(player->getDiscard().size()) + " discards");
+	    currPlayer_++;
+	    if (currPlayer_ == 4) {
+             currPlayer_ = 0;
+        }
+	}
+	std::cout<<"Discard Pile: "<<std::endl;
+	for (auto it: discardPile) std::cout<<*it<<" ";
+	std::cout<<std::endl;
+        playerNum++;
+        if (playerNum == 4) {
+            playerNum = 0;
+        }
+        //playerNum = currPlayer_;
     }
     player = model_->getPlayers(playerNum);
     vector<Card*> hand = player->getHand();
@@ -381,8 +435,5 @@ void GUI::update(Command::Type &command, int playerNum, Card &card, bool isLegal
         }
     }
     show_all_children();
-//    if (playerType[playerNum]=="c") {
-//        controller_->playRound(playerNum);
-//    }
 }
 

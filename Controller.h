@@ -16,6 +16,7 @@ public:
     int newRound();
     Command::Type gamePlay(Card* card, int playerNum);
     Card* getCard();
+    int index(int playerNum);
 };
 
 #endif //STRAIGHTS_CONTROLLER_H

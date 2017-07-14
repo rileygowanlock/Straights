@@ -48,7 +48,6 @@ bool Model::isLegalPlay(int playerNum, Command &command) {
     bool isLegal = false;
     vector<Card*> cards = player->legalPlay();
     vector<Card*> hand = player->getHand();
-
     //checks if card entered is part of legal plays vector
     if (command.type==Command::Type::PLAY) {
         for (auto it:cards)  {
@@ -58,10 +57,9 @@ bool Model::isLegalPlay(int playerNum, Command &command) {
             }
         }
         if (isLegal) {
-            if (playerNum == 3) {
+	    playerNum++;
+            if (playerNum == 4) {
                 playerNum = 0;
-            } else {
-            playerNum++;
             }
 	}	
     }
