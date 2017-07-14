@@ -6,7 +6,10 @@ GUI::GUI(Model* model, Controller* controller): m_Window(Gtk::ORIENTATION_VERTIC
     set_title("Straights");
     set_default_size(500, 400);
     set_resizable(false);
-    playerType = {"h","h","h","h"};
+
+    playerType = {"h","h","h","h"}; //
+
+    // Specifies when the game starts and resets
     start_ = true;
     reset_ = false;
 
@@ -18,14 +21,16 @@ GUI::GUI(Model* model, Controller* controller): m_Window(Gtk::ORIENTATION_VERTIC
         }
     }
 
+    // Enables Start button
     m_Start = Gtk::Button("Start new game with seed:");
     m_Start.signal_clicked().connect(sigc::mem_fun(*this, &GUI::new_game));
+    m_Seed.set_max_length(10); // specifies max number of digits
+    m_Seed.set_text("0"); // default value
 
-    m_Seed.set_max_length(10);
-    m_Seed.set_text("0");
-
+    // Enables End button
     m_End = Gtk::Button("End current game");
     m_End.signal_clicked().connect(sigc::mem_fun(*this, &GUI::end_game));
+
 
     add(m_Window);
     m_Header.pack_start(m_Start);
