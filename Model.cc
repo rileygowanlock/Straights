@@ -91,3 +91,9 @@ bool Model::isPlay(int playerNum) {
     }
     return true;
 }
+
+void Model::resetPlayers() {
+    if (players.size()!=0) {
+        players.clear();
+    }
+}

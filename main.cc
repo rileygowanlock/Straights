@@ -28,9 +28,12 @@ int main(int argc, char *argv[]) {
     Controller* controller = new Controller(model); // create a Controller instance
     //View* view = new View(model, controller); // create a View instance
 
-    GUI* gui = new GUI(model, controller); // create a View instance
-
-    model->subscribe(gui); // add gui view as an observer of model
+    while (true) {
+        std::cout << "aaa";
+        GUI* gui = new GUI(model, controller); // create a View instance
+        model->subscribe(gui); // add gui view as an observer of model
+        return app->run( *gui );
+    }
     //model->subscribe(view); // add gui cli as an observer of model
     //view->run(); // initialize user interface
 
@@ -39,7 +42,6 @@ int main(int argc, char *argv[]) {
 //    delete view;
 //    delete controller;
 //    delete d;
-    return app->run( *gui );
 
 
 }

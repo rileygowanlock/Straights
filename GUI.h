@@ -15,6 +15,7 @@ private:
     int startPlayer_;
     int currPlayer_;
     bool start_;
+    bool reset_;
 
 public:
     GUI(Model* model, Controller* controller);

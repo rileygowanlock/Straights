@@ -95,6 +95,7 @@ int Controller::newGame(std::vector<std::string> playerType, int seed) { //Note 
     model_->getDeck()->createDeck(seed);
    
     model_->getDeck()->shuffle();
+    model_->resetPlayers();
     // Invite players
     for (int i = 0; i < 4; i++) {
         if (playerType[i]=="h") {
@@ -105,9 +106,9 @@ int Controller::newGame(std::vector<std::string> playerType, int seed) { //Note 
     }
     for (int i = 0; i < 4; i++) {
         model_->getPlayers(i)->updateHand();
-        //model_->getPlayers(i)->resetDiscard();
+        model_->getPlayers(i)->resetDiscard();
     }
-//    //model_->getDeck()->removePlayed();
+    model_->getDeck()->removePlayed();
     int startPlayer = model_->startGame();
     //model_->notify(model_->getPlayers(startPlayer));
     return startPlayer;
@@ -117,17 +118,15 @@ int Controller::newGame(std::vector<std::string> playerType, int seed) { //Note 
 int Controller::index(int playerNum) {
     Player *player = model_->getPlayers(playerNum);
     int index = -1;
-    if (!(player->isHuman())) {
-        //Card *card = player->getHand()[0];
-        vector <Card*> legal = player->legalPlay();
-        if (legal.size() != 0) {
-	    for (int i=0; i<player->getHand().size(); i++) {
-		std::cout<<"Leg[0]: "<<*(legal[0])<<* (player->getHand()[i])<<std::endl;
-                if (legal[0] == player->getHand()[i]) index=i;
+    vector <Card*> legal = player->legalPlay();
+    if (legal.size() != 0) {
+        for (int i = 0; i < player->getHand().size(); i++) {
+            std::cout << "Leg[0]: " << *(legal[0]) << *(player->getHand()[i]) << std::endl;
+            if (legal[0] == player->getHand()[i]) {
+                index = i;
             }
-	}
+        }
     }
-
     return index;
 }
 
@@ -146,21 +145,19 @@ void Controller::playRound(int playerNum) {
             card_ = c;
             //std::cout << std::to_string(c->rank().rank());
             //std::cout << std::to_string(c->suit().suit());
-	     std::cout <<*c<<std::endl;
-	  playerNum++;
-          if (playerNum == 4) {
-            playerNum = 0;
-	    
-          }
+            //std::cout <<*c<<std::endl;
+	        playerNum++;
+            if (playerNum == 4) {
+                playerNum = 0;
+            }
             model_->notify(command.type, playerNum, *c, true);
-
         } else {
             Card *c = player->discard();
             Command command(Command::Type::DISCARD, *c);
             card_ = c;
-	    //std::cout << std::to_string(c->rank().rank());
+            //std::cout << std::to_string(c->rank().rank());
             //std::cout << std::to_string(c->suit().suit());
-	    std::cout <<*c<<std::endl;
+	        //std::cout <<*c<<std::endl;
             model_->notify(command.type, playerNum, *c, true);
         }
     }
@@ -169,5 +166,4 @@ void Controller::playRound(int playerNum) {
 Card* Controller::getCard() {
     return card_;
 }
-
 

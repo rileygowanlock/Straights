@@ -23,6 +23,7 @@ public:
     int startGame(); //starts the game - returns first player's number
     void updatePlayers(int playerNum);
     bool isPlay(int playerNum);
+    void resetPlayers();
 };
 
 #endif //STRAIGHTS_MODEL_H
