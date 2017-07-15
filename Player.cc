@@ -7,14 +7,12 @@ using std::vector;
 
 //Player constructor
 Player::Player(Deck* d, int playerNum): playerNum_(playerNum), deck_(d) {
-   updateHand();
-       score_ = 0;
+    updateHand();
+    score_ = 0;
 }
 
 //Player destructor
-Player::~Player() {
-
-}
+Player::~Player() {}
 
 //returns legal plays of player based on current hand
 vector<Card*> Player::legalPlay () {
@@ -64,6 +62,10 @@ void Player::updateScore() {
 //returns player's current score (score_)
 int Player::getScore() {
     return score_;
+}
+
+void Player::addScore(int num) {
+    score_ = num;
 }
 
 //returns if player is human

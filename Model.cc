@@ -72,7 +72,14 @@ bool Model::isLegalPlay(int playerNum, Command &command) {
 //create human and computer players - for start of game and ragequit
 void Model::updatePlayers(int playerNum) {
     if (players[playerNum]->isHuman()) {
-        players[playerNum] = new Computer(deck_, playerNum);
+        Player* player = players[playerNum];
+        Player* newPlayer = new Computer(deck_, playerNum);
+        vector<Card*> discard = player->getDiscard();
+        player->addScore(players[playerNum]->getScore());
+        for (int i=0; i<4; i++) {
+            newPlayer->discard(*discard[i]);
+        }
+        players[playerNum] = newPlayer;
     } else {
         players[playerNum] = new Human(deck_, playerNum);
     }

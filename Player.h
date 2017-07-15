@@ -38,6 +38,7 @@ public:
     void printHand(); //Prints hand - FOR TEST PURPOSES
     int playerNum(); //returns player's number (position in player array)
     void rageQuit(); //CLI ragequit
+    void addScore(int num);
 };
 
 #endif //PLAYER_H
