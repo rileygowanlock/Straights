@@ -246,6 +246,7 @@ void GUI::computer(Player* player) {
             show_all_children();
         }
         playRound(); // check if round is done
+	std::cout<<"CurrP: "<<currPlayer_<<std::endl;
         controller_->playRound(currPlayer_);
 	    if (index != -1) {
         currPlayer_++;

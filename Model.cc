@@ -75,10 +75,10 @@ void Model::updatePlayers(int playerNum) {
         Player* player = players[playerNum];
         Player* newPlayer = new Computer(deck_, playerNum);
         vector<Card*> discard = player->getDiscard();
+	vector<Card*> hand = player->getHand();
         newPlayer->addScore(player->getScore());
-        for (int i=0; i<discard.size(); i++) {
-            newPlayer->discard(*discard[i]);
-        }
+        newPlayer->setDiscard(discard);
+	newPlayer->setHand(hand);
         players[playerNum] = newPlayer;
     } else {
         players[playerNum] = new Human(deck_, playerNum);
