@@ -7,30 +7,30 @@ GUI::GUI(Model* model, Controller* controller): m_Window(Gtk::ORIENTATION_VERTIC
     set_default_size(500, 400);
     set_resizable(false);
 
-    playerType = {"h","h","h","h"}; //
+    playerType = {"h","h","h","h"}; //tracks whether the player is a human or computer
 
-    // Specifies when the game starts and resets
+    //specifies when the game starts and resets
     start_ = true;
     reset_ = false;
 
+    //populate table with blank cards in a grid 4*13
     for (int i=0; i<4; i++) {
         for (int j=0; j<13; j++) {
             m_Cards[i][j] = Gtk::Image("img/nothing.png");
-            m_Cards[0][0].set_size_request(53); //formatting
+            m_Cards[0][0].set_size_request(53); //
             m_Grid.attach(m_Cards[i][j], j, i, 1, 1);
         }
     }
 
-    // Enables Start button
+    //enables Start button
     m_Start = Gtk::Button("Start new game with seed:");
     m_Start.signal_clicked().connect(sigc::mem_fun(*this, &GUI::new_game));
-    m_Seed.set_max_length(10); // specifies max number of digits
-    m_Seed.set_text("0"); // default value
+    m_Seed.set_max_length(10); //specifies max number of digits
+    m_Seed.set_text("0"); //default value
 
-    // Enables End button
+    //enables End button
     m_End = Gtk::Button("End current game");
     m_End.signal_clicked().connect(sigc::mem_fun(*this, &GUI::end_game));
-
 
     add(m_Window);
     m_Header.pack_start(m_Start);
@@ -149,6 +149,9 @@ void GUI::endRound() {
         resetScreen();
     } else {
         resetScreen();
+        for (int i=0; i<4; i++) {
+            rageQuit[i].set_label("Rage!");
+        }
         controller_->shuffleDeck();
         currPlayer_ = controller_->newRound();
         startPlayer_ = currPlayer_;
