@@ -105,7 +105,20 @@ void Controller::playRound(int playerNum) {
             }
             model_->notify(command.type, playerNum, *c, true);
         } else {
+	    /*vector <Card*> hand1 = player->getHand();
+	    	    std::cout<<"Pre-discard: "<<std::endl;
+	    for (auto it:hand1) {
+std::cout<<*it<<" ";
+	    }
+	    std::cout<<std::endl;*/
             Card *c = player->discard();
+	    /*std::cout<<"Discarded: "<<*c<<std::endl;
+	    hand1 = player->getHand();
+	    	    std::cout<<"Post-discard: "<<std::endl;
+	    for (auto it:hand1) {
+std::cout<<*it<<" ";
+	    }
+std::cout<<std::endl;*/
             Command command(Command::Type::DISCARD, *c);
             card_ = c;
             model_->notify(command.type, playerNum, *c, true);

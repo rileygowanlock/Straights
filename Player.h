@@ -33,6 +33,8 @@ public:
     virtual Card* play(); 
     virtual void discard(Card& c);
     virtual Card* discard();
+    void setDiscard(vector<Card*> discard);
+    void setHand(vector<Card*> hand);
     void updateHand(); //sets player's hand
     vector<Card*> legalPlay (); //returns legal plays of player based on current hand
     void printHand(); //Prints hand - FOR TEST PURPOSES

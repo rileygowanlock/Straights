@@ -137,3 +137,11 @@ void Player::resetDiscard() {
 void Player::rageQuit() {
     std::cout<<"Player "<<playerNum_+1<<" ragequits. A computer will now take over."<<std::endl;
 }
+
+void Player::setDiscard(vector<Card*> discard) {
+    discard_=discard;
+}
+
+void Player::setHand(vector<Card*> hand) {
+    hand_=hand;
+}

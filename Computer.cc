@@ -36,6 +36,7 @@ Card* Computer::play() {
 
 //discards first card and returns card discarded
 Card* Computer::discard() {
+	std::cout<<"COMPUTER::discard "<<*(hand_[0])<<std::endl;
     Card* c = hand_[0]; //first card in hand 
     discard_.push_back(c); //add c to discard
 
