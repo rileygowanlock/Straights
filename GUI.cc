@@ -147,6 +147,7 @@ void GUI::endRound() {
             dialog.run();
         }
         resetScreen();
+        reset_ = true;
     } else {
         resetScreen();
         for (int i=0; i<4; i++) {
@@ -162,7 +163,6 @@ void GUI::endRound() {
 }
 
 void GUI::resetScreen() {
-    reset_ = true;
     for (int i=0; i<4; i++) {
         for (int j=0; j<13; j++) {
             m_Cards[i][j].set("img/nothing.png");
@@ -199,7 +199,7 @@ void GUI::rage_quit(int i) {
         rageQuit[i].set_sensitive(false);
         controller_->updatePlayers(i);
         playerType[i] = "c";
-        Player* player = controller_->getPlayers(startPlayer_);
+        Player* player = controller_->getPlayers(i);
         computer(player);
     }
 }
