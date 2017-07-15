@@ -75,8 +75,8 @@ void Model::updatePlayers(int playerNum) {
         Player* player = players[playerNum];
         Player* newPlayer = new Computer(deck_, playerNum);
         vector<Card*> discard = player->getDiscard();
-        player->addScore(players[playerNum]->getScore());
-        for (int i=0; i<4; i++) {
+        player->addScore(player->getScore());
+        for (int i=0; i<discard.size(); i++) {
             newPlayer->discard(*discard[i]);
         }
         players[playerNum] = newPlayer;
