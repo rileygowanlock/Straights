@@ -5,15 +5,14 @@ Controller::Controller(Model* model): model_(model) {}
 
 //choose human or computer player
 void Controller::invitePlayers(char playerType, int playerNum) {
-
     switch(playerType) {
         case 'h': {
-            Human* h = new Human(model_->getDeck(), playerNum);
+            Human* h = new Human(model_->getDeck(), playerNum); //create human
             model_->appendPlayer(h);
             break;
         }
         case 'c': {
-            Computer* c = new Computer(model_->getDeck(), playerNum);
+            Computer* c = new Computer(model_->getDeck(), playerNum); //create computer
             model_->appendPlayer(c);
             break;
         }
@@ -32,6 +31,7 @@ int Controller::newRound() {
     return startPlayer;
 }
 
+//returns if the card is of type play, discard or bad_command
 Command::Type Controller::gamePlay (Card* card, int playerNum) {
     Player* player = model_->getPlayers(playerNum);
     if (model_->isPlay(playerNum)) { //checks if player has a legal play
@@ -53,7 +53,8 @@ Command::Type Controller::gamePlay (Card* card, int playerNum) {
     return Command::Type::BAD_COMMAND;
 }
 
-int Controller::newGame(std::vector<std::string> playerType, int seed) { //Note to self: changed this from void to int
+//called if new game
+int Controller::newGame(std::vector<std::string> playerType, int seed) {
     model_->getDeck()->createDeck(seed);
    
     model_->getDeck()->shuffle();
@@ -66,6 +67,7 @@ int Controller::newGame(std::vector<std::string> playerType, int seed) { //Note 
             invitePlayers('c', i);
         }
     }
+    //reset
     for (int i = 0; i < 4; i++) {
         model_->getPlayers(i)->updateHand();
         model_->getPlayers(i)->resetDiscard();
@@ -75,7 +77,7 @@ int Controller::newGame(std::vector<std::string> playerType, int seed) { //Note 
     return startPlayer;
 }
 
-// just added
+//returns position of card for computer to play/discard
 int Controller::index(int playerNum) {
     Player *player = model_->getPlayers(playerNum);
     int index = -1;
@@ -90,7 +92,7 @@ int Controller::index(int playerNum) {
     return index;
 }
 
-// just added
+//play round for computer player
 void Controller::playRound(int playerNum) {
     Player *player = model_->getPlayers(playerNum);
     if (!(player->isHuman())) {
@@ -105,20 +107,7 @@ void Controller::playRound(int playerNum) {
             }
             model_->notify(command.type, playerNum, *c, true);
         } else {
-	    /*vector <Card*> hand1 = player->getHand();
-	    	    std::cout<<"Pre-discard: "<<std::endl;
-	    for (auto it:hand1) {
-std::cout<<*it<<" ";
-	    }
-	    std::cout<<std::endl;*/
             Card *c = player->discard();
-	    /*std::cout<<"Discarded: "<<*c<<std::endl;
-	    hand1 = player->getHand();
-	    	    std::cout<<"Post-discard: "<<std::endl;
-	    for (auto it:hand1) {
-std::cout<<*it<<" ";
-	    }
-std::cout<<std::endl;*/
             Command command(Command::Type::DISCARD, *c);
             card_ = c;
             model_->notify(command.type, playerNum, *c, true);
